@@ -30,6 +30,7 @@
 		"@angular/platform-browser": "^17.3.4",
 		"@angular/platform-browser-dynamic": "^17.3.4",
 		"@angular/router": "^17.3.4",
+		"@faker-js/faker": "^8.4.1",
 		"@types/jasmine": "^5.1.4",
 		"@types/node": "^20.12.7",
 		"jasmine-core": "^5.1.2",
