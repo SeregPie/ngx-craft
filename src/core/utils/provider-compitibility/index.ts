@@ -2,7 +2,7 @@
 
 import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
 
-export type ProviderChoice<T> = {
+export interface ProviderChoice<T> {
 	useValue(source: T): ValueProvider;
 	useFactory(source: {(): T}): FactoryProvider;
 	useClass(source: Type<T>): ClassProvider;

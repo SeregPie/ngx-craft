@@ -2,7 +2,7 @@ import {Signal, WritableSignal, effect, inject, signal} from '@angular/core';
 import {NgControl, ValidationErrors} from '@angular/forms';
 
 export type FormBridgeResult = {
-	touched: Signal<boolean>;
+	touch: Signal<boolean>;
 	disabled: Signal<boolean>;
 	pending: Signal<boolean>;
 	errors: Signal<null | ValidationErrors>;
@@ -10,6 +10,8 @@ export type FormBridgeResult = {
 
 export type FormBridgeOptions = Partial<{
 	disabled: WritableSignal<boolean>;
+	pending: Signal<boolean>;
+	errors: Signal<ValidationErrors>;
 }>;
 
 export const useFormBridge: {
