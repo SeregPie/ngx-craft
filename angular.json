@@ -1,0 +1,32 @@
+{
+	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+	"cli": {
+		"analytics": false,
+		"cache": {
+			"enabled": false
+		}
+	},
+	"projects": {
+		"core": {
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "./ng-package.json",
+						"tsConfig": "./src/tsconfig.json"
+					}
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"polyfills": ["zone.js", "zone.js/testing"],
+						"tsConfig": "./src/tsconfig.spec.json"
+					}
+				}
+			},
+			"projectType": "library",
+			"root": "."
+		}
+	},
+	"version": 1
+}

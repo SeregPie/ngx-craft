@@ -1,0 +1,14 @@
+{
+	"angularCompilerOptions": {
+		"compilationMode": "partial",
+		"enableI18nLegacyMessageIdFormat": false,
+		"strictInjectionParameters": true,
+		"strictInputAccessModifiers": true,
+		"strictTemplates": true
+	},
+	"compilerOptions": {
+		"experimentalDecorators": true,
+		"lib": ["ES2022", "DOM"]
+	},
+	"extends": "../tsconfig.json"
+}
