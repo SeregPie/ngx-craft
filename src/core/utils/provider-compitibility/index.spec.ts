@@ -138,6 +138,7 @@ describe('provide', () => {
 			it('should create correct provider', fakeAsync(async () => {
 				expect(provide(token, {multi: true}).useValue(A.asValue)).toEqual({
 					provide: token,
+					multi: true,
 					useValue: A.asValue,
 				});
 			}));
@@ -161,6 +162,7 @@ describe('provide', () => {
 			it('should create correct provider', fakeAsync(async () => {
 				expect(provide(token, {multi: true}).useFactory(A.asFactory)).toEqual({
 					provide: token,
+					multi: true,
 					useFactory: A.asFactory,
 				});
 			}));
@@ -184,6 +186,7 @@ describe('provide', () => {
 			it('should create correct provider', fakeAsync(async () => {
 				expect(provide(token, {multi: true}).useClass(A.asClass)).toEqual({
 					provide: token,
+					multi: true,
 					useClass: A.asClass,
 				});
 			}));
@@ -207,6 +210,7 @@ describe('provide', () => {
 			it('should create correct provider', fakeAsync(async () => {
 				expect(provide(token, {multi: true}).useExisting(A.asExisting)).toEqual({
 					provide: token,
+					multi: true,
 					useExisting: A.asExisting,
 				});
 			}));
