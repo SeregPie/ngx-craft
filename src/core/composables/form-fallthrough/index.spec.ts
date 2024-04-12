@@ -6,7 +6,7 @@ import {simpleFaker as faker} from '@faker-js/faker';
 
 import {useFormFallthrough} from '.';
 
-fdescribe('useFormFallthrough', () => {
+describe('useFormFallthrough', () => {
 	it('should work with FormControlDirective', fakeAsync(async () => {
 		let form = new FormRecord({
 			a: new FormControl(null),
@@ -291,7 +291,7 @@ fdescribe('useFormFallthrough', () => {
 		expect(result()).toBeUndefined();
 	}));
 
-	it('should return nothing if not available', () => {
+	it('should check type and return nothing if not available', () => {
 		let form = new FormGroup({});
 
 		@Component({
@@ -339,7 +339,7 @@ fdescribe('useFormFallthrough', () => {
 		expect(result).toThrow();
 	}));
 
-	it('should throw if required but not available', () => {
+	it('should check type and throw if required but not available', () => {
 		let form = new FormGroup({});
 
 		@Component({
