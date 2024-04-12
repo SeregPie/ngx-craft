@@ -9,9 +9,9 @@ export type ProviderChoice<T> = {
 	useExisting(source: ProviderToken<T>): ExistingProvider;
 };
 
-export type ProvideOptions = {
-	multi?: boolean;
-};
+export type ProvideOptions = Partial<{
+	multi: boolean;
+}>;
 
 export const provide: {
 	<T>(

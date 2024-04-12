@@ -1,7 +1,6 @@
 import {Component, computed, signal} from '@angular/core';
 import {TestBed, fakeAsync} from '@angular/core/testing';
 import {
-	AbstractControl,
 	FormArray,
 	FormControl,
 	FormGroup,
@@ -28,7 +27,7 @@ describe('useFormFallthrough', () => {
 			template: '',
 		})
 		class MySubComponent {
-			result = useFormFallthrough(AbstractControl);
+			result = useFormFallthrough();
 		}
 
 		@Component({
