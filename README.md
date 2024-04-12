@@ -20,6 +20,20 @@ import {provide} from 'ngx-craft';
 
 Simplifies the definition of providers and extends it with type safety.
 
+#### Usage
+
+<!-- prettier-ignore -->
+```ts
+type MyTheme = 'Polaris' | 'Nebula';
+
+const MyThemeToken = new InjectionToken<MyTheme>('MyTheme');
+
+@Component({
+  providers: [provide(MyThemeToken).useValue('Polaris')],
+})
+class MyComponent {}
+```
+
 #### Types
 
 <!-- prettier-ignore -->
@@ -45,18 +59,4 @@ const provide: {
     options?: ProvideOptions,
   ): ProviderChoice<T>;
 };
-```
-
-#### Usage
-
-<!-- prettier-ignore -->
-```ts
-type MyTheme = 'Polaris' | 'Nebula';
-
-const MyThemeToken = new InjectionToken<MyTheme>('MyTheme');
-
-@Component({
-  providers: [provide(MyThemeToken).useValue('Polaris')],
-})
-class MyComponent {}
 ```

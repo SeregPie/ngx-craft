@@ -1,172 +1,229 @@
 import {InjectionToken} from '@angular/core';
 import {fakeAsync} from '@angular/core/testing';
+import {simpleFaker as faker} from '@faker-js/faker';
 
 import {provide} from '.';
 
 describe('provide', () => {
-	describe('', () => {
-		interface Xchsasel {
-			a: number;
-			b: string;
-		}
+	type TA = {
+		a: number;
+		b: string;
+	};
 
-		// todo: rename
-		// todo: set values
-		class Appsgzuf implements Xchsasel {
-			a = 123;
-			b = 'abc';
-		}
+	class A implements TA {
+		static asValue = new this();
+		static asFactory = () => new this();
+		static asClass = this;
+		static asExisting = new InjectionToken('', {factory: this.asFactory});
 
-		describe('', () => {
-			let token = new InjectionToken<Xchsasel>('');
+		a = faker.number.int();
+		b = faker.string.alphanumeric();
+	}
 
-			it('', () => {
-				let source = new Appsgzuf();
-				let provider = provide(token).useValue(source);
+	type TB = {
+		a: string;
+		b: number;
+	};
 
-				expect(provider).toEqual({
+	class B implements TB {
+		static asValue = new this();
+		static asFactory = () => new this();
+		static asClass = this;
+		static asExisting = new InjectionToken('', {factory: this.asFactory});
+
+		a = faker.string.alphanumeric();
+		b = faker.number.int();
+	}
+
+	describe('single', () => {
+		let token = new InjectionToken<TA>('');
+
+		describe('useValue', () => {
+			it('should create correct provider', fakeAsync(async () => {
+				expect(provide(token).useValue(A.asValue)).toEqual({
 					provide: token,
-					useValue: source,
+					useValue: A.asValue,
 				});
-			});
+			}));
+
+			it('should ensure type safety', fakeAsync(async () => {
+				expect(async () => {
+					// @ts-expect-error
+					provide(token).useValue(B.asValue);
+					// @ts-expect-error
+					provide(token).useValue(A.asFactory);
+					// @ts-expect-error
+					provide(token).useValue(A.asClass);
+					// @ts-expect-error
+					provide(token).useValue(A.asExisting);
+				});
+				expect().nothing();
+			}));
+		});
+
+		describe('useFactory', () => {
+			it('should create correct provider', fakeAsync(async () => {
+				expect(provide(token).useFactory(A.asFactory)).toEqual({
+					provide: token,
+					useFactory: A.asFactory,
+				});
+			}));
+
+			it('should ensure type safety', fakeAsync(async () => {
+				expect(async () => {
+					// @ts-expect-error
+					provide(token).useFactory(A.asValue);
+					// @ts-expect-error
+					provide(token).useFactory(B.asFactory);
+					// @ts-expect-error
+					provide(token).useFactory(A.asClass);
+					// @ts-expect-error
+					provide(token).useFactory(A.asExisting);
+				});
+				expect().nothing();
+			}));
+		});
+
+		describe('useClass', () => {
+			it('should create correct provider', fakeAsync(async () => {
+				expect(provide(token).useClass(A.asClass)).toEqual({
+					provide: token,
+					useClass: A.asClass,
+				});
+			}));
+
+			it('should ensure type safety', fakeAsync(async () => {
+				expect(async () => {
+					// @ts-expect-error
+					provide(token).useClass(A.asValue);
+					// @ts-expect-error
+					provide(token).useClass(A.asFactory);
+					// @ts-expect-error
+					provide(token).useClass(B.asClass);
+					// @ts-expect-error
+					provide(token).useClass(A.asExisting);
+				});
+				expect().nothing();
+			}));
+		});
+
+		describe('useExisting', () => {
+			it('should create correct provider', fakeAsync(async () => {
+				expect(provide(token).useExisting(A.asExisting)).toEqual({
+					provide: token,
+					useExisting: A.asExisting,
+				});
+			}));
+
+			it('should ensure type safety', fakeAsync(async () => {
+				expect(async () => {
+					// @ts-expect-error
+					provide(token).useExisting(A.asValue);
+					// @ts-ignore
+					provide(token).useExisting(A.asFactory);
+					// @ts-ignore
+					provide(token).useExisting(A.asClass);
+					// @ts-ignore
+					provide(token).useExisting(B.asExisting);
+				});
+				expect().nothing();
+			}));
 		});
 	});
 
-	// todo: description
-	it('...', fakeAsync(async () => {
-		// todo: rename
-		interface Xchsasel {
-			a: number;
-			b: string;
-		}
+	describe('multiple', () => {
+		let token = new InjectionToken<Array<TA>>('');
 
-		// todo: rename
-		// todo: set values
-		class Appsgzuf implements Xchsasel {
-			a = 123;
-			b = 'abc';
-		}
-
-		{
-			let token = new InjectionToken<Xchsasel>('');
-			{
-				let source = new Appsgzuf();
-				let provider = provide(token).useValue(source);
-
-				expect(provider).toEqual({
+		describe('useValue', () => {
+			it('should create correct provider', fakeAsync(async () => {
+				expect(provide(token, {multi: true}).useValue(A.asValue)).toEqual({
 					provide: token,
-					useValue: source,
+					useValue: A.asValue,
 				});
-			}
-			{
-				let source = () => new Appsgzuf();
-				let provider = provide(token).useFactory(source);
+			}));
 
-				expect(provider).toEqual({
-					provide: token,
-					useFactory: source,
+			it('should ensure type safety', fakeAsync(async () => {
+				expect(async () => {
+					// @ts-expect-error
+					provide(token, {multi: true}).useValue(B.asValue);
+					// @ts-expect-error
+					provide(token, {multi: true}).useValue(A.asFactory);
+					// @ts-expect-error
+					provide(token, {multi: true}).useValue(A.asClass);
+					// @ts-expect-error
+					provide(token, {multi: true}).useValue(A.asExisting);
 				});
-			}
-			{
-				let source = Appsgzuf;
-				let provider = provide(token).useClass(source);
-
-				expect(provider).toEqual({
-					provide: token,
-					useClass: source,
-				});
-			}
-			{
-				let source = new InjectionToken<Appsgzuf>('');
-				let provider = provide(token).useExisting(source);
-
-				expect(provider).toEqual({
-					provide: token,
-					useExisting: source,
-				});
-			}
-		}
-		{
-			let token = new InjectionToken<Array<Xchsasel>>('');
-			{
-				let source = new Appsgzuf();
-				let provider = provide(token, {multi: true}).useValue(source);
-
-				expect(provider).toEqual({
-					provide: token,
-					multi: true,
-					useValue: source,
-				});
-			}
-			{
-				let source = () => new Appsgzuf();
-				let provider = provide(token, {multi: true}).useFactory(source);
-
-				expect(provider).toEqual({
-					provide: token,
-					multi: true,
-					useFactory: source,
-				});
-			}
-			{
-				let source = Appsgzuf;
-				let provider = provide(token, {multi: true}).useClass(source);
-
-				expect(provider).toEqual({
-					provide: token,
-					multi: true,
-					useClass: source,
-				});
-			}
-			{
-				let source = new InjectionToken<Appsgzuf>('');
-				let provider = provide(token, {multi: true}).useExisting(source);
-
-				expect(provider).toEqual({
-					provide: token,
-					multi: true,
-					useExisting: source,
-				});
-			}
-		}
-	}));
-
-	// todo: description
-	it('...', fakeAsync(async () => {
-		let token = new InjectionToken<number>('');
-
-		expect(async () => {
-			// @ts-expect-error
-			provide(token).useValue([1]);
-
-			// @ts-expect-error
-			provide(token, {multi: false}).useValue([1]);
-
-			// @ts-ignore
-			provide(token, {multi: true}).useValue(1);
-
-			// @ts-ignore
-			provide(token, {multi: true}).useValue([1]);
+				expect().nothing();
+			}));
 		});
 
-		expect().nothing();
-	}));
+		describe('useFactory', () => {
+			it('should create correct provider', fakeAsync(async () => {
+				expect(provide(token, {multi: true}).useFactory(A.asFactory)).toEqual({
+					provide: token,
+					useFactory: A.asFactory,
+				});
+			}));
 
-	// todo: description
-	it('...', fakeAsync(async () => {
-		let token = new InjectionToken<Array<number>>('');
-
-		expect(async () => {
-			// @ts-expect-error
-			provide(token).useValue(1);
-
-			// @ts-expect-error
-			provide(token, {multi: false}).useValue(1);
-
-			// @ts-expect-error
-			provide(token, {multi: true}).useValue([1]);
+			it('should ensure type safety', fakeAsync(async () => {
+				expect(async () => {
+					// @ts-expect-error
+					provide(token, {multi: true}).useFactory(A.asValue);
+					// @ts-expect-error
+					provide(token, {multi: true}).useFactory(B.asFactory);
+					// @ts-expect-error
+					provide(token, {multi: true}).useFactory(A.asClass);
+					// @ts-expect-error
+					provide(token, {multi: true}).useFactory(A.asExisting);
+				});
+				expect().nothing();
+			}));
 		});
 
-		expect().nothing();
-	}));
+		describe('useClass', () => {
+			it('should create correct provider', fakeAsync(async () => {
+				expect(provide(token, {multi: true}).useClass(A.asClass)).toEqual({
+					provide: token,
+					useClass: A.asClass,
+				});
+			}));
+
+			it('should ensure type safety', fakeAsync(async () => {
+				expect(async () => {
+					// @ts-expect-error
+					provide(token, {multi: true}).useClass(A.asValue);
+					// @ts-expect-error
+					provide(token, {multi: true}).useClass(A.asFactory);
+					// @ts-expect-error
+					provide(token, {multi: true}).useClass(B.asClass);
+					// @ts-expect-error
+					provide(token, {multi: true}).useClass(A.asExisting);
+				});
+				expect().nothing();
+			}));
+		});
+
+		describe('useExisting', () => {
+			it('should create correct provider', fakeAsync(async () => {
+				expect(provide(token, {multi: true}).useExisting(A.asExisting)).toEqual({
+					provide: token,
+					useExisting: A.asExisting,
+				});
+			}));
+
+			it('should ensure type safety', fakeAsync(async () => {
+				expect(async () => {
+					// @ts-expect-error
+					provide(token, {multi: true}).useExisting(A.asValue);
+					// @ts-ignore
+					provide(token, {multi: true}).useExisting(A.asFactory);
+					// @ts-ignore
+					provide(token, {multi: true}).useExisting(A.asClass);
+					// @ts-ignore
+					provide(token, {multi: true}).useExisting(B.asExisting);
+				});
+				expect().nothing();
+			}));
+		});
+	});
 });
