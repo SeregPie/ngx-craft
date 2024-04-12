@@ -46,7 +46,7 @@ type ProviderChoice<T> = {
 };
 
 type ProvideOptions = Partial<{
-	multi: boolean;
+  multi: boolean;
 }>;
 
 const provide: {
