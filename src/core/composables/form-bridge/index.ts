@@ -2,16 +2,17 @@ import {Signal, WritableSignal, effect, inject, signal} from '@angular/core';
 import {NgControl, ValidationErrors} from '@angular/forms';
 
 export type FormBridgeResult = {
-	touch: Signal<boolean>;
 	disabled: Signal<boolean>;
 	pending: Signal<boolean>;
-	errors: Signal<null | ValidationErrors>;
+	errors: Signal<undefined | ValidationErrors>;
+	touched: Signal<boolean>;
+	touch: {(): void};
 };
 
 export type FormBridgeOptions = Partial<{
 	disabled: WritableSignal<boolean>;
 	pending: Signal<boolean>;
-	errors: Signal<ValidationErrors>;
+	errors: Signal<undefined | ValidationErrors>;
 }>;
 
 export const useFormBridge: {
@@ -19,7 +20,14 @@ export const useFormBridge: {
 		value: WritableSignal<TValue>,
 		options?: FormBridgeOptions,
 	): FormBridgeResult;
-} = (value$, {disabled: disabled$ = signal(false)} = {}) => {
+} = (
+	value$,
+	{
+		disabled: disabled$ = signal(false),
+		pending: pending$ = signal(false).asReadonly(),
+		errors: errors$ = signal(undefined).asReadonly(),
+	} = {},
+) => {
 	let ref = inject(NgControl, {self: true, optional: true});
 	if (ref != null) {
 		let value = value$();
