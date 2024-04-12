@@ -94,7 +94,7 @@ class MyPercentInputComponent {
 ```ts
 const useFormFallthrough: {
   <TControl extends AbstractControl>(
-    controlCtor?: Type<TControl>,
+    controlCtor?: AbstractType<TControl>,
   ): Signal<undefined | TControl>;
   required: {
     <TControl extends AbstractControl>(

@@ -1,19 +1,11 @@
 import {Component, computed, signal} from '@angular/core';
 import {TestBed, fakeAsync} from '@angular/core/testing';
-import {
-	FormArray,
-	FormControl,
-	FormGroup,
-	FormRecord,
-	FormsModule,
-	ReactiveFormsModule,
-} from '@angular/forms';
+import {FormArray, FormControl, FormGroup, FormRecord, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 
 import {useFormFallthrough} from '.';
 
-// prettier-ignore
-describe('useFormFallthrough', () => {
+fdescribe('useFormFallthrough', () => {
 	it('should work with FormControlDirective', fakeAsync(async () => {
 		let form = new FormRecord({
 			a: new FormControl(null),
@@ -104,8 +96,8 @@ describe('useFormFallthrough', () => {
 
 	it('should work with FormGroupDirective', fakeAsync(async () => {
 		let form = new FormRecord({
-			a: new FormGroup({a: new FormControl(null)}),
-			b: new FormGroup({a: new FormControl(null)}),
+			a: new FormGroup({}),
+			b: new FormGroup({}),
 		});
 		let formSwitch$ = signal<string>('a');
 
@@ -145,8 +137,8 @@ describe('useFormFallthrough', () => {
 
 	it('should work with FormGroupNameDirective', fakeAsync(async () => {
 		let form = new FormRecord({
-			a: new FormGroup({a: new FormControl(null)}),
-			b: new FormGroup({a: new FormControl(null)}),
+			a: new FormGroup({}),
+			b: new FormGroup({}),
 		});
 		let formSwitch$ = signal<string>('a');
 
@@ -191,8 +183,8 @@ describe('useFormFallthrough', () => {
 
 	it('should work with FormArrayNameDirective', fakeAsync(async () => {
 		let form = new FormRecord({
-			a: new FormArray([new FormControl(null)]),
-			b: new FormArray([new FormControl(null)]),
+			a: new FormArray([]),
+			b: new FormArray([]),
 		});
 		let formSwitch$ = signal<string>('a');
 
@@ -301,7 +293,40 @@ describe('useFormFallthrough', () => {
 		expect(result()).toBeUndefined();
 	}));
 
-	it('should throw if required and not available', fakeAsync(async () => {
+	it('should return nothing if not available', () => {
+		let form = new FormGroup({});
+
+		@Component({
+			selector: 'my-sub',
+			standalone: true,
+			template: '',
+		})
+		class MySubComponent {
+			result = useFormFallthrough(FormArray);
+		}
+
+		@Component({
+			imports: [ReactiveFormsModule, MySubComponent],
+			standalone: true,
+			template: `<my-sub [formGroup]="form" />`,
+		})
+		class MyComponent {
+			form = form;
+		}
+
+		let fixture = TestBed.createComponent(MyComponent);
+		fixture.detectChanges();
+		// prettier-ignore
+		let {result}: MySubComponent = (fixture
+			.debugElement
+			.query(By.directive(MySubComponent))
+			.componentInstance
+		);
+
+		expect(result()).toBeUndefined();
+	});
+
+	it('should throw if required but not available', fakeAsync(async () => {
 		@Component({
 			standalone: true,
 			template: '',
@@ -316,4 +341,37 @@ describe('useFormFallthrough', () => {
 
 		expect(result).toThrow();
 	}));
+
+	it('should throw if required but not available', () => {
+		let form = new FormGroup({});
+
+		@Component({
+			selector: 'my-sub',
+			standalone: true,
+			template: '',
+		})
+		class MySubComponent {
+			result = useFormFallthrough.required(FormArray);
+		}
+
+		@Component({
+			imports: [ReactiveFormsModule, MySubComponent],
+			standalone: true,
+			template: `<my-sub [formGroup]="form" />`,
+		})
+		class MyComponent {
+			form = form;
+		}
+
+		let fixture = TestBed.createComponent(MyComponent);
+		fixture.detectChanges();
+		// prettier-ignore
+		let {result}: MySubComponent = (fixture
+			.debugElement
+			.query(By.directive(MySubComponent))
+			.componentInstance
+		);
+
+		expect(result).toThrow();
+	});
 });

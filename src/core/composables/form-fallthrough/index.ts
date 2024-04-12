@@ -1,11 +1,11 @@
 // @ts-nocheck
 
-import {Signal, Type, afterRender, computed, inject, signal} from '@angular/core';
+import {AbstractType, Signal, afterRender, computed, inject, signal} from '@angular/core';
 import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
 
 export const useFormFallthrough: {
 	<TControl extends AbstractControl>(
-		controlCtor?: Type<TControl>,
+		controlCtor?: AbstractType<TControl>,
 	): Signal<undefined | TControl>;
 	required: {
 		<TControl extends AbstractControl>(
@@ -14,8 +14,7 @@ export const useFormFallthrough: {
 	};
 } = (() => {
 	return Object.assign((controlCtor = AbstractControl) => {
-		// todo: rename
-		let vozrwodm = (ref) => {
+		let fromDirective = (ref) => {
 			let watch = signal({});
 			afterRender(() => {
 				watch.set({});
@@ -37,13 +36,13 @@ export const useFormFallthrough: {
 					registerOnChange() {},
 					registerOnTouched() {},
 				};
-				return vozrwodm(ref);
+				return fromDirective(ref);
 			}
 		}
 		{
 			let ref = inject(ControlContainer, {self: true, optional: true});
 			if (ref != null) {
-				return vozrwodm(ref);
+				return fromDirective(ref);
 			}
 		}
 		return signal(undefined).asReadonly();
@@ -53,7 +52,6 @@ export const useFormFallthrough: {
 			return computed(() => {
 				let result = result$();
 				if (result == null) {
-					// todo: message
 					throw new Error(`required but not available`);
 				}
 				return result;
