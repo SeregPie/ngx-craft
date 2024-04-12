@@ -1,3 +1,4 @@
 /dist
 
+/src/core/composables/form-fallthrough/index.ts
 /src/core/utils/provider-compitibility
