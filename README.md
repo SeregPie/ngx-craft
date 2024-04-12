@@ -38,7 +38,7 @@ class MyComponent {}
 
 <!-- prettier-ignore -->
 ```ts
-type ProviderChoice<T> = {
+interface ProviderChoice<T> {
   useValue(source: T): ValueProvider;
   useFactory(source: {(): T}): FactoryProvider;
   useClass(source: Type<T>): ClassProvider;
