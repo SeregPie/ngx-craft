@@ -1,20 +1,26 @@
-// @ts-nocheck
+import {
+	AbstractType,
+	Signal,
+	afterRender,
+	computed,
+	inject,
+	signal,
+} from '@angular/core';
+import {
+	AbstractControl,
+	AbstractControlDirective,
+	ControlContainer,
+	NgControl,
+} from '@angular/forms';
 
-import {AbstractType, Signal, afterRender, computed, inject, signal} from '@angular/core';
-import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
-
-export const useFormFallthrough: {
-	<TControl extends AbstractControl>(
+export const useFormFallthrough = (() => {
+	function impl<TControl extends AbstractControl>(
 		controlCtor?: AbstractType<TControl>,
 	): Signal<undefined | TControl>;
-	required: {
-		<TControl extends AbstractControl>(
-			...args: Parameters<typeof useFormFallthrough<TControl>>
-		): Signal<TControl>;
-	};
-} = (() => {
-	return Object.assign((controlCtor = AbstractControl) => {
-		let fromDirective = (ref) => {
+	function impl(
+		controlCtor: AbstractType<AbstractControl> = AbstractControl,
+	): Signal<undefined | AbstractControl> {
+		let fromDirective = (ref: AbstractControlDirective) => {
 			let watch = signal({});
 			afterRender(() => {
 				watch.set({});
@@ -46,16 +52,22 @@ export const useFormFallthrough: {
 			}
 		}
 		return signal(undefined).asReadonly();
-	}, {
-		required: (...args) => {
-			let result$ = useFormFallthrough(...args);
-			return computed(() => {
-				let result = result$();
-				if (result == null) {
-					throw new Error(`required but not available`);
-				}
-				return result;
-			});
-		},
+	}
+	return Object.assign(impl, {
+		required: (() => {
+			function impl<TControl extends AbstractControl>(
+				...args: Parameters<typeof useFormFallthrough<TControl>>
+			): Signal<TControl> {
+				let result$ = useFormFallthrough<TControl>(...args);
+				return computed(() => {
+					let result = result$();
+					if (result == null) {
+						throw new Error(`required but not available`);
+					}
+					return result;
+				});
+			}
+			return impl;
+		})(),
 	});
 })();
