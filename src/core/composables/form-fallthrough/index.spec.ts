@@ -2,6 +2,7 @@ import {Component, computed, signal} from '@angular/core';
 import {TestBed, fakeAsync} from '@angular/core/testing';
 import {FormArray, FormControl, FormGroup, FormRecord, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
+import {simpleFaker as faker} from '@faker-js/faker';
 
 import {useFormFallthrough} from '.';
 
@@ -257,20 +258,17 @@ fdescribe('useFormFallthrough', () => {
 		);
 		let form = result();
 
-		// todo
 		for await (let _ of (async function* () {
 			yield;
-
 			for (let i = 2; i--; ) {
-				form.setValue(Math.random());
-				fixture.detectChanges();
-
-				yield;
-
-				value$.set(Math.random());
-				fixture.detectChanges();
-
-				yield;
+				for (let fn of [
+					(v) => form.setValue(v),
+					(v) => value$.set(v),
+				] as Iterable<{(v: number): void}>) {
+					fn(faker.number.int());
+					fixture.detectChanges();
+					yield;
+				}
 			}
 		})()) {
 			expect(form.value).toEqual(value$());
@@ -316,7 +314,6 @@ fdescribe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		// prettier-ignore
 		let {result}: MySubComponent = (fixture
 			.debugElement
 			.query(By.directive(MySubComponent))
@@ -365,7 +362,6 @@ fdescribe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		// prettier-ignore
 		let {result}: MySubComponent = (fixture
 			.debugElement
 			.query(By.directive(MySubComponent))
