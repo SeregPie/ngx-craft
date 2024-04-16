@@ -3,7 +3,9 @@ import {TestBed, fakeAsync} from '@angular/core/testing';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 
-import {useFormBridge} from './';
+import {useFormBridge} from '.';
+
+// todo
 
 describe('useFormBridge', () => {
 	it('should work', fakeAsync(async () => {

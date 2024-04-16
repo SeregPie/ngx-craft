@@ -33,7 +33,7 @@ export const withAsyncValidators: {
 		),
 	): TControl;
 } = (control, validators) => {
-	control.addAsyncValidators(validators as any);
+	control.addAsyncValidators(validators as (AsyncValidatorFn | AsyncValidatorFn[]));
 	control.updateValueAndValidity();
 	return control;
 };
@@ -51,6 +51,7 @@ export const composeAsyncValidators: {
 	}
 	return async (control) => {
 		for (let validator of validators) {
+			// todo: format
 			let errors = await ((v) => (isObservable(v) ? lastValueFrom(v) : v))(
 				validator(control),
 			);

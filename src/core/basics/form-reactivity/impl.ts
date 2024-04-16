@@ -36,6 +36,8 @@ let prototype = {};
 
 let instances = new WeakMap();
 
+// todo
+
 export default (control) => {
 	let instance = instances.get(control);
 	if (instance == null) {

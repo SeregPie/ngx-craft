@@ -28,7 +28,7 @@ export const withValidators: {
 		),
 	): TControl;
 } = (control, validators) => {
-	control.addValidators(validators as any);
+	control.addValidators(validators as (ValidatorFn | ValidatorFn[]));
 	control.updateValueAndValidity();
 	return control;
 };
