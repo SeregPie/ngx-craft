@@ -6,7 +6,7 @@ import * as impl from './impl';
 export type FormBridgeResult = {
 	disabled: Signal<boolean>;
 	pending: Signal<boolean>;
-	errors: Signal<undefined | ValidationErrors>;
+	errors: Signal<null | ValidationErrors>;
 	touched: Signal<boolean>;
 	touch: {(): void};
 };
@@ -14,7 +14,7 @@ export type FormBridgeResult = {
 export type FormBridgeOptions = Partial<{
 	disabled: WritableSignal<boolean>;
 	pending: Signal<boolean>;
-	errors: Signal<undefined | ValidationErrors>;
+	errors: Signal<null | ValidationErrors>;
 }>;
 
 export const useFormBridge: {
