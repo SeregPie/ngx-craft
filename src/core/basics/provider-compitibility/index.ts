@@ -18,29 +18,27 @@ export type ProvideOptions = Partial<{
 	multi: boolean;
 }>;
 
-export const provide = (() => {
-	function impl<T>(
+// prettier-ignore
+export const provide: {
+	<T>(
 		token: ProviderToken<Array<T>>,
 		options: ProvideOptions & {multi: true},
 	): ProviderChoice<T>;
-	function impl<T>(
+	<T>(
 		token: ProviderToken<T>,
 		options?: ProvideOptions,
 	): ProviderChoice<T>;
-	function impl<T>(
-		token: ProviderToken<T>,
-		{multi = false}: ProvideOptions = {},
-	): ProviderChoice<T> {
-		let options = {
-			provide: token,
-			...(multi ? {multi} : {}),
-		};
-		return {
-			useValue: (source) => ({...options, useValue: source}),
-			useFactory: (source) => ({...options, useFactory: source}),
-			useClass: (source) => ({...options, useClass: source}),
-			useExisting: (source) => ({...options, useExisting: source}),
-		};
-	}
-	return impl;
-})();
+} = (token, {
+	multi = false,
+} = {}) => {
+	let options = {
+		provide: token,
+		...(multi ? {multi} : {}),
+	};
+	return {
+		useValue: (source) => ({...options, useValue: source}),
+		useFactory: (source) => ({...options, useFactory: source}),
+		useClass: (source) => ({...options, useClass: source}),
+		useExisting: (source) => ({...options, useExisting: source}),
+	};
+};
