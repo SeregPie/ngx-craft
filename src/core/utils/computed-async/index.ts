@@ -18,6 +18,7 @@ export type CreateComputedAsyncOptions<T> = (
 	& CreateComputedOptions<T>
 	& Partial<{
 		initialValue: T;
+		lazy: boolean;
 	}>
 )
 // prettier-ignore
@@ -25,6 +26,7 @@ export interface ComputedAsyncRef<T>
 	extends Signal<Promise<T>>
 {
 	get pending(): boolean;
+	abort(): void;
 }
 
 export function computedAsync<T>(
