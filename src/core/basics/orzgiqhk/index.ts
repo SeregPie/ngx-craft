@@ -10,7 +10,6 @@ export const NoopValidator: {
 	(control: AbstractControl): null;
 } = () => null;
 
-// prettier-ignore
 // todo: rename
 export const FailValidator: {
 	<TErrors extends ValidationErrors>(errors: TErrors): {
@@ -18,7 +17,6 @@ export const FailValidator: {
 	};
 } = (errors) => () => errors;
 
-// prettier-ignore
 export const withValidators: {
 	<TControl extends AbstractControl>(
 		control: TControl,
@@ -28,7 +26,7 @@ export const withValidators: {
 		),
 	): TControl;
 } = (control, validators) => {
-	control.addValidators(validators as (ValidatorFn | ValidatorFn[]));
+	control.addValidators(validators as any);
 	control.updateValueAndValidity();
 	return control;
 };

@@ -5,7 +5,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {spy} from '../../../test';
 import {formi} from './';
 
-fdescribe('formi', () => {
+describe('formi', () => {
 	it('should reflect actual state', fakeAsync(async () => {
 		let form = new FormGroup({
 			a: new FormControl<null | number>(null, {
@@ -16,6 +16,7 @@ fdescribe('formi', () => {
 			}),
 		});
 
+		// todo
 		for await (let _ of (async function* () {
 			yield;
 			for (let fn of [
@@ -50,6 +51,7 @@ fdescribe('formi', () => {
 	it('should trigger changes properly', fakeAsync(async () => {
 		let form = new FormControl(null);
 
+		// todo: rename
 		let effectFn = spy(() => {
 			formi(form).disabled;
 		});
@@ -92,5 +94,11 @@ fdescribe('formi', () => {
 		let form = new FormControl(null);
 
 		expect(formi(form).control).toBe(form);
+	}));
+
+	it('should re-use instance', fakeAsync(async () => {
+		let form = new FormControl(null);
+
+		expect(formi(form)).toBe(formi(form));
 	}));
 });

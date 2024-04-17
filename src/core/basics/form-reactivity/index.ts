@@ -21,11 +21,13 @@ export type Ygakljpn = (
 
 // prettier-ignore
 // todo: rename
-export type Nyggshxy<TControl extends AbstractControl = AbstractControl> = (
-	& Readonly<Pick<TControl, Ygakljpn>>
+export type Nyggshxy<
+	TControl extends AbstractControl = AbstractControl,
+> = (
 	& {
 		readonly control: TControl;
 	}
+	& Readonly<Pick<TControl, Ygakljpn>>
 );
 
 // todo: rename?

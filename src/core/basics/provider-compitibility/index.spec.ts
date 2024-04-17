@@ -5,11 +5,13 @@ import {simpleFaker as faker} from '@faker-js/faker';
 import {provide} from '.';
 
 describe('provide', () => {
+	// todo: rename
 	type TA = {
 		a: number;
 		b: string;
 	};
 
+	// todo: rename
 	class A implements TA {
 		static asValue = new this();
 		static asFactory = () => new this();
@@ -20,11 +22,13 @@ describe('provide', () => {
 		b = faker.string.alphanumeric();
 	}
 
+	// todo: rename
 	type TB = {
 		a: string;
 		b: number;
 	};
 
+	// todo: rename
 	class B implements TB {
 		static asValue = new this();
 		static asFactory = () => new this();

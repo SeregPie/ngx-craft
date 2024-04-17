@@ -15,7 +15,6 @@ export const NoopAsyncValidator: {
 	(control: AbstractControl): Promise<null>;
 } = async () => null;
 
-// prettier-ignore
 // todo: rename
 export const FailAsyncValidator: {
 	<TErrors extends ValidationErrors>(errors: TErrors): {
@@ -23,7 +22,6 @@ export const FailAsyncValidator: {
 	};
 } = (errors) => async () => errors;
 
-// prettier-ignore
 export const withAsyncValidators: {
 	<TControl extends AbstractControl>(
 		control: TControl,
@@ -33,7 +31,7 @@ export const withAsyncValidators: {
 		),
 	): TControl;
 } = (control, validators) => {
-	control.addAsyncValidators(validators as (AsyncValidatorFn | AsyncValidatorFn[]));
+	control.addAsyncValidators(validators as any);
 	control.updateValueAndValidity();
 	return control;
 };
@@ -51,10 +49,7 @@ export const composeAsyncValidators: {
 	}
 	return async (control) => {
 		for (let validator of validators) {
-			// todo: format
-			let errors = await ((v) => (isObservable(v) ? lastValueFrom(v) : v))(
-				validator(control),
-			);
+			let errors = await ((v) => isObservable(v) ? lastValueFrom(v) : v)(validator(control));
 			if (errors != null) {
 				return errors;
 			}

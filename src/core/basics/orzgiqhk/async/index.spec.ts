@@ -1,12 +1,8 @@
 import {fakeAsync, tick} from '@angular/core/testing';
 import {FormControl} from '@angular/forms';
 
-import {
-	NoopAsyncValidator,
-	composeAsyncValidators,
-	withAsyncValidators,
-} from '.';
 import {spy} from '../../../../test';
+import {NoopAsyncValidator, composeAsyncValidators, withAsyncValidators} from '.';
 
 describe('withAsyncValidators', () => {
 	it('should work', fakeAsync(async () => {
@@ -14,8 +10,7 @@ describe('withAsyncValidators', () => {
 			new FormControl<number>(1, {
 				nonNullable: true,
 			}),
-			// todo: format
-			async ({value}) => (value % 2 ? {error: true} : null),
+			async ({value}) => value % 2 ? {error: true} : null,
 		);
 
 		expect(form.pending).toBe(true);
@@ -70,9 +65,8 @@ describe('composeAsyncValidators', () => {
 				nonNullable: true,
 			}),
 			composeAsyncValidators([
-				// todo: format
-				async ({value}) => (value === 1 ? {error: {n: 1}} : null),
-				async ({value}) => (value === 2 ? {error: {n: 2}} : null),
+				async ({value}) => value === 1 ? {error: {n: 1}} : null,
+				async ({value}) => value === 2 ? {error: {n: 2}} : null,
 			]),
 		);
 

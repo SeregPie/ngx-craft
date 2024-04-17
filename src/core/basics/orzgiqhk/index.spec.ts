@@ -1,8 +1,8 @@
 import {fakeAsync} from '@angular/core/testing';
 import {FormControl} from '@angular/forms';
 
-import {NoopValidator, composeValidators, withValidators} from '.';
 import {spy} from '../../../test';
+import {NoopValidator, composeValidators, withValidators} from '.';
 
 describe('withValidators', () => {
 	it('should work', fakeAsync(async () => {
@@ -10,8 +10,7 @@ describe('withValidators', () => {
 			new FormControl<number>(1, {
 				nonNullable: true,
 			}),
-			// todo: format
-			({value}) => (value % 2 ? {error: true} : null),
+			({value}) => value % 2 ? {error: true} : null,
 		);
 
 		expect(form.errors).toEqual({error: true});
@@ -58,9 +57,8 @@ describe('composeValidators', () => {
 				nonNullable: true,
 			}),
 			composeValidators([
-				// todo: format
-				({value}) => (value === 1 ? {error: {n: 1}} : null),
-				({value}) => (value === 2 ? {error: {n: 2}} : null),
+				({value}) => value === 1 ? {error: {n: 1}} : null,
+				({value}) => value === 2 ? {error: {n: 2}} : null,
 			]),
 		);
 

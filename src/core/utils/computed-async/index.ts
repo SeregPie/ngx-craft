@@ -1,17 +1,13 @@
 import {
 	CreateComputedOptions,
 	EffectCleanupRegisterFn,
-	Injector,
 	Signal,
 	computed,
 	effect,
-	inject,
 	signal,
 } from '@angular/core';
 
-function hfsmwvzm(): Injector {
-	return inject(Injector, {optional: true}) ?? Injector.create({providers: []});
-}
+import {hfsmwvzm} from '../../basics/xnozleer';
 
 // prettier-ignore
 export type CreateComputedAsyncOptions<T> = (

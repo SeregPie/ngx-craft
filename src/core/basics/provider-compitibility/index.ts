@@ -1,11 +1,4 @@
-import {
-	ClassProvider,
-	ExistingProvider,
-	FactoryProvider,
-	ProviderToken,
-	Type,
-	ValueProvider,
-} from '@angular/core';
+import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
 
 export interface ProviderChoice<T> {
 	useValue(source: T): ValueProvider;
@@ -18,7 +11,6 @@ export type ProvideOptions = Partial<{
 	multi: boolean;
 }>;
 
-// prettier-ignore
 export const provide: {
 	<T>(
 		token: ProviderToken<Array<T>>,
