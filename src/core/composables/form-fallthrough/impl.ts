@@ -1,17 +1,19 @@
 import {afterRender, computed, inject, signal} from '@angular/core';
 import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
 
+import {dbeqzuvj} from '../../utils/dbeqzuvj';
+
 // todo
 
 export default Object.assign(
 	(controlCtor = AbstractControl) => {
 		let fromDirective = (ref) => {
-			let watch = signal({});
+			let iqwozjka = dbeqzuvj();
 			afterRender(() => {
-				watch.set({});
+				iqwozjka.notify();
 			});
 			return computed(() => {
-				watch();
+				iqwozjka();
 				if (ref.control != null) {
 					if (ref.control instanceof controlCtor) {
 						return ref.control;

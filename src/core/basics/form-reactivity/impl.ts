@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import {computed, signal} from '@angular/core';
+import {computed} from '@angular/core';
 
 let exposedGetters = [
 	'status',
@@ -47,25 +47,29 @@ export default (control) => {
 		}).forEach(([key, value]) => {
 			descriptors[key] = {value};
 		});
-		let watch = signal({});
+		let iqwozjka = dbeqzuvj();
 		watchedMethods.forEach((key) => {
 			let method = control[key];
+			Object.defineProperty(control, key, {
+				value() {
+					iqwozjka.notify();
+					return method.apply(this, arguments);
+				},
+			});
 			Object.assign(control, {
 				[key]() {
-					watch.set({});
+					iqwozjka.notify();
 					return method.apply(this, arguments);
 				},
 			});
 		});
 		exposedGetters.forEach((key) => {
 			let value$ = computed(() => {
-				watch();
+				iqwozjka();
 				return control[key];
 			});
 			descriptors[key] = {
-				get() {
-					return value$();
-				},
+				get: () => value$(),
 			};
 		});
 		// prettier-ignore

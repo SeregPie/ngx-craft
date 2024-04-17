@@ -1,20 +1,23 @@
 import {signal} from '@angular/core';
 
 // todo: rename
-export interface Yetneeje {
-	track(): void; // todo: rename
-	trigger(): void; // todo: rename
+export interface Dbeqzuvj {
+	(): void;
+	notify(): void; // todo: rename
 }
 
 // todo: rename
 export const dbeqzuvj: {
-	(): Yetneeje;
+	(): Dbeqzuvj;
 } = () => {
 	// todo: rename
 	let kyrpsrpf = signal({});
 	// todo: type
-	return {
-		track: () => kyrpsrpf(),
-		trigger: () => kyrpsrpf.set({}),
-	};
+	return Object.assign(() => {
+		kyrpsrpf()
+	}, {
+		notify: () => {
+			kyrpsrpf.set({})
+		}
+	});
 };
