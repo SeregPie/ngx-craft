@@ -6,9 +6,9 @@ import {
 import {isObservable, lastValueFrom} from 'rxjs';
 
 export interface CustomAsyncValidatorFn<
-	TControl extends AbstractControl = AbstractControl,
+	ControlT extends AbstractControl = AbstractControl,
 > {
-	(control: TControl): ReturnType<AsyncValidatorFn>;
+	(control: ControlT): ReturnType<AsyncValidatorFn>;
 }
 
 export const NoopAsyncValidator: {
@@ -17,19 +17,19 @@ export const NoopAsyncValidator: {
 
 // todo: rename
 export const FailAsyncValidator: {
-	<TErrors extends ValidationErrors>(errors: TErrors): {
-		(control: AbstractControl): Promise<TErrors>;
+	<ErrorsT extends ValidationErrors>(errors: ErrorsT): {
+		(control: AbstractControl): Promise<ErrorsT>;
 	};
 } = (errors) => async () => errors;
 
 export const withAsyncValidators: {
-	<TControl extends AbstractControl>(
-		control: TControl,
+	<ControlT extends AbstractControl>(
+		control: ControlT,
 		validators: (
-			| CustomAsyncValidatorFn<TControl>
-			| Readonly<Array<CustomAsyncValidatorFn<TControl>>>
+			| CustomAsyncValidatorFn<ControlT>
+			| Readonly<Array<CustomAsyncValidatorFn<ControlT>>>
 		),
-	): TControl;
+	): ControlT;
 } = (control, validators) => {
 	control.addAsyncValidators(validators as any);
 	control.updateValueAndValidity();
@@ -37,9 +37,9 @@ export const withAsyncValidators: {
 };
 
 export const composeAsyncValidators: {
-	<TControl extends AbstractControl>(
-		validators: Readonly<Array<CustomAsyncValidatorFn<TControl>>>,
-	): CustomAsyncValidatorFn<TControl>;
+	<ControlT extends AbstractControl>(
+		validators: Readonly<Array<CustomAsyncValidatorFn<ControlT>>>,
+	): CustomAsyncValidatorFn<ControlT>;
 } = (validators) => {
 	switch (validators.length) {
 		case 0:

@@ -1,9 +1,9 @@
 import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 export interface CustomValidatorFn<
-	TControl extends AbstractControl = AbstractControl,
+	ControlT extends AbstractControl = AbstractControl,
 > {
-	(control: TControl): ReturnType<ValidatorFn>;
+	(control: ControlT): ReturnType<ValidatorFn>;
 }
 
 export const NoopValidator: {
@@ -12,19 +12,19 @@ export const NoopValidator: {
 
 // todo: rename
 export const FailValidator: {
-	<TErrors extends ValidationErrors>(errors: TErrors): {
-		(control: AbstractControl): TErrors;
+	<ErrorsT extends ValidationErrors>(errors: ErrorsT): {
+		(control: AbstractControl): ErrorsT;
 	};
 } = (errors) => () => errors;
 
 export const withValidators: {
-	<TControl extends AbstractControl>(
-		control: TControl,
+	<ControlT extends AbstractControl>(
+		control: ControlT,
 		validators: (
-			| CustomValidatorFn<TControl>
-			| Readonly<Array<CustomValidatorFn<TControl>>>
+			| CustomValidatorFn<ControlT>
+			| Readonly<Array<CustomValidatorFn<ControlT>>>
 		),
-	): TControl;
+	): ControlT;
 } = (control, validators) => {
 	control.addValidators(validators as any);
 	control.updateValueAndValidity();
@@ -32,9 +32,9 @@ export const withValidators: {
 };
 
 export const composeValidators: {
-	<TControl extends AbstractControl>(
-		validators: Readonly<Array<CustomValidatorFn<TControl>>>,
-	): CustomValidatorFn<TControl>;
+	<ControlT extends AbstractControl>(
+		validators: Readonly<Array<CustomValidatorFn<ControlT>>>,
+	): CustomValidatorFn<ControlT>;
 } = (validators) => {
 	switch (validators.length) {
 		case 0:

@@ -22,18 +22,18 @@ export type Ygakljpn = (
 // prettier-ignore
 // todo: rename
 export type Nyggshxy<
-	TControl extends AbstractControl = AbstractControl,
+	ControlT extends AbstractControl = AbstractControl,
 > = (
 	& {
-		readonly control: TControl;
+		readonly control: ControlT;
 	}
-	& Readonly<Pick<TControl, Ygakljpn>>
+	& Readonly<Pick<ControlT, Ygakljpn>>
 );
 
 // todo: rename?
 export const formi: {
-	<TControl extends AbstractControl>(
+	<ControlT extends AbstractControl>(
 		//
-		control: TControl,
-	): Nyggshxy<TControl>;
+		control: ControlT,
+	): Nyggshxy<ControlT>;
 } = impl.default;

@@ -1,19 +1,11 @@
 import {Component, computed, signal} from '@angular/core';
 import {TestBed, fakeAsync} from '@angular/core/testing';
-import {
-	FormArray,
-	FormControl,
-	FormGroup,
-	FormRecord,
-	FormsModule,
-	ReactiveFormsModule,
-} from '@angular/forms';
+import {FormArray, FormControl, FormGroup, FormRecord, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {simpleFaker as faker} from '@faker-js/faker';
 
 import {useFormFallthrough} from '.';
 
-// prettier-ignore
 describe('useFormFallthrough', () => {
 	it('should work with FormControlDirective', fakeAsync(async () => {
 		let form = new FormRecord({
