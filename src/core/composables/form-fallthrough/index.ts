@@ -17,7 +17,9 @@ export const useFormFallthrough: {
 		let fromDirective = (ref) => {
 			let watch = signal({});
 			afterRender(() => {
-				watch.set({});
+				setTimeout(() => {
+					watch.set({});
+				});
 			});
 			return computed(() => {
 				watch();
