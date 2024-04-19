@@ -31,10 +31,7 @@ describe('withAsyncValidators', () => {
 
 	it('should contain validators', fakeAsync(async () => {
 		let form = new FormControl(null);
-		let validators = [
-			async () => null,
-			async () => null,
-		];
+		let validators = [async () => null, async () => null];
 		withAsyncValidators(form, ...validators);
 
 		for (let validator of validators) {
@@ -44,10 +41,7 @@ describe('withAsyncValidators', () => {
 
 	it('should call validators only once', fakeAsync(async () => {
 		let form = new FormControl(null);
-		let validators = [
-			spy(async () => null),
-			spy(async () => null),
-		];
+		let validators = [spy(async () => null), spy(async () => null)];
 		withAsyncValidators(form, ...validators);
 
 		for (let validator of validators) {
