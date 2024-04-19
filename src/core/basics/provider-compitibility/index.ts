@@ -7,18 +7,20 @@ export interface ProviderChoice<T> {
 	useExisting(source: ProviderToken<T>): ExistingProvider;
 }
 
-export type ProvideOptions = Partial<{
-	multi: boolean;
-}>;
+export module provide {
+	export type Options = Partial<{
+		multi: boolean;
+	}>;
+}
 
 export const provide: {
 	<T>(
 		token: ProviderToken<Array<T>>,
-		options: ProvideOptions & {multi: true},
+		options: provide.Options & {multi: true},
 	): ProviderChoice<T>;
 	<T>(
 		token: ProviderToken<T>,
-		options?: ProvideOptions,
+		options?: provide.Options,
 	): ProviderChoice<T>;
 } = (token, {
 	multi = false,

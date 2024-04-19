@@ -22,7 +22,6 @@ export interface ComputedAsyncRef<T>
 	extends Signal<Promise<T>>
 {
 	get pending(): boolean;
-	abort(): void;
 }
 
 export function computedAsync<T>(
