@@ -20,8 +20,8 @@ export module useFormBridge {
 }
 
 export const useFormBridge: {
-	<TValue>(
-		value: WritableSignal<TValue>,
+	<ValueT>(
+		value: WritableSignal<ValueT>,
 		options?: useFormBridge.Options,
 	): useFormBridge.Result;
 } = impl.default;

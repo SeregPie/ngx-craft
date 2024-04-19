@@ -17,25 +17,23 @@ export const FailValidator: {
 	};
 } = (errors) => () => errors;
 
-export const withValidators: {
-	<ControlT extends AbstractControl>(
-		control: ControlT,
-		validators: (
-			| CustomValidatorFn<ControlT>
-			| Readonly<Array<CustomValidatorFn<ControlT>>>
-		),
-	): ControlT;
-} = (control, validators) => {
-	control.addValidators(validators as any);
+export function withValidators<ControlT extends AbstractControl>(
+	control: ControlT,
+	...validators: CustomValidatorFn<ControlT>[]
+): ControlT;
+
+export function withValidators(
+	control: AbstractControl,
+	...validators: ValidatorFn[]
+) {
+	control.addValidators(validators);
 	control.updateValueAndValidity();
 	return control;
-};
+}
 
-export const composeValidators: {
-	<ControlT extends AbstractControl>(
-		validators: Readonly<Array<CustomValidatorFn<ControlT>>>,
-	): CustomValidatorFn<ControlT>;
-} = (validators) => {
+export function composeValidators<ControlT extends AbstractControl>(
+	validators: Readonly<Array<CustomValidatorFn<ControlT>>>,
+): CustomValidatorFn<ControlT> {
 	switch (validators.length) {
 		case 0:
 			return NoopValidator;
@@ -51,6 +49,6 @@ export const composeValidators: {
 		}
 		return null;
 	};
-};
+}
 
 export * from './async';

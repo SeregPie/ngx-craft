@@ -57,7 +57,7 @@ export default (control) => {
 				},
 			});
 			Object.assign(control, {
-				[key]() {
+				get [key]() {
 					iqwozjka.notify();
 					return method.apply(this, arguments);
 				},

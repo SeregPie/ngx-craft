@@ -1,4 +1,11 @@
-import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
+import {
+	ClassProvider,
+	ExistingProvider,
+	FactoryProvider,
+	ProviderToken,
+	Type,
+	ValueProvider,
+} from '@angular/core';
 
 export interface ProviderChoice<T> {
 	useValue(source: T): ValueProvider;
@@ -13,18 +20,19 @@ export module provide {
 	}>;
 }
 
-export const provide: {
-	<T>(
-		token: ProviderToken<Array<T>>,
-		options: provide.Options & {multi: true},
-	): ProviderChoice<T>;
-	<T>(
-		token: ProviderToken<T>,
-		options?: provide.Options,
-	): ProviderChoice<T>;
-} = (token, {
-	multi = false,
-} = {}) => {
+export function provide<T>(
+	token: ProviderToken<Array<T>>,
+	options: provide.Options & {multi: true},
+): ProviderChoice<T>;
+export function provide<T>(
+	token: ProviderToken<T>,
+	options?: provide.Options,
+): ProviderChoice<T>;
+
+export function provide(
+	token: ProviderToken<any>,
+	{multi = false}: provide.Options = {},
+): ProviderChoice<any> {
 	let options = {
 		provide: token,
 		...(multi ? {multi} : {}),
@@ -35,4 +43,4 @@ export const provide: {
 		useClass: (source) => ({...options, useClass: source}),
 		useExisting: (source) => ({...options, useExisting: source}),
 	};
-};
+}

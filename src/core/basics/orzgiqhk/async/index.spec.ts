@@ -5,6 +5,7 @@ import {spy} from '../../../../test';
 import {NoopAsyncValidator, composeAsyncValidators, withAsyncValidators} from '.';
 
 describe('withAsyncValidators', () => {
+	// todo: description
 	it('should work', fakeAsync(async () => {
 		let form = withAsyncValidators(
 			new FormControl<number>(1, {
@@ -30,18 +31,28 @@ describe('withAsyncValidators', () => {
 
 	it('should contain validators', fakeAsync(async () => {
 		let form = new FormControl(null);
-		let validator = async () => null;
-		withAsyncValidators(form, validator);
+		let validators = [
+			async () => null,
+			async () => null,
+		];
+		withAsyncValidators(form, ...validators);
 
-		expect(form.hasAsyncValidator(validator)).toBe(true);
+		for (let validator of validators) {
+			expect(form.hasAsyncValidator(validator)).toBe(true);
+		}
 	}));
 
 	it('should call validators only once', fakeAsync(async () => {
 		let form = new FormControl(null);
-		let validator = spy(async () => null);
-		withAsyncValidators(form, validator);
+		let validators = [
+			spy(async () => null),
+			spy(async () => null),
+		];
+		withAsyncValidators(form, ...validators);
 
-		expect(validator).toHaveBeenCalledTimes(1);
+		for (let validator of validators) {
+			expect(validator).toHaveBeenCalledTimes(1);
+		}
 	}));
 
 	it('should not replace existing validators', fakeAsync(async () => {

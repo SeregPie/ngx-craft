@@ -18,25 +18,23 @@ export const FailAsyncValidator: {
 	};
 } = (errors) => async () => errors;
 
-export const withAsyncValidators: {
-	<ControlT extends AbstractControl>(
-		control: ControlT,
-		validators: (
-			| CustomAsyncValidatorFn<ControlT>
-			| Readonly<Array<CustomAsyncValidatorFn<ControlT>>>
-		),
-	): ControlT;
-} = (control, validators) => {
-	control.addAsyncValidators(validators as any);
+export function withAsyncValidators<ControlT extends AbstractControl>(
+	control: ControlT,
+	...validators: CustomAsyncValidatorFn<ControlT>[]
+): ControlT;
+
+export function withAsyncValidators(
+	control: AbstractControl,
+	...validators: AsyncValidatorFn[]
+) {
+	control.addAsyncValidators(validators);
 	control.updateValueAndValidity();
 	return control;
-};
+}
 
-export const composeAsyncValidators: {
-	<ControlT extends AbstractControl>(
-		validators: Readonly<Array<CustomAsyncValidatorFn<ControlT>>>,
-	): CustomAsyncValidatorFn<ControlT>;
-} = (validators) => {
+export function composeAsyncValidators<ControlT extends AbstractControl>(
+	validators: Readonly<Array<CustomAsyncValidatorFn<ControlT>>>,
+): CustomAsyncValidatorFn<ControlT> {
 	switch (validators.length) {
 		case 0:
 			return NoopAsyncValidator;
@@ -45,11 +43,11 @@ export const composeAsyncValidators: {
 	}
 	return async (control) => {
 		for (let validator of validators) {
-			let errors = await ((v) => isObservable(v) ? lastValueFrom(v) : v)(validator(control));
+			let errors = await ((v) => (isObservable(v) ? lastValueFrom(v) : v))(validator(control));
 			if (errors != null) {
 				return errors;
 			}
 		}
 		return null;
 	};
-};
+}

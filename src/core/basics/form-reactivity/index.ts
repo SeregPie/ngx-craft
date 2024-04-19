@@ -21,9 +21,7 @@ export type Ygakljpn = (
 
 // prettier-ignore
 // todo: rename
-export type Nyggshxy<
-	ControlT extends AbstractControl = AbstractControl,
-> = (
+export type Nyggshxy<ControlT extends AbstractControl = AbstractControl> = (
 	& {
 		readonly control: ControlT;
 	}
