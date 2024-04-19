@@ -1,8 +1,4 @@
-import {
-	AbstractControl,
-	AsyncValidatorFn,
-	ValidationErrors,
-} from '@angular/forms';
+import {AbstractControl, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
 import {isObservable, lastValueFrom} from 'rxjs';
 
 export interface CustomAsyncValidatorFn<
