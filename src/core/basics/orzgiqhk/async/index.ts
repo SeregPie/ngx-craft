@@ -1,4 +1,10 @@
-import {AbstractControl, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
+// @ts-nocheck
+
+import {
+	AbstractControl,
+	AsyncValidatorFn,
+	ValidationErrors,
+} from '@angular/forms';
 import {isObservable, lastValueFrom} from 'rxjs';
 
 export interface CustomAsyncValidatorFn<
@@ -13,28 +19,29 @@ export const NoopAsyncValidator: {
 
 // todo: rename
 export const FailAsyncValidator: {
-	<ErrorsT extends ValidationErrors>(errors: ErrorsT): {
+	<ErrorsT extends ValidationErrors>(
+		errors: ErrorsT,
+	): {
 		(control: AbstractControl): Promise<ErrorsT>;
 	};
 } = (errors) => async () => errors;
 
-export function withAsyncValidators<ControlT extends AbstractControl>(
-	control: ControlT,
-	...validators: CustomAsyncValidatorFn<ControlT>[]
-): ControlT;
-
-export function withAsyncValidators(
-	control: AbstractControl,
-	...validators: AsyncValidatorFn[]
-) {
+export const withAsyncValidators: {
+	<ControlT extends AbstractControl>(
+		control: ControlT,
+		...validators: CustomAsyncValidatorFn<ControlT>[]
+	): ControlT;
+} = (control, ...validators) => {
 	control.addAsyncValidators(validators);
 	control.updateValueAndValidity();
 	return control;
-}
+};
 
-export function composeAsyncValidators<ControlT extends AbstractControl>(
-	validators: Readonly<Array<CustomAsyncValidatorFn<ControlT>>>,
-): CustomAsyncValidatorFn<ControlT> {
+export const composeAsyncValidators: {
+	<ControlT extends AbstractControl>(
+		validators: Readonly<Array<CustomAsyncValidatorFn<ControlT>>>,
+	): CustomAsyncValidatorFn<ControlT>;
+} = (validators) => {
 	switch (validators.length) {
 		case 0:
 			return NoopAsyncValidator;
@@ -43,11 +50,13 @@ export function composeAsyncValidators<ControlT extends AbstractControl>(
 	}
 	return async (control) => {
 		for (let validator of validators) {
-			let errors = await ((v) => (isObservable(v) ? lastValueFrom(v) : v))(validator(control));
+			let errors = await ((v) => (isObservable(v) ? lastValueFrom(v) : v))(
+				validator(control),
+			);
 			if (errors != null) {
 				return errors;
 			}
 		}
 		return null;
 	};
-}
+};

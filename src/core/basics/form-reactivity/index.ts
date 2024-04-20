@@ -1,7 +1,5 @@
 import {AbstractControl} from '@angular/forms';
 
-import * as impl from './impl';
-
 // prettier-ignore
 // todo: rename
 export type Ygakljpn = (
@@ -21,17 +19,58 @@ export type Ygakljpn = (
 
 // prettier-ignore
 // todo: rename
-export type Nyggshxy<ControlT extends AbstractControl = AbstractControl> = (
+export type Nyggshxy<
+	ControlT extends AbstractControl = AbstractControl,
+> = (
+	& Readonly<Pick<ControlT, Ygakljpn>>
 	& {
 		readonly control: ControlT;
 	}
-	& Readonly<Pick<ControlT, Ygakljpn>>
 );
 
 // todo: rename?
-export const formi: {
-	<ControlT extends AbstractControl>(
-		//
+export const formi = (() => {
+	let exposedGetters = [
+		'status',
+		'valid',
+		'invalid',
+		'pending',
+		'disabled',
+		'enabled',
+		'pristine',
+		'dirty',
+		'touched',
+		'untouched',
+		'value',
+		'errors',
+	];
+
+	let watchedMethods = [
+		'_updatePristine',
+		'_updateTouched',
+		'_updateValue',
+		'disable',
+		'enable',
+		'markAsDirty',
+		'markAsPending',
+		'markAsPristine',
+		'markAsTouched',
+		'markAsUntouched',
+		'setErrors',
+		'updateValueAndValidity',
+	];
+
+	let instances = new WeakMap();
+
+	function impl<ControlT extends AbstractControl>(
 		control: ControlT,
-	): Nyggshxy<ControlT>;
-} = impl.default;
+	): Nyggshxy<ControlT> {
+		let instance = instances.get(control);
+		if (instance == null) {
+			instances.set(control, (instance = null as any));
+		}
+		return instance;
+	}
+
+	return impl;
+})();

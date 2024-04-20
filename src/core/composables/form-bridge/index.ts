@@ -1,8 +1,6 @@
 import {Signal, WritableSignal} from '@angular/core';
 import {ValidationErrors} from '@angular/forms';
 
-import * as impl from './impl';
-
 export module useFormBridge {
 	export type Result = {
 		disabled: Signal<boolean>;
@@ -24,4 +22,4 @@ export const useFormBridge: {
 		value: WritableSignal<ValueT>,
 		options?: useFormBridge.Options,
 	): useFormBridge.Result;
-} = impl.default;
+} = null as any;

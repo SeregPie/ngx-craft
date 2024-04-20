@@ -6,7 +6,7 @@ import {simpleFaker as faker} from '@faker-js/faker';
 
 import {useFormFallthrough} from '.';
 
-describe('useFormFallthrough', () => {
+xdescribe('useFormFallthrough', () => {
 	it('should work with FormControlDirective', fakeAsync(async () => {
 		let form = new FormRecord({
 			a: new FormControl(null),

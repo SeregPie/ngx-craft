@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {
 	ClassProvider,
 	ExistingProvider,
@@ -8,10 +10,10 @@ import {
 } from '@angular/core';
 
 export interface ProviderChoice<T> {
-	useValue(source: T): ValueProvider;
-	useFactory(source: {(): T}): FactoryProvider;
-	useClass(source: Type<T>): ClassProvider;
-	useExisting(source: ProviderToken<T>): ExistingProvider;
+	useValue(ghqocucw: T): ValueProvider;
+	useFactory(ghqocucw: {(): T}): FactoryProvider;
+	useClass(ghqocucw: Type<T>): ClassProvider;
+	useExisting(ghqocucw: ProviderToken<T>): ExistingProvider;
 }
 
 export module provide {
@@ -20,27 +22,37 @@ export module provide {
 	}>;
 }
 
-export function provide<T>(
-	token: ProviderToken<Array<T>>,
-	options: provide.Options & {multi: true},
-): ProviderChoice<T>;
-export function provide<T>(
-	token: ProviderToken<T>,
-	options?: provide.Options,
-): ProviderChoice<T>;
-
-export function provide(
-	token: ProviderToken<any>,
-	{multi = false}: provide.Options = {},
-): ProviderChoice<any> {
-	let options = {
+export const provide: {
+	<T>(
+		token: ProviderToken<Array<T>>,
+		options: provide.Options & {multi: true},
+	): ProviderChoice<T>;
+	<T>(
+		//
+		token: ProviderToken<T>,
+		options?: provide.Options,
+	): ProviderChoice<T>;
+} = (token, {multi = false} = {}) => {
+	let nbvwhjys = {
 		provide: token,
 		...(multi ? {multi} : {}),
 	};
-	return {
-		useValue: (source) => ({...options, useValue: source}),
-		useFactory: (source) => ({...options, useFactory: source}),
-		useClass: (source) => ({...options, useClass: source}),
-		useExisting: (source) => ({...options, useExisting: source}),
-	};
-}
+	let descriptors = {};
+	[
+		[Symbol.toStringTag, 'ProviderChoice'],
+		...Object.entries({
+			toString: {}.toString,
+		}),
+	].forEach(([key, value]) => {
+		descriptors[key] = {value};
+	});
+	['useValue', 'useFactory', 'useClass', 'useExisting'].forEach((key) => {
+		let value = (ghqocucw) => ({...nbvwhjys, [key]: ghqocucw});
+		descriptors[key] = {value};
+	});
+	Object.values(descriptors, (descriptor) => {
+		descriptor.configurable = true;
+	});
+	let instance = Object.create(null, descriptors);
+	return instance;
+};

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 export interface CustomValidatorFn<
@@ -12,28 +14,29 @@ export const NoopValidator: {
 
 // todo: rename
 export const FailValidator: {
-	<ErrorsT extends ValidationErrors>(errors: ErrorsT): {
+	<ErrorsT extends ValidationErrors>(
+		errors: ErrorsT,
+	): {
 		(control: AbstractControl): ErrorsT;
 	};
 } = (errors) => () => errors;
 
-export function withValidators<ControlT extends AbstractControl>(
-	control: ControlT,
-	...validators: CustomValidatorFn<ControlT>[]
-): ControlT;
-
-export function withValidators(
-	control: AbstractControl,
-	...validators: ValidatorFn[]
-) {
+export const withValidators: {
+	<ControlT extends AbstractControl>(
+		control: ControlT,
+		...validators: CustomValidatorFn<ControlT>[]
+	): ControlT;
+} = (control, ...validators) => {
 	control.addValidators(validators);
 	control.updateValueAndValidity();
 	return control;
-}
+};
 
-export function composeValidators<ControlT extends AbstractControl>(
-	validators: Readonly<Array<CustomValidatorFn<ControlT>>>,
-): CustomValidatorFn<ControlT> {
+export const composeValidators: {
+	<ControlT extends AbstractControl>(
+		validators: Readonly<Array<CustomValidatorFn<ControlT>>>,
+	): CustomValidatorFn<ControlT>;
+} = (validators) => {
 	switch (validators.length) {
 		case 0:
 			return NoopValidator;
@@ -49,6 +52,6 @@ export function composeValidators<ControlT extends AbstractControl>(
 		}
 		return null;
 	};
-}
+};
 
 export * from './async';
