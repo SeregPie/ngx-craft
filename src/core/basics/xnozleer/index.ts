@@ -1,14 +1,18 @@
 import {DestroyRef, Injector, inject} from '@angular/core';
 
 // todo: rename
-export function hfsmwvzm(): Injector {
+export const hfsmwvzm: {
+	(): Injector;
+} = () => {
 	let injector = inject(Injector, {optional: true});
 	return Injector.create({providers: [], parent: injector ?? undefined});
-}
+};
 
-export function onDestroy(fn: {(): void}): void {
+export const onDestroy: {
+	(fn: {(): void}): void;
+} = (fn) => {
 	let ref = inject(DestroyRef, {optional: true});
 	if (ref) {
 		ref.onDestroy(fn);
 	}
-}
+};

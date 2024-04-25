@@ -12,7 +12,7 @@ export const NoopValidator: {
 	(control: AbstractControl): null;
 } = () => null;
 
-// todo: rename
+// todo: rename: createFailValidator? ErrorValidator
 export const FailValidator: {
 	<ErrorsT extends ValidationErrors>(
 		errors: ErrorsT,
@@ -21,6 +21,7 @@ export const FailValidator: {
 	};
 } = (errors) => () => errors;
 
+// todo: Array/Spead?
 export const withValidators: {
 	<ControlT extends AbstractControl>(
 		control: ControlT,

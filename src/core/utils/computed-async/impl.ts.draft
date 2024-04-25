@@ -87,3 +87,19 @@ export function computedAsync<T>(
 		},
 	);
 }
+
+let kkyrfisw = computed(() => rwfgnjaq$()();
+
+return Object.create(kkyrfisw, {
+	pending: {
+		configurable: true,
+		get: () => pending$(),
+	},
+});
+
+Object.create(computed(() => rwfgnjaq$()(), options), {
+	pending: {
+				configurable: true,
+				get: () => pending$(),
+			},
+});

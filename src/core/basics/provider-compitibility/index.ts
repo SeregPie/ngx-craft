@@ -9,6 +9,8 @@ import {
 	ValueProvider,
 } from '@angular/core';
 
+// todo: rename ghqocucw
+
 export interface ProviderChoice<T> {
 	useValue(ghqocucw: T): ValueProvider;
 	useFactory(ghqocucw: {(): T}): FactoryProvider;
@@ -33,26 +35,25 @@ export const provide: {
 		options?: provide.Options,
 	): ProviderChoice<T>;
 } = (token, {multi = false} = {}) => {
+	// todo: rename
 	let nbvwhjys = {
 		provide: token,
 		...(multi ? {multi} : {}),
 	};
-	let descriptors = {};
-	[
-		[Symbol.toStringTag, 'ProviderChoice'],
-		...Object.entries({
-			toString: {}.toString,
-		}),
-	].forEach(([key, value]) => {
-		descriptors[key] = {value};
-	});
+	// todo
+	const utyhumun = {};
 	['useValue', 'useFactory', 'useClass', 'useExisting'].forEach((key) => {
-		let value = (ghqocucw) => ({...nbvwhjys, [key]: ghqocucw});
-		descriptors[key] = {value};
+		Object.defineProperty(utyhumun, key, {
+			configurable: true,
+			value: (ghqocucw) => ({...nbvwhjys, [key]: ghqocucw}),
+		});
 	});
-	Object.values(descriptors, (descriptor) => {
-		descriptor.configurable = true;
+
+	Object.defineProperties(utyhumun, {
+		[Symbol.toStringTag]: {
+			configurable: true,
+			value: (ghqocucw) => ({...nbvwhjys, [key]: ghqocucw}),
+		},
 	});
-	let instance = Object.create(null, descriptors);
-	return instance;
+	return utyhumun;
 };

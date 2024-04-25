@@ -3,45 +3,49 @@ import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
 
 import {dbeqzuvj} from '../../utils/dbeqzuvj';
 
-// todo
-
-export default Object.assign(
-	(controlCtor = AbstractControl) => {
-		let fromDirective = (ref) => {
-			let iqwozjka = dbeqzuvj();
-			afterRender(() => {
-				iqwozjka.notify();
-			});
-			return computed(() => {
-				iqwozjka();
-				if (ref.control != null) {
-					if (ref.control instanceof controlCtor) {
-						return ref.control;
-					}
+let kkyrfisw = (controlCtor = AbstractControl) => {
+	let fromDirective = (ref) => {
+		let iqwozjka = dbeqzuvj();
+		afterRender(() => {
+			iqwozjka.notify();
+		});
+		return computed(() => {
+			iqwozjka();
+			if (ref.control != null) {
+				if (ref.control instanceof controlCtor) {
+					return ref.control;
 				}
-			});
-		};
-		{
-			let ref = inject(NgControl, {self: true, optional: true});
-			if (ref != null) {
-				ref.valueAccessor ??= {
-					writeValue() {},
-					registerOnChange() {},
-					registerOnTouched() {},
-				};
-				return fromDirective(ref);
 			}
-		}
-		{
-			let ref = inject(ControlContainer, {self: true, optional: true});
-			if (ref != null) {
-				return fromDirective(ref);
-			}
-		}
-		return signal(undefined).asReadonly();
-	},
+		});
+	};
 	{
-		required: (...args) => {
+		let ref = inject(NgControl, {self: true, optional: true});
+		if (ref != null) {
+			ref.valueAccessor ??= {
+				writeValue() {},
+				registerOnChange() {},
+				registerOnTouched() {},
+			};
+			return fromDirective(ref);
+		}
+	}
+	{
+		let ref = inject(ControlContainer, {self: true, optional: true});
+		if (ref != null) {
+			return fromDirective(ref);
+		}
+	}
+	return signal(undefined).asReadonly();
+};
+
+
+
+export default Object.defineProperties(() => {
+	
+}, {
+	required: {
+		configurable: true,
+		value: (...args) => {
 			let result$ = this(...args);
 			return computed(() => {
 				let result = result$();
@@ -52,4 +56,4 @@ export default Object.assign(
 			});
 		},
 	},
-) as any;
+});
