@@ -1,35 +1,24 @@
 // @ts-nocheck
 
-import {o} from '../../../misc/kkgcobgp';
+import o from '../../../misc/kkgcobgp';
 
-// todo: rename ghqocucw
-
-// todo: rename
-let buvqlfgx = (token, {
+// todo: rename?
+let main = (token, {
 	multi = false,
 } = {}) => {
-	// todo: rename
-	let nbvwhjys = {
-		provide: token,
-		...(multi ? {multi} : {}),
-	};
-	return o({}, ...[
-		...[
-			'useValue',
-			'useFactory',
-			'useClass',
-			'useExisting',
-		].map((key) => ({
-			[key](ghqocucw) {
-				return {...nbvwhjys, [key]: ghqocucw};
+	let provider = {provide: token, ...(multi ? {multi} : {})};
+	return o.new(
+		...['useValue', 'useFactory', 'useClass', 'useExisting'].map((key) => ({
+			[key](source) {
+				return {...provider, [key]: source};
 			},
 		})),
 		{
 			[Symbol.toStringTag]: 'ProviderChoice',
 		},
-	]);
+	);
 };
 
-export default o(buvqlfgx, {
+export default o(main, {
 	name: 'provide',
 }) as any;

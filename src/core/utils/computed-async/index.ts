@@ -10,7 +10,7 @@ import {
 	signal,
 } from '@angular/core';
 
-import {o} from '../../../misc/kkgcobgp';
+import o from '../../../misc/kkgcobgp';
 
 export type CreateComputedAsyncOptions<T> = CreateComputedOptions<T> &
 	Partial<{

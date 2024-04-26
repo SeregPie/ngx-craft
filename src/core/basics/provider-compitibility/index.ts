@@ -2,13 +2,11 @@ import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, V
 
 import * as impl from './impl';
 
-// todo: rename ghqocucw
-
 export interface ProviderChoice<T> {
-	useValue(ghqocucw: T): ValueProvider;
-	useFactory(ghqocucw: {(): T}): FactoryProvider;
-	useClass(ghqocucw: Type<T>): ClassProvider;
-	useExisting(ghqocucw: ProviderToken<T>): ExistingProvider;
+	useValue(source: T): ValueProvider;
+	useFactory(source: {(): T}): FactoryProvider;
+	useClass(source: Type<T>): ClassProvider;
+	useExisting(source: ProviderToken<T>): ExistingProvider;
 }
 
 export module provide {

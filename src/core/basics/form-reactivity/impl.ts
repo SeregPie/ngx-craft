@@ -2,7 +2,7 @@
 
 import {computed} from '@angular/core';
 
-import {o} from '../../../misc/kkgcobgp';
+import o from '../../../misc/kkgcobgp';
 import {dbeqzuvj} from '../../utils/dbeqzuvj';
 
 // todo

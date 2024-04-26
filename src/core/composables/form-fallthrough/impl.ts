@@ -3,14 +3,15 @@
 import {afterRender, computed, inject, signal} from '@angular/core';
 import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
 
-import {o} from '../../../misc/kkgcobgp';
+import o from '../../../misc/kkgcobgp';
 
-let buvqlfgx = (controlCtor = AbstractControl) => {
+// todo: rename
+let main = (controlType = AbstractControl) => {
 	let hubitguq = signal(undefined);
 	let fromDirective = (ref) => {
 		let xhskcqcu = () => {
 			if (ref.control != null) {
-				if (ref.control instanceof controlCtor) {
+				if (ref.control instanceof controlType) {
 					return ref.control;
 				}
 			}
@@ -41,10 +42,10 @@ let buvqlfgx = (controlCtor = AbstractControl) => {
 	return hubitguq.asReadonly();
 };
 
-export default o(buvqlfgx, {
+export default o(main, {
 	name: 'useFormFallthrough',
 	required(...args) {
-		let result$ = buvqlfgx(...args);
+		let result$ = main(...args);
 		return computed(() => {
 			let result = result$();
 			if (result == null) {

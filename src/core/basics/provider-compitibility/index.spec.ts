@@ -5,12 +5,7 @@ import {simpleFaker as faker} from '@faker-js/faker';
 import {provide} from '.';
 
 describe('provide', () => {
-	type TypeA = {
-		a: number;
-		b: string;
-	};
-
-	class A implements TypeA {
+	class A {
 		static asValue = new this();
 		static asFactory = () => new this();
 		static asClass = this;
@@ -20,12 +15,7 @@ describe('provide', () => {
 		b = faker.string.alphanumeric();
 	}
 
-	type TypeB = {
-		a: string;
-		b: number;
-	};
-
-	class B implements TypeB {
+	class B {
 		static asValue = new this();
 		static asFactory = () => new this();
 		static asClass = this;
@@ -36,7 +26,7 @@ describe('provide', () => {
 	}
 
 	describe('regular', () => {
-		let token = new InjectionToken<TypeA>('');
+		let token = new InjectionToken<A>('');
 
 		describe('useValue', () => {
 			it('should create correct provider', fakeAsync(async () => {
@@ -132,7 +122,7 @@ describe('provide', () => {
 	});
 
 	describe('multiple', () => {
-		let token = new InjectionToken<Array<TypeA>>('');
+		let token = new InjectionToken<Array<A>>('');
 
 		describe('useValue', () => {
 			it('should create correct provider', fakeAsync(async () => {

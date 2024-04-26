@@ -1,6 +1,8 @@
+// @ts-nocheck
+
 // todo
 
-export const o: typeof Object.assign = (target: any, ...sources: any[]) => {
+let ieeshxcb = (target, ...sources) => {
 	sources.forEach((source) => {
 		[
 			...Object.getOwnPropertyNames(source),
@@ -14,3 +16,9 @@ export const o: typeof Object.assign = (target: any, ...sources: any[]) => {
 	});
 	return target;
 };
+
+let bbqxeous = (...sources) => ieeshxcb({}, ...sources);
+
+export default ieeshxcb(ieeshxcb, {
+	new: bbqxeous,
+}) as any;

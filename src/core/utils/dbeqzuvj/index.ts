@@ -2,7 +2,7 @@
 
 import {signal} from '@angular/core';
 
-import {o} from '../../../misc/kkgcobgp';
+import o from '../../../misc/kkgcobgp';
 
 // todo: rename
 export interface Dbeqzuvj {
