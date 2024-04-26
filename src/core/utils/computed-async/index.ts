@@ -9,16 +9,15 @@ import {
 	signal,
 } from '@angular/core';
 
-import {hfsmwvzm} from '../../basics/xnozleer';
-
 export type CreateComputedAsyncOptions<T> = CreateComputedOptions<T> &
 	Partial<{
 		initialValue: T;
 		lazy: boolean;
 	}>;
 
-export interface ComputedAsyncRef<T> extends Signal<Promise<T>> {
+export interface ComputedAsyncRef<T> extends EffectRef, Signal<T> {
 	get pending(): boolean;
+	// abort(): void;
 }
 
 export const computedAsync: {
@@ -31,15 +30,13 @@ export const computedAsync: {
 		options?: CreateComputedAsyncOptions<undefined | T>,
 	): ComputedAsyncRef<undefined | T>;
 } = (fn, {initialValue, ...options} = {}) => {
-	let injector = hfsmwvzm();
 	let rwfgnjaq$ = signal(() => initialValue);
-	let pending$ = signal(false);
-	effect(
+	let pending$ = signal(true);
+	let effectRef = effect(
 		async (onCleanup) => {
 			let aborted = false;
 			onCleanup(() => {
 				aborted = true;
-				pending$.set(false);
 			});
 			try {
 				if (!aborted) {
@@ -63,12 +60,15 @@ export const computedAsync: {
 		},
 		{
 			allowSignalWrites: true,
-			injector,
 		},
 	);
-	return Object.create(
+	return Object.defineProperties(
 		computed(() => rwfgnjaq$()(), options),
 		{
+			destroy: {
+				configurable: true,
+				value: () => effectRef.destroy(),
+			},
 			pending: {
 				configurable: true,
 				get: () => pending$(),

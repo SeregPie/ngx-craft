@@ -1,11 +1,21 @@
-import {DestroyRef, Injector, inject} from '@angular/core';
+import {
+	DestroyRef,
+	Injector,
+	createEnvironmentInjector,
+	inject,
+} from '@angular/core';
 
 // todo: rename
 export const hfsmwvzm: {
 	(): Injector;
 } = () => {
-	let injector = inject(Injector, {optional: true});
-	return Injector.create({providers: [], parent: injector ?? undefined});
+	let injector = (() => {
+		try {
+			return inject(Injector);
+		} catch {}
+	})();
+	createEnvironmentInjector;
+	return Injector.create({providers: [], parent: injector});
 };
 
 export const onDestroy: {
