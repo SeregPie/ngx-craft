@@ -8,6 +8,7 @@ export interface CustomValidatorFn<
 	(control: ControlT): ReturnType<ValidatorFn>;
 }
 
+// todo: rename noopValidator
 export const NoopValidator: {
 	(control: AbstractControl): null;
 } = () => null;

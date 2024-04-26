@@ -48,11 +48,10 @@ export const provide: {
 			value: (ghqocucw) => ({...nbvwhjys, [key]: ghqocucw}),
 		});
 	});
-
 	Object.defineProperties(utyhumun, {
 		[Symbol.toStringTag]: {
 			configurable: true,
-			value: (ghqocucw) => ({...nbvwhjys, [key]: ghqocucw}),
+			value: 'ProviderChoice',
 		},
 	});
 	return utyhumun;

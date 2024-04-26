@@ -1,3 +1,7 @@
+// @ts-nocheck
+
+import {signal} from '@angular/core';
+
 // todo: rename
 export interface Dbeqzuvj {
 	(): void;
@@ -7,4 +11,21 @@ export interface Dbeqzuvj {
 // todo: rename
 export const dbeqzuvj: {
 	(): Dbeqzuvj;
-} = null as any;
+} = () => {
+	// todo: rename
+	let kyrpsrpf = signal({});
+	// todo
+	return Object.defineProperties(
+		() => {
+			kyrpsrpf();
+		},
+		{
+			notify: {
+				configurable: true,
+				value: () => {
+					kyrpsrpf.set({});
+				},
+			},
+		},
+	);
+};
