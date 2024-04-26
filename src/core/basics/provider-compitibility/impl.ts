@@ -4,6 +4,7 @@ import {o} from '../../../misc/kkgcobgp';
 
 // todo: rename ghqocucw
 
+// todo: rename
 let buvqlfgx = (token, {
 	multi = false,
 } = {}) => {

@@ -5,14 +5,12 @@ import {simpleFaker as faker} from '@faker-js/faker';
 import {provide} from '.';
 
 describe('provide', () => {
-	// todo: rename
-	type TA = {
+	type TypeA = {
 		a: number;
 		b: string;
 	};
 
-	// todo: rename
-	class A implements TA {
+	class A implements TypeA {
 		static asValue = new this();
 		static asFactory = () => new this();
 		static asClass = this;
@@ -22,14 +20,12 @@ describe('provide', () => {
 		b = faker.string.alphanumeric();
 	}
 
-	// todo: rename
-	type TB = {
+	type TypeB = {
 		a: string;
 		b: number;
 	};
 
-	// todo: rename
-	class B implements TB {
+	class B implements TypeB {
 		static asValue = new this();
 		static asFactory = () => new this();
 		static asClass = this;
@@ -40,7 +36,7 @@ describe('provide', () => {
 	}
 
 	describe('regular', () => {
-		let token = new InjectionToken<TA>('');
+		let token = new InjectionToken<TypeA>('');
 
 		describe('useValue', () => {
 			it('should create correct provider', fakeAsync(async () => {
@@ -136,7 +132,7 @@ describe('provide', () => {
 	});
 
 	describe('multiple', () => {
-		let token = new InjectionToken<Array<TA>>('');
+		let token = new InjectionToken<Array<TypeA>>('');
 
 		describe('useValue', () => {
 			it('should create correct provider', fakeAsync(async () => {

@@ -11,6 +11,10 @@ let create = (control) => {
 	let controlProxy = o({}, {
 		control,
 		[Symbol.toStringTag]: 'ReadonlyReactiveFormProxy',
+		toString() {
+			// todo
+			return '';
+		}
 	});
 	let iqwozjka = dbeqzuvj();
 	[

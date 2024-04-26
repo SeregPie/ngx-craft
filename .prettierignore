@@ -9,7 +9,7 @@
 -/src/core/composables/form-bridge/index.spec.ts
 -/src/core/composables/form-bridge/index.ts
 
--/src/core/composables/form-fallthrough/index.spec.ts
+/src/core/composables/form-fallthrough/index.spec.ts
 /src/core/composables/form-fallthrough/index.ts
 
 -/src/core/utils/computed-async/index.spec.ts

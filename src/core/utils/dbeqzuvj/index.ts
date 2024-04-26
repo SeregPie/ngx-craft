@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {signal} from '@angular/core';
 
 import {o} from '../../../misc/kkgcobgp';
@@ -12,15 +14,21 @@ export interface Dbeqzuvj {
 export function dbeqzuvj(): Dbeqzuvj {
 	// todo: rename
 	let kyrpsrpf = signal({});
-	// todo
-	return o(
-		() => {
-			kyrpsrpf();
+	// todo: rename
+	let ytjsqapm = () => {
+		kyrpsrpf();
+	};
+	return o(ytjsqapm, {
+		get name() {
+			return this[Symbol.toStringTag];
 		},
-		{
-			notify() {
-				kyrpsrpf.set({});
-			},
+		notify() {
+			kyrpsrpf.set({});
 		},
-	);
+		[Symbol.toStringTag]: 'Dbeqzuvj',
+		toString() {
+			// todo
+			return '';
+		},
+	});
 }

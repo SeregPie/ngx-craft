@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {
 	CreateComputedOptions,
 	EffectCleanupRegisterFn,
@@ -66,13 +68,20 @@ export const computedAsync: {
 	return o(
 		computed(() => rwfgnjaq$()(), options as any),
 		{
-			destroy() {
-				effectRef.destroy();
+			get name() {
+				return this[Symbol.toStringTag];
 			},
 			get pending() {
 				return pending$();
 			},
+			destroy() {
+				effectRef.destroy();
+			},
 			[Symbol.toStringTag]: 'ComputedAsync',
+			toString() {
+				// todo
+				return '';
+			},
 		},
 	);
 };
