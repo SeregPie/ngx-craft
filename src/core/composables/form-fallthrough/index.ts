@@ -5,8 +5,7 @@ import * as impl from './impl';
 
 export const useFormFallthrough: {
 	<ControlT extends AbstractControl>(
-		// todo: rename
-		controlCtor?: AbstractType<ControlT>,
+		controlType?: AbstractType<ControlT>,
 	): Signal<undefined | ControlT>;
 	required: {
 		<ControlT extends AbstractControl>(

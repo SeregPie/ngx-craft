@@ -5,66 +5,62 @@ import {computed} from '@angular/core';
 import {o} from '../../../misc/kkgcobgp';
 import {dbeqzuvj} from '../../utils/dbeqzuvj';
 
+// todo
 let create = (control) => {
-	let iqwozjka = dbeqzuvj();
-	o(
-		control,
-		...[
-			'_updatePristine',
-			'_updateTouched',
-			'_updateValue',
-			'disable',
-			'enable',
-			'markAsDirty',
-			'markAsPending',
-			'markAsPristine',
-			'markAsTouched',
-			'markAsUntouched',
-			'setErrors',
-			'updateValueAndValidity',
-		].map((key) => {
-			let method = control[key];
-			return {
-				[key]() {
-					iqwozjka.notify();
-					return method.apply(this, arguments);
-				},
-			};
-		}),
-	);
 	// prettier-ignore
-	return o({}, ...[
-		{
-			control,
-		},
-		...[
-			'status',
-			'valid',
-			'invalid',
-			'pending',
-			'disabled',
-			'enabled',
-			'pristine',
-			'dirty',
-			'touched',
-			'untouched',
-			'value',
-			'errors',
-		].map((key) => {
-			let value$ = computed(() => {
-				iqwozjka();
-				return control[key];
-			});
-			return {
-				get [key]() {
-					return value$();
-				},
-			};
-		}),
-		{
-			[Symbol.toStringTag]: 'ReadonlyReactiveFormProxy',
-		},
-	]);
+	let controlProxy = o({}, {
+		control,
+		[Symbol.toStringTag]: 'ReadonlyReactiveFormProxy',
+	});
+	let iqwozjka = dbeqzuvj();
+	[
+		'_updatePristine',
+		'_updateTouched',
+		'_updateValue',
+		'disable',
+		'enable',
+		'markAsDirty',
+		'markAsPending',
+		'markAsPristine',
+		'markAsTouched',
+		'markAsUntouched',
+		'setErrors',
+		'updateValueAndValidity',
+	].forEach((key) => {
+		let method = control[key];
+		o(control, {
+			[key]() {
+				iqwozjka.notify();
+				return method.apply(this, arguments);
+			},
+		});
+	});
+	[
+		'status',
+		'valid',
+		'invalid',
+		'pending',
+		'disabled',
+		'enabled',
+		'pristine',
+		'dirty',
+		'touched',
+		'untouched',
+		'value',
+		'errors',
+	].forEach((key) => {
+		let value$ = computed(() => {
+			iqwozjka();
+			return control[key];
+		});
+		o(controlProxy, {
+			get [key]() {
+				return value$();
+			},
+		});
+	});
+	// prettier-ignore
+	return controlProxy;
 };
 
 // todo: rename
