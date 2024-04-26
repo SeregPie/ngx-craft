@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import {
 	ClassProvider,
 	ExistingProvider,
@@ -8,6 +6,8 @@ import {
 	Type,
 	ValueProvider,
 } from '@angular/core';
+
+import * as impl from './impl';
 
 // todo: rename ghqocucw
 
@@ -34,25 +34,4 @@ export const provide: {
 		token: ProviderToken<T>,
 		options?: provide.Options,
 	): ProviderChoice<T>;
-} = (token, {multi = false} = {}) => {
-	// todo: rename
-	let nbvwhjys = {
-		provide: token,
-		...(multi ? {multi} : {}),
-	};
-	// todo
-	const utyhumun = {};
-	['useValue', 'useFactory', 'useClass', 'useExisting'].forEach((key) => {
-		Object.defineProperty(utyhumun, key, {
-			configurable: true,
-			value: (ghqocucw) => ({...nbvwhjys, [key]: ghqocucw}),
-		});
-	});
-	Object.defineProperties(utyhumun, {
-		[Symbol.toStringTag]: {
-			configurable: true,
-			value: 'ProviderChoice',
-		},
-	});
-	return utyhumun;
-};
+} = impl.default;

@@ -1,13 +1,14 @@
-// @ts-nocheck
-
 import {
 	CreateComputedOptions,
 	EffectCleanupRegisterFn,
+	EffectRef,
 	Signal,
 	computed,
 	effect,
 	signal,
 } from '@angular/core';
+
+import {o} from '../../../misc/kkgcobgp';
 
 export type CreateComputedAsyncOptions<T> = CreateComputedOptions<T> &
 	Partial<{
@@ -62,21 +63,16 @@ export const computedAsync: {
 			allowSignalWrites: true,
 		},
 	);
-	return Object.defineProperties(
-		computed(() => rwfgnjaq$()(), options),
+	return o(
+		computed(() => rwfgnjaq$()(), options as any),
 		{
-			destroy: {
-				configurable: true,
-				value: () => effectRef.destroy(),
+			destroy() {
+				effectRef.destroy();
 			},
-			pending: {
-				configurable: true,
-				get: () => pending$(),
+			get pending() {
+				return pending$();
 			},
-			[Symbol.toStringTag]: {
-				configurable: true,
-				value: 'ComputedAsyncRef',
-			},
+			[Symbol.toStringTag]: 'ComputedAsync',
 		},
 	);
 };

@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import {
 	AbstractType,
 	Signal,
@@ -8,7 +6,14 @@ import {
 	inject,
 	signal,
 } from '@angular/core';
-import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
+import {
+	AbstractControl,
+	AbstractControlDirective,
+	ControlContainer,
+	NgControl,
+} from '@angular/forms';
+
+import {o} from '../../../misc/kkgcobgp';
 
 export const useFormFallthrough: {
 	<ControlT extends AbstractControl>(
@@ -20,10 +25,10 @@ export const useFormFallthrough: {
 			...args: Parameters<typeof useFormFallthrough<ControlT>>
 		): Signal<ControlT>;
 	};
-} = Object.defineProperties(
-	(controlCtor = AbstractControl) => {
+} = o(
+	(controlCtor = AbstractControl as any) => {
 		let hubitguq = signal(undefined);
-		let fromDirective = (ref) => {
+		let fromDirective = (ref: AbstractControlDirective) => {
 			let xhskcqcu = () => {
 				if (ref.control != null) {
 					if (ref.control instanceof controlCtor) {
@@ -32,9 +37,9 @@ export const useFormFallthrough: {
 				}
 			};
 			afterRender(() => {
-				hubitguq.set(xhskcqcu());
+				hubitguq.set(xhskcqcu() as any);
 			});
-			hubitguq.set(xhskcqcu());
+			hubitguq.set(xhskcqcu() as any);
 			return hubitguq.asReadonly();
 		};
 		{
@@ -57,18 +62,17 @@ export const useFormFallthrough: {
 		return hubitguq.asReadonly();
 	},
 	{
-		required: {
-			configurable: true,
-			value: (...args) => {
-				let result$ = useFormFallthrough(...args);
-				return computed(() => {
-					let result = result$();
-					if (result == null) {
-						throw new Error(`required but not available`);
-					}
-					return result;
-				});
-			},
+		required<ControlT extends AbstractControl>(
+			...args: Parameters<typeof useFormFallthrough<ControlT>>
+		) {
+			let result$ = useFormFallthrough<ControlT>(...args);
+			return computed(() => {
+				let result = result$();
+				if (result == null) {
+					throw new Error(`required but not available`);
+				}
+				return result;
+			});
 		},
 	},
 );

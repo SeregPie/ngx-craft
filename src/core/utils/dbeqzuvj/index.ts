@@ -1,6 +1,6 @@
-// @ts-nocheck
-
 import {signal} from '@angular/core';
+
+import {o} from '../../../misc/kkgcobgp';
 
 // todo: rename
 export interface Dbeqzuvj {
@@ -9,23 +9,18 @@ export interface Dbeqzuvj {
 }
 
 // todo: rename
-export const dbeqzuvj: {
-	(): Dbeqzuvj;
-} = () => {
+export function dbeqzuvj(): Dbeqzuvj {
 	// todo: rename
 	let kyrpsrpf = signal({});
 	// todo
-	return Object.defineProperties(
+	return o(
 		() => {
 			kyrpsrpf();
 		},
 		{
-			notify: {
-				configurable: true,
-				value: () => {
-					kyrpsrpf.set({});
-				},
+			notify() {
+				kyrpsrpf.set({});
 			},
 		},
 	);
-};
+}
