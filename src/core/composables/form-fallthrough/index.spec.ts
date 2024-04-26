@@ -13,7 +13,7 @@ import {simpleFaker as faker} from '@faker-js/faker';
 
 import {useFormFallthrough} from '.';
 
-xdescribe('useFormFallthrough', () => {
+describe('useFormFallthrough', () => {
 	it('should work with FormControlDirective', fakeAsync(async () => {
 		let form = new FormRecord({
 			a: new FormControl(null),
@@ -319,7 +319,6 @@ xdescribe('useFormFallthrough', () => {
 	it('should throw if required but not available', fakeAsync(async () => {
 		@Component({
 			standalone: true,
-			template: '',
 		})
 		class MyComponent {
 			result = useFormFallthrough.required();

@@ -1,7 +1,6 @@
-export function o<TargetT, SourceT>(
-	target: TargetT,
-	...sources: SourceT[]
-): TargetT & SourceT {
+// todo
+
+export const o: typeof Object.assign = (target: any, ...sources: any[]) => {
 	sources.forEach((source) => {
 		[
 			...Object.getOwnPropertyNames(source),
@@ -13,5 +12,5 @@ export function o<TargetT, SourceT>(
 			Object.defineProperty(target, key, descriptor);
 		});
 	});
-	return target as any;
-}
+	return target;
+};

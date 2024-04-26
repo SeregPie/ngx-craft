@@ -1,11 +1,4 @@
-import {
-	ClassProvider,
-	ExistingProvider,
-	FactoryProvider,
-	ProviderToken,
-	Type,
-	ValueProvider,
-} from '@angular/core';
+import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
 
 import * as impl from './impl';
 
@@ -30,7 +23,6 @@ export const provide: {
 		options: provide.Options & {multi: true},
 	): ProviderChoice<T>;
 	<T>(
-		//
 		token: ProviderToken<T>,
 		options?: provide.Options,
 	): ProviderChoice<T>;
