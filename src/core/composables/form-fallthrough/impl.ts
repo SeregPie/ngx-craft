@@ -6,7 +6,7 @@ import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
 import o from '../../../misc/kkgcobgp';
 
 // todo: rename
-let compose = (controlType = AbstractControl) => {
+let use = (controlType = AbstractControl) => {
 	let hubitguq = signal(undefined);
 	let fromDirective = (ref) => {
 		let xhskcqcu = () => {
@@ -42,9 +42,9 @@ let compose = (controlType = AbstractControl) => {
 	return hubitguq.asReadonly();
 };
 
-export default o(compose, {
+export default o(use, {
 	required(...args) {
-		let result$ = compose(...args);
+		let result$ = use(...args);
 		return computed(() => {
 			let result = result$();
 			if (result == null) {

@@ -1,7 +1,7 @@
 /dist
 
 -/src/core/basics/form-reactivity/index.spec.ts
--/src/core/basics/form-reactivity/index.ts
+/src/core/basics/form-reactivity/index.ts
 
 -/src/core/basics/xnozleer/index.spec.ts
 -/src/core/basics/xnozleer/index.ts
@@ -18,7 +18,7 @@
 -/src/core/utils/dbeqzuvj/index.spec.ts
 -/src/core/utils/dbeqzuvj/index.ts
 
--/src/core/basics/orzgiqhk
+/src/core/basics/orzgiqhk
 
 /src/core/basics/provider-compitibility/index.spec.ts
 -/src/core/basics/provider-compitibility/index.ts
