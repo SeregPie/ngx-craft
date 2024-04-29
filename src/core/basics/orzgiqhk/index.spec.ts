@@ -32,7 +32,7 @@ describe('withValidators', () => {
 
 	it('should call validators only once', fakeAsync(async () => {
 		let form = new FormControl(null);
-		let validators = [spy(() => null), spy(() => null)];
+		let validators = [() => null, () => null].map((fn) => spy(fn));
 		withValidators(form, ...validators);
 
 		for (let validator of validators) {
@@ -60,7 +60,11 @@ describe('composeValidators', () => {
 			new FormControl<number>(1, {
 				nonNullable: true,
 			}),
-			composeValidators([({value}) => (value === 1 ? {error: {n: 1}} : null), ({value}) => (value === 2 ? {error: {n: 2}} : null)]),
+			composeValidators([
+				//
+				({value}) => (value === 1 ? {error: {n: 1}} : null),
+				({value}) => (value === 2 ? {error: {n: 2}} : null),
+			]),
 		);
 
 		expect(form.errors).toEqual({error: {n: 1}});
@@ -75,7 +79,12 @@ describe('composeValidators', () => {
 	}));
 
 	it('should skip other validators after one fails', fakeAsync(async () => {
-		let validators = [spy(() => null), spy(() => ({error: true})), spy(() => null)];
+		let validators = [
+			//
+			() => null,
+			() => ({error: true}),
+			() => null,
+		].map((fn) => spy(fn));
 		new FormControl(null, {
 			validators: composeValidators(validators),
 		});

@@ -6,7 +6,7 @@ import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
 import o from '../../../misc/kkgcobgp';
 
 // todo: rename
-let main = (controlType = AbstractControl) => {
+let compose = (controlType = AbstractControl) => {
 	let hubitguq = signal(undefined);
 	let fromDirective = (ref) => {
 		let xhskcqcu = () => {
@@ -42,10 +42,9 @@ let main = (controlType = AbstractControl) => {
 	return hubitguq.asReadonly();
 };
 
-export default o(main, {
-	name: 'useFormFallthrough',
+export default o(compose, {
 	required(...args) {
-		let result$ = main(...args);
+		let result$ = compose(...args);
 		return computed(() => {
 			let result = result$();
 			if (result == null) {

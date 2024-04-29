@@ -4,9 +4,15 @@ import {AbstractControl} from '@angular/forms';
 import o from '../../../misc/kkgcobgp';
 
 export const useFormFallthrough: {
-	<ControlT extends AbstractControl>(controlType?: AbstractType<ControlT>): Signal<undefined | ControlT>;
+	<ControlT extends AbstractControl>(
+		//
+		controlType?: AbstractType<ControlT>,
+	): Signal<undefined | ControlT>;
 	required: {
-		<ControlT extends AbstractControl>(...args: Parameters<typeof useFormFallthrough<ControlT>>): Signal<ControlT>;
+		<ControlT extends AbstractControl>(
+			//
+			...args: Parameters<typeof useFormFallthrough<ControlT>>
+		): Signal<ControlT>;
 	};
 } = (() => {
 	let blablabla = (controlType = AbstractControl) => {

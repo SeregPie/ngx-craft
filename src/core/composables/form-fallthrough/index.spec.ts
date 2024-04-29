@@ -1,17 +1,10 @@
 import {Component, computed, signal} from '@angular/core';
 import {TestBed, fakeAsync} from '@angular/core/testing';
-import {
-	FormArray,
-	FormControl,
-	FormGroup,
-	FormRecord,
-	FormsModule,
-	ReactiveFormsModule,
-} from '@angular/forms';
+import {FormArray, FormControl, FormGroup, FormRecord, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {simpleFaker as faker} from '@faker-js/faker';
 
-import {useFormFallthrough} from '.';
+import {useFormFallthrough} from './';
 
 describe('useFormFallthrough', () => {
 	it('should work with FormControlDirective', fakeAsync(async () => {
@@ -41,11 +34,7 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result}: MySubComponent = fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 
 		expect(result()).toBe(form.controls.a);
 
@@ -87,11 +76,7 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result}: MySubComponent = fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 
 		expect(result()).toBe(form.controls.a);
 
@@ -129,11 +114,7 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result}: MySubComponent = fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 
 		expect(result()).toBe(form.controls.a);
 
@@ -175,11 +156,7 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result}: MySubComponent = fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 
 		expect(result()).toBe(form.controls.a);
 
@@ -221,11 +198,7 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result}: MySubComponent = fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 
 		expect(result()).toBe(form.controls.a);
 
@@ -258,17 +231,14 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result}: MySubComponent = fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 		let form = result();
 
 		for await (let _ of (async function* () {
 			yield;
 			for (let i = 2; i--; ) {
 				for (let fn of [
+					//
 					(v) => form.setValue(v),
 					(v) => value$.set(v),
 				] as Iterable<{(v: number): void}>) {
@@ -321,11 +291,7 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result}: MySubComponent = fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 
 		expect(result()).toBeUndefined();
 	});
@@ -368,11 +334,7 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result}: MySubComponent = fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 
 		expect(result).toThrow();
 	});
