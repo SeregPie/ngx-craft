@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 export interface CustomValidatorFn<
@@ -8,21 +6,16 @@ export interface CustomValidatorFn<
 	(control: ControlT): ReturnType<ValidatorFn>;
 }
 
-// todo: rename noopValidator
-export const NoopValidator: {
-	(control: AbstractControl): null;
-} = () => null;
-
-// todo: rename: createFailValidator? ErrorValidator
-export const FailValidator: {
-	<ErrorsT extends ValidationErrors>(
+export const stubValidator: {
+	<ErrorsT extends null | ValidationErrors>(
 		errors: ErrorsT,
 	): {
 		(control: AbstractControl): ErrorsT;
 	};
 } = (errors) => () => errors;
 
-// todo: Array/Spead?
+export const noopValidator = stubValidator(null);
+
 export const withValidators: {
 	<ControlT extends AbstractControl>(
 		control: ControlT,
@@ -36,12 +29,12 @@ export const withValidators: {
 
 export const composeValidators: {
 	<ControlT extends AbstractControl>(
-		validators: Readonly<Array<CustomValidatorFn<ControlT>>>,
+		validators: ReadonlyArray<CustomValidatorFn<ControlT>>,
 	): CustomValidatorFn<ControlT>;
 } = (validators) => {
 	switch (validators.length) {
 		case 0:
-			return NoopValidator;
+			return noopValidator;
 		case 1:
 			return validators[0];
 	}

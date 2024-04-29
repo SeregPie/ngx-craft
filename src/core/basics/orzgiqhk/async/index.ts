@@ -13,18 +13,15 @@ export interface CustomAsyncValidatorFn<
 	(control: ControlT): ReturnType<AsyncValidatorFn>;
 }
 
-export const NoopAsyncValidator: {
-	(control: AbstractControl): Promise<null>;
-} = async () => null;
-
-// todo: rename
-export const FailAsyncValidator: {
-	<ErrorsT extends ValidationErrors>(
+export const stubAsyncValidator: {
+	<ErrorsT extends null | ValidationErrors>(
 		errors: ErrorsT,
 	): {
 		(control: AbstractControl): Promise<ErrorsT>;
 	};
 } = (errors) => async () => errors;
+
+export const noopAsyncValidator = stubAsyncValidator(null);
 
 export const withAsyncValidators: {
 	<ControlT extends AbstractControl>(
@@ -39,12 +36,12 @@ export const withAsyncValidators: {
 
 export const composeAsyncValidators: {
 	<ControlT extends AbstractControl>(
-		validators: Readonly<Array<CustomAsyncValidatorFn<ControlT>>>,
+		validators: ReadonlyArray<CustomAsyncValidatorFn<ControlT>>,
 	): CustomAsyncValidatorFn<ControlT>;
 } = (validators) => {
 	switch (validators.length) {
 		case 0:
-			return NoopAsyncValidator;
+			return noopAsyncValidator;
 		case 1:
 			return validators[0];
 	}

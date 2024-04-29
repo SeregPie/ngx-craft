@@ -71,14 +71,11 @@ let create = (control) => {
 let adkzzfxw = (v) => v;
 let instances = new WeakMap();
 
-// prettier-ignore
-export default o((...args) => {
-	let key = adkzzfxw(...args)
+export default ((...args) => {
+	let key = adkzzfxw(...args);
 	let instance = instances.get(key);
 	if (instance == null) {
-		instances.set(key, instance = create(...args));
+		instances.set(key, (instance = create(...args)));
 	}
 	return instance;
-}, {
-	name: 'formi',
 }) as any;

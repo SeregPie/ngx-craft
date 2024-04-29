@@ -2,8 +2,8 @@ import {fakeAsync, tick} from '@angular/core/testing';
 import {FormControl} from '@angular/forms';
 
 import {
-	NoopAsyncValidator,
 	composeAsyncValidators,
+	noopAsyncValidator,
 	withAsyncValidators,
 } from '.';
 import {spy} from '../../../../misc/test';
@@ -126,6 +126,6 @@ describe('composeAsyncValidators', () => {
 	}));
 
 	it('should return no-op validator if nothing provided', fakeAsync(async () => {
-		expect(composeAsyncValidators([])).toBe(NoopAsyncValidator);
+		expect(composeAsyncValidators([])).toBe(noopAsyncValidator);
 	}));
 });
