@@ -3,9 +3,7 @@
 import o from '../../../misc/kkgcobgp';
 
 // todo: rename?
-let main = (token, {
-	multi = false,
-} = {}) => {
+let main = (token, {multi = false} = {}) => {
 	let provider = {provide: token, ...(multi ? {multi} : {})};
 	return o.new(
 		...['useValue', 'useFactory', 'useClass', 'useExisting'].map((key) => ({

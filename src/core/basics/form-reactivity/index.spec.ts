@@ -40,7 +40,6 @@ describe('formi', () => {
 			}
 		})()) {
 			([form, form.controls.a, form.controls.b] as const).forEach((form) => {
-				// prettier-ignore
 				(['status', 'valid', 'invalid', 'pending', 'disabled', 'enabled', 'pristine', 'dirty', 'touched', 'untouched', 'value', 'errors'] as const).forEach((key) => {
 					expect(formi(form)[key]).toBe(form[key]);
 				});

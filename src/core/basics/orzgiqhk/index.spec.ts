@@ -1,11 +1,10 @@
 import {fakeAsync} from '@angular/core/testing';
 import {FormControl} from '@angular/forms';
 
-import {composeValidators, noopValidator, withValidators} from '.';
 import {spy} from '../../../misc/test';
+import {composeValidators, noopValidator, withValidators} from './';
 
 describe('withValidators', () => {
-	// todo: description
 	it('should work', fakeAsync(async () => {
 		let form = withValidators(
 			new FormControl<number>(1, {
@@ -61,10 +60,7 @@ describe('composeValidators', () => {
 			new FormControl<number>(1, {
 				nonNullable: true,
 			}),
-			composeValidators([
-				({value}) => (value === 1 ? {error: {n: 1}} : null),
-				({value}) => (value === 2 ? {error: {n: 2}} : null),
-			]),
+			composeValidators([({value}) => (value === 1 ? {error: {n: 1}} : null), ({value}) => (value === 2 ? {error: {n: 2}} : null)]),
 		);
 
 		expect(form.errors).toEqual({error: {n: 1}});
@@ -79,11 +75,7 @@ describe('composeValidators', () => {
 	}));
 
 	it('should skip other validators after one fails', fakeAsync(async () => {
-		let validators = [
-			spy(() => null),
-			spy(() => ({error: true})),
-			spy(() => null),
-		];
+		let validators = [spy(() => null), spy(() => ({error: true})), spy(() => null)];
 		new FormControl(null, {
 			validators: composeValidators(validators),
 		});

@@ -1,13 +1,8 @@
-// @ts-nocheck
-
-import {
-	AbstractControl,
-	AsyncValidatorFn,
-	ValidationErrors,
-} from '@angular/forms';
+import {AbstractControl, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
 import {isObservable, lastValueFrom} from 'rxjs';
 
 export interface CustomAsyncValidatorFn<
+	//
 	ControlT extends AbstractControl = AbstractControl,
 > {
 	(control: ControlT): ReturnType<AsyncValidatorFn>;
@@ -25,6 +20,7 @@ export const noopAsyncValidator = stubAsyncValidator(null);
 
 export const withAsyncValidators: {
 	<ControlT extends AbstractControl>(
+		//
 		control: ControlT,
 		...validators: CustomAsyncValidatorFn<ControlT>[]
 	): ControlT;
@@ -36,6 +32,7 @@ export const withAsyncValidators: {
 
 export const composeAsyncValidators: {
 	<ControlT extends AbstractControl>(
+		//
 		validators: ReadonlyArray<CustomAsyncValidatorFn<ControlT>>,
 	): CustomAsyncValidatorFn<ControlT>;
 } = (validators) => {
@@ -47,9 +44,7 @@ export const composeAsyncValidators: {
 	}
 	return async (control) => {
 		for (let validator of validators) {
-			let errors = await ((v) => (isObservable(v) ? lastValueFrom(v) : v))(
-				validator(control),
-			);
+			let errors = await ((v) => (isObservable(v) ? lastValueFrom(v) : v))(validator(control));
 			if (errors != null) {
 				return errors;
 			}

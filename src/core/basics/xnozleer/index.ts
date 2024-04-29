@@ -1,9 +1,4 @@
-import {
-	DestroyRef,
-	Injector,
-	createEnvironmentInjector,
-	inject,
-} from '@angular/core';
+import {DestroyRef, Injector, createEnvironmentInjector, inject} from '@angular/core';
 
 // todo: rename
 export const hfsmwvzm: {

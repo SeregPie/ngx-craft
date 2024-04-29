@@ -1,6 +1,7 @@
 import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 export interface CustomValidatorFn<
+	//
 	ControlT extends AbstractControl = AbstractControl,
 > {
 	(control: ControlT): ReturnType<ValidatorFn>;
@@ -18,6 +19,7 @@ export const noopValidator = stubValidator(null);
 
 export const withValidators: {
 	<ControlT extends AbstractControl>(
+		//
 		control: ControlT,
 		...validators: CustomValidatorFn<ControlT>[]
 	): ControlT;
@@ -29,6 +31,7 @@ export const withValidators: {
 
 export const composeValidators: {
 	<ControlT extends AbstractControl>(
+		//
 		validators: ReadonlyArray<CustomValidatorFn<ControlT>>,
 	): CustomValidatorFn<ControlT>;
 } = (validators) => {

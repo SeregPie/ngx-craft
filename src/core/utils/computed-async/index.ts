@@ -1,22 +1,14 @@
-// @ts-nocheck
-
-import {
-	CreateComputedOptions,
-	EffectCleanupRegisterFn,
-	EffectRef,
-	Signal,
-	computed,
-	effect,
-	signal,
-} from '@angular/core';
+import {CreateComputedOptions, EffectCleanupRegisterFn, EffectRef, Signal, computed, effect, signal} from '@angular/core';
 
 import o from '../../../misc/kkgcobgp';
 
-export type CreateComputedAsyncOptions<T> = CreateComputedOptions<T> &
-	Partial<{
-		initialValue: T;
-		lazy: boolean;
-	}>;
+export type CreateComputedAsyncOptions<T> =
+	//
+	CreateComputedOptions<T> &
+		Partial<{
+			initialValue: T;
+			lazy: boolean;
+		}>;
 
 export interface ComputedAsyncRef<T> extends EffectRef, Signal<T> {
 	get pending(): boolean;
@@ -25,10 +17,12 @@ export interface ComputedAsyncRef<T> extends EffectRef, Signal<T> {
 
 export const computedAsync: {
 	<T>(
+		//
 		fn: {(onCleanup: EffectCleanupRegisterFn): Promise<T>},
 		options: CreateComputedAsyncOptions<T> & {initialValue: T},
 	): ComputedAsyncRef<T>;
 	<T>(
+		//
 		fn: {(onCleanup: EffectCleanupRegisterFn): Promise<T>},
 		options?: CreateComputedAsyncOptions<undefined | T>,
 	): ComputedAsyncRef<undefined | T>;
@@ -66,7 +60,7 @@ export const computedAsync: {
 		},
 	);
 	return o(
-		computed(() => rwfgnjaq$()(), options as any),
+		computed(() => rwfgnjaq$()(), options),
 		{
 			get name() {
 				return this[Symbol.toStringTag];
