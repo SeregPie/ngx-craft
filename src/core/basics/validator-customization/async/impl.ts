@@ -21,7 +21,7 @@ export const composeAsyncValidators = (validators) => {
 	}
 	return async (control) => {
 		for (let validator of validators) {
-			let errors = await ((v) => (isObservable(v) ? lastValueFrom(v) : v))(validator(control));
+			let errors = await ((v) => isObservable(v) ? lastValueFrom(v) : v)(validator(control));
 			if (errors != null) {
 				return errors;
 			}

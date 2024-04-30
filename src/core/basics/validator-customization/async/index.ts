@@ -5,16 +5,13 @@ import {AbstractControl, AsyncValidatorFn, ValidationErrors} from '@angular/form
 import * as impl from './impl';
 
 export interface CustomAsyncValidatorFn<
-	//
 	ControlT extends AbstractControl = AbstractControl,
 > {
 	(control: ControlT): ReturnType<AsyncValidatorFn>;
 }
 
 export const stubAsyncValidator: {
-	<ErrorsT extends null | ValidationErrors>(
-		errors: ErrorsT,
-	): {
+	<ErrorsT extends null | ValidationErrors>(errors: ErrorsT): {
 		(control: AbstractControl): Promise<ErrorsT>;
 	};
 } = impl.stubAsyncValidator;
@@ -25,7 +22,6 @@ export const noopAsyncValidator: {
 
 export const withAsyncValidators: {
 	<ControlT extends AbstractControl>(
-		//
 		control: ControlT,
 		...validators: CustomAsyncValidatorFn<ControlT>[]
 	): ControlT;
@@ -33,7 +29,6 @@ export const withAsyncValidators: {
 
 export const composeAsyncValidators: {
 	<ControlT extends AbstractControl>(
-		//
 		validators: ReadonlyArray<CustomAsyncValidatorFn<ControlT>>,
 	): CustomAsyncValidatorFn<ControlT>;
 } = impl.composeAsyncValidators;
