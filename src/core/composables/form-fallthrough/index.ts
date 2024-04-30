@@ -14,8 +14,8 @@ export const useFormFallthrough: {
 			...args: Parameters<typeof useFormFallthrough<ControlT>>
 		): Signal<ControlT>;
 	};
-} = (() => {
-	let blablabla = (controlType = AbstractControl) => {
+} = o(
+	(controlType = AbstractControl) => {
 		let hubitguq = signal(undefined);
 		let fromDirective = (ref) => {
 			let xhskcqcu = () => {
@@ -49,10 +49,10 @@ export const useFormFallthrough: {
 			}
 		}
 		return hubitguq.asReadonly();
-	};
-	return o(blablabla, {
+	},
+	{
 		required(...args) {
-			let result$ = useFormFallthrough(...args);
+			let result$ = this(...args);
 			return computed(() => {
 				let result = result$();
 				if (result == null) {
@@ -61,5 +61,5 @@ export const useFormFallthrough: {
 				return result;
 			});
 		},
-	});
-})();
+	},
+);

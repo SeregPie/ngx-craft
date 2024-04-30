@@ -5,10 +5,20 @@ import {computed} from '@angular/core';
 import o from '../../../misc/kkgcobgp';
 import {dbeqzuvj} from '../../utils/dbeqzuvj';
 
+const ReadonlyReactiveFormProxy = {
+	prototype: {
+		[Symbol.toStringTag]: 'ReadonlyReactiveFormProxy',
+		toString() {
+			// todo
+			return '';
+		},
+	},
+};
+
 // todo
 let create = (control) => {
 	// prettier-ignore
-	let controlProxy = o({}, {
+	let controlProxy = o.new({
 		control,
 		[Symbol.toStringTag]: 'ReadonlyReactiveFormProxy',
 		toString() {

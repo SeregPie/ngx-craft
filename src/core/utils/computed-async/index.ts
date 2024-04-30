@@ -1,6 +1,4 @@
-import {CreateComputedOptions, EffectCleanupRegisterFn, EffectRef, Signal, computed, effect, signal} from '@angular/core';
-
-import o from '../../../misc/kkgcobgp';
+import {CreateComputedOptions, EffectCleanupRegisterFn, Signal, computed, effect, signal} from '@angular/core';
 
 export type CreateComputedAsyncOptions<T> =
 	//
@@ -10,10 +8,14 @@ export type CreateComputedAsyncOptions<T> =
 			lazy: boolean;
 		}>;
 
-export interface ComputedAsyncRef<T> extends EffectRef, Signal<T> {
+export interface ComputedAsyncRef<T> extends Signal<T> {
 	get pending(): boolean;
 	// abort(): void;
 }
+
+const ComputedAsync = {
+	prototype: {},
+};
 
 export const computedAsync: {
 	<T>(
@@ -27,7 +29,8 @@ export const computedAsync: {
 		options?: CreateComputedAsyncOptions<undefined | T>,
 	): ComputedAsyncRef<undefined | T>;
 } = (fn, {initialValue, ...options} = {}) => {
-	let rwfgnjaq$ = signal(() => initialValue);
+	let value$$ = signal(() => initialValue);
+	let value$ = computed(() => value$$()(), options);
 	let pending$ = signal(true);
 	let effectRef = effect(
 		async (onCleanup) => {
@@ -41,11 +44,11 @@ export const computedAsync: {
 				}
 				let value = await fn(onCleanup);
 				if (!aborted) {
-					rwfgnjaq$.set(() => value);
+					value$$.set(() => value);
 				}
 			} catch (error) {
 				if (!aborted) {
-					rwfgnjaq$.set(() => {
+					value$$.set(() => {
 						throw error;
 					});
 				}
@@ -55,27 +58,18 @@ export const computedAsync: {
 				}
 			}
 		},
-		{
-			allowSignalWrites: true,
-		},
+		{allowSignalWrites: true},
 	);
-	return o(
-		computed(() => rwfgnjaq$()(), options),
-		{
+	return Object.defineProperties(
+		value$,
+		Object.getOwnPropertyDescriptors({
 			get name() {
 				return this[Symbol.toStringTag];
 			},
 			get pending() {
 				return pending$();
 			},
-			destroy() {
-				effectRef.destroy();
-			},
 			[Symbol.toStringTag]: 'ComputedAsync',
-			toString() {
-				// todo
-				return '';
-			},
-		},
+		}),
 	);
 };

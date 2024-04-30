@@ -2,22 +2,19 @@
 
 // todo
 
-let ieeshxcb = (target, ...sources) => {
+let ieeshxcb: typeof Object.assign = (target, ...sources) => {
 	sources.forEach((source) => {
-		[
-			...Object.getOwnPropertyNames(source),
-			...Object.getOwnPropertySymbols(source),
-		].forEach((key) => {
-			let descriptor = Object.getOwnPropertyDescriptor(source, key)!;
+		Reflect.ownKeys(source).forEach((key) => {
+			let descriptor = Reflect.getOwnPropertyDescriptor(source, key);
 			delete descriptor.enumerable;
 			delete descriptor.writable;
-			Object.defineProperty(target, key, descriptor);
+			Reflect.defineProperty(target, key, descriptor);
 		});
 	});
 	return target;
 };
 
-let bbqxeous = (...sources) => ieeshxcb({}, ...sources);
+let bbqxeous: typeof Object.assign = (...sources) => ieeshxcb({}, ...sources);
 
 export default ieeshxcb(ieeshxcb, {
 	new: bbqxeous,

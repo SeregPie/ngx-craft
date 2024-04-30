@@ -2,7 +2,7 @@ import {fakeAsync} from '@angular/core/testing';
 import {FormControl} from '@angular/forms';
 
 import {spy} from '../../../misc/test';
-import {composeValidators, noopValidator, withValidators} from '.';
+import {composeValidators, noopValidator, stubValidator, withValidators} from './';
 
 describe('withValidators', () => {
 	it('should work', fakeAsync(async () => {
@@ -10,7 +10,7 @@ describe('withValidators', () => {
 			new FormControl<number>(1, {
 				nonNullable: true,
 			}),
-			({value}) => value % 2 ? {error: true} : null,
+			({value}) => (value % 2 ? {error: true} : null),
 		);
 
 		expect(form.errors).toEqual({error: true});
@@ -61,8 +61,9 @@ describe('composeValidators', () => {
 				nonNullable: true,
 			}),
 			composeValidators([
-				({value}) => value === 1 ? {error: {n: 1}} : null,
-				({value}) => value === 2 ? {error: {n: 2}} : null,
+				//
+				({value}) => (value === 1 ? {error: {n: 1}} : null),
+				({value}) => (value === 2 ? {error: {n: 2}} : null),
 			]),
 		);
 
@@ -79,6 +80,7 @@ describe('composeValidators', () => {
 
 	it('should skip other validators after one fails', fakeAsync(async () => {
 		let validators = [
+			//
 			() => null,
 			() => ({error: true}),
 			() => null,
@@ -100,5 +102,21 @@ describe('composeValidators', () => {
 
 	it('should return no-op validator if nothing provided', fakeAsync(async () => {
 		expect(composeValidators([])).toBe(noopValidator);
+	}));
+});
+
+describe('noopValidator', () => {
+	it('', fakeAsync(async () => {
+		let form = withValidators(new FormControl(null), noopValidator);
+
+		expect(form.errors).toBeNull();
+	}));
+});
+
+describe('stubValidator', () => {
+	it('', fakeAsync(async () => {
+		let form = withValidators(new FormControl(null), stubValidator({error: true}));
+
+		expect(form.errors).toEqual({error: true});
 	}));
 });
