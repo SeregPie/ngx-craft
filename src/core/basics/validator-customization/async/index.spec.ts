@@ -30,7 +30,7 @@ describe('withAsyncValidators', () => {
 
 	it('should contain validators', fakeAsync(async () => {
 		let form = new FormControl(null);
-		let validators = [async () => null, async () => null];
+		let validators = [null, null].map((v) => async () => v);
 		withAsyncValidators(form, ...validators);
 
 		for (let validator of validators) {
@@ -40,7 +40,7 @@ describe('withAsyncValidators', () => {
 
 	it('should call validators only once', fakeAsync(async () => {
 		let form = new FormControl(null);
-		let validators = [async () => null, async () => null].map(spy);
+		let validators = [null, null].map((v) => spy(async () => v));
 		withAsyncValidators(form, ...validators);
 
 		for (let validator of validators) {
@@ -98,11 +98,7 @@ describe('composeAsyncValidators', () => {
 	}));
 
 	it('should skip other validators after one fails', fakeAsync(async () => {
-		let validators = [
-			async () => null,
-			async () => ({error: true}),
-			async () => null,
-		].map(spy);
+		let validators = [null, {error: true}, null].map((v) => spy(async () => v));
 		new FormControl(null, {
 			asyncValidators: composeAsyncValidators(validators),
 		});
