@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import {Signal, signal} from '@angular/core';
 
 export const useMediaQuery: {

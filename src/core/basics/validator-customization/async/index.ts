@@ -12,7 +12,6 @@ export const noopAsyncValidator: {
 	(control: AbstractControl): Promise<null>;
 } = async () => null;
 
-// todo: rename
 export const stubAsyncValidator: {
 	<ErrorsT extends ValidationErrors>(errors: ErrorsT): {
 		(control: AbstractControl): Promise<ErrorsT>;

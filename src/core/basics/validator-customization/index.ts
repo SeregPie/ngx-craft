@@ -12,7 +12,6 @@ export const noopValidator: {
 	(control: AbstractControl): null;
 } = () => null;
 
-// todo: rename
 export const stubValidator: {
 	<ErrorsT extends ValidationErrors>(errors: ErrorsT): {
 		(control: AbstractControl): ErrorsT;
