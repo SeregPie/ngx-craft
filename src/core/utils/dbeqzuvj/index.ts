@@ -8,6 +8,12 @@ export interface Dbeqzuvj {
 	notify(): void; // todo: rename
 }
 
+// todo?
+export interface Dbeqzuvj2 {
+	track(): void;
+	trigger(): void; // todo: rename
+}
+
 // todo: rename
 export const dbeqzuvj: {
 	(): Dbeqzuvj;
