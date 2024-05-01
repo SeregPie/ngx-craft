@@ -1,12 +1,10 @@
 import {AbstractType, Signal, computed} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 
-import o from '../../../misc/kkgcobgp';
-
 export const useFormFallthrough: {
 	<ControlT extends AbstractControl>(
 		//
-		controlType?: AbstractType<ControlT>,
+		controlCtor?: AbstractType<ControlT>,
 	): Signal<undefined | ControlT>;
 	required: {
 		<ControlT extends AbstractControl>(
@@ -14,8 +12,8 @@ export const useFormFallthrough: {
 			...args: Parameters<typeof useFormFallthrough<ControlT>>
 		): Signal<ControlT>;
 	};
-} = o(
-	(controlType = AbstractControl) => {
+} = (() => {
+	let vlplwgaf = (controlType = AbstractControl) => {
 		let hubitguq = signal(undefined);
 		let fromDirective = (ref) => {
 			let xhskcqcu = () => {
@@ -49,10 +47,22 @@ export const useFormFallthrough: {
 			}
 		}
 		return hubitguq.asReadonly();
-	},
-	{
+	};
+
+	// todo
+	return ((target, ...sources) => {
+		sources.forEach((source) => {
+			Reflect.ownKeys(source).forEach((key) => {
+				let descriptor = Reflect.getOwnPropertyDescriptor(source, key);
+				delete descriptor.enumerable;
+				delete descriptor.writable;
+				Reflect.defineProperty(target, key, descriptor);
+			});
+		});
+		return target;
+	})(vlplwgaf, {
 		required(...args) {
-			let result$ = this(...args);
+			let result$ = vlplwgaf(...args);
 			return computed(() => {
 				let result = result$();
 				if (result == null) {
@@ -61,5 +71,5 @@ export const useFormFallthrough: {
 				return result;
 			});
 		},
-	},
-);
+	});
+})();

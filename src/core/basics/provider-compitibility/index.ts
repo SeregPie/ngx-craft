@@ -1,6 +1,6 @@
-import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
+// @ts-nocheck
 
-import o from '../../../misc/kkgcobgp';
+import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
 
 export interface ProviderChoice<T> {
 	useValue(source: T): ValueProvider;
@@ -14,16 +14,6 @@ export module provide {
 		multi: boolean;
 	}>;
 }
-let a = ([1, 2] as const).at(0);
-
-
-export function foo<K extends 'useValue' | 'useFactory' | 'useClass' | 'useExisting'>(key: K): Pick<ProviderChoice<string>, K> {
-	return {
-		[key](source: any) {
-			return {[key]: source};
-		},
-	};
-}
 
 export const provide: {
 	<T>(
@@ -36,13 +26,40 @@ export const provide: {
 		token: ProviderToken<T>,
 		options?: provide.Options,
 	): ProviderChoice<T>;
-} = (token, {multi = false} = {}) => {
-	let provider = {provide: token, ...(multi ? {multi} : {})};
-	return o.new(...(['useValue', 'useFactory', 'useClass', 'useExisting'] as const).map((key) => foo<any>(key)), {
+} = (() => {
+	// todo: rename
+	let naepsxdi = ['useValue', 'useFactory', 'useClass', 'useExisting'];
+
+	// todo: rename
+	let unwkjhtw = {
 		[Symbol.toStringTag]: 'ProviderChoice',
 		toString() {
 			// todo
 			return '';
 		},
-	});
-};
+	};
+
+	return (token, {multi = false} = {}) => {
+		// todo: rename
+		let qnlgnadi = {provide: token, ...(multi ? {multi} : {})};
+		// todo: rename
+		let hpaphuld = naepsxdi.map((key) => ({
+			[key](source) {
+				return {...qnlgnadi, [key]: source};
+			},
+		}));
+		// todo
+		return ((...sources) => {
+			let target = {};
+			sources.forEach((source) => {
+				Reflect.ownKeys(source).forEach((key) => {
+					let descriptor = Reflect.getOwnPropertyDescriptor(source, key);
+					delete descriptor.enumerable;
+					delete descriptor.writable;
+					Reflect.defineProperty(target, key, descriptor);
+				});
+			});
+			return target;
+		})(...hpaphuld, unwkjhtw);
+	};
+})();

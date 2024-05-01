@@ -3,6 +3,7 @@ import {Signal, signal} from '@angular/core';
 export const useMediaQuery: {
 	(query: string): Signal<boolean>;
 } = (query) => {
+	// todo: try catch
 	try {
 		let {window} = globalThis;
 		// todo: rename

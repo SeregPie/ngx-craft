@@ -13,10 +13,6 @@ export interface ComputedAsyncRef<T> extends Signal<T> {
 	// abort(): void;
 }
 
-const ComputedAsync = {
-	prototype: {},
-};
-
 export const computedAsync: {
 	<T>(
 		//
