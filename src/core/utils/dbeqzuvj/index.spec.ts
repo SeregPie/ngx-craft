@@ -3,8 +3,8 @@
 import {effect} from '@angular/core';
 import {TestBed, fakeAsync} from '@angular/core/testing';
 
-import {dbeqzuvj} from '.';
-import {spy} from '../../../misc/test';
+import {spy} from '../../../misc/jasmine';
+import {dbeqzuvj} from './';
 
 describe('', () => {
 	it('', fakeAsync(async () => {

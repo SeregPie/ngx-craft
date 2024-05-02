@@ -3,7 +3,7 @@
 import {AbstractType, Signal, computed, inject, signal} from '@angular/core';
 import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
 
-import o from '../../../misc/kkgcobgp';
+import oo from '../../../misc/object-oven';
 import {dbeqzuvj} from '../../utils/dbeqzuvj';
 
 export const useFormFallthrough: {
@@ -26,7 +26,7 @@ export const useFormFallthrough: {
 			// todo: array?
 			['ngOnChanges'].forEach((key) => {
 				let method = ref[key];
-				o(ref, {
+				oo.extend(ref, {
 					[key]() {
 						iqwozjka.notify();
 						return method.apply(this, arguments);
@@ -62,7 +62,7 @@ export const useFormFallthrough: {
 		return signal(undefined).asReadonly();
 	};
 
-	return o(vlplwgaf, {
+	return oo.extend(vlplwgaf, {
 		required(...args) {
 			// todo: use this?
 			let result$ = this(...args);

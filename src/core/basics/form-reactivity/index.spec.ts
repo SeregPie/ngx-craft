@@ -2,7 +2,7 @@ import {effect} from '@angular/core';
 import {TestBed, fakeAsync} from '@angular/core/testing';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
-import {spy} from '../../../misc/test';
+import {spy} from '../../../misc/jasmine';
 import {formi} from './';
 
 // todo

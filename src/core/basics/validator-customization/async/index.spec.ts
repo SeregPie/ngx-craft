@@ -1,7 +1,7 @@
 import {fakeAsync, tick} from '@angular/core/testing';
 import {FormControl} from '@angular/forms';
 
-import {spy} from '../../../../misc/test';
+import {spy} from '../../../../misc/jasmine';
 import {composeAsyncValidators, noopAsyncValidator, stubAsyncValidator, withAsyncValidators} from '.';
 
 describe('withAsyncValidators', () => {

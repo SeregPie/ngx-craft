@@ -1,8 +1,6 @@
-// @ts-nocheck
-
 import {signal} from '@angular/core';
 
-import o from '../../../misc/kkgcobgp';
+import oo from '../../../misc/object-oven';
 
 // todo: rename
 export interface Dbeqzuvj {
@@ -36,7 +34,7 @@ export const dbeqzuvj: {
 		// todo: rename
 		let kyrpsrpf = signal({});
 		// todo
-		return o(
+		return oo.extend(
 			() => {
 				kyrpsrpf();
 			},

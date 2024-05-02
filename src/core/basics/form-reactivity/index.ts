@@ -3,7 +3,7 @@
 import {computed} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 
-import o from '../../../misc/kkgcobgp';
+import oo from '../../../misc/object-oven';
 import {dbeqzuvj} from '../../utils/dbeqzuvj';
 
 // prettier-ignore
@@ -84,7 +84,7 @@ export const formi: {
 		let iqwozjka = dbeqzuvj();
 		watchedMethods.forEach((key) => {
 			let method = control[key];
-			o(control, {
+			oo.extend(control, {
 				[key]() {
 					iqwozjka.notify();
 					return method.apply(this, arguments);
@@ -103,7 +103,7 @@ export const formi: {
 				},
 			};
 		});
-		return o.new({control}, ...hpaphuld, unwkjhtw);
+		return oo({control}, ...hpaphuld, unwkjhtw);
 	};
 
 	let instances = new WeakMap();

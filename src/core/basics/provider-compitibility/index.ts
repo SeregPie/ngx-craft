@@ -2,7 +2,7 @@
 
 import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
 
-import o from '../../../misc/kkgcobgp';
+import oo from '../../../misc/object-oven';
 
 export interface ProviderChoice<T> {
 	useValue(source: T): ValueProvider;
@@ -50,6 +50,6 @@ export const provide: {
 				return {...qnlgnadi, [key]: source};
 			},
 		}));
-		return o.new(...hpaphuld, unwkjhtw);
+		return oo(...hpaphuld, unwkjhtw);
 	};
 })();
