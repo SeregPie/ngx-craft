@@ -4,6 +4,8 @@ import {FormArray, FormControl, FormGroup, FormRecord, FormsModule, ReactiveForm
 import {By} from '@angular/platform-browser';
 import {simpleFaker as faker} from '@faker-js/faker';
 
+Promise.withResolvers();
+
 import {useFormFallthrough} from '.';
 
 describe('useFormFallthrough', () => {
@@ -237,10 +239,7 @@ describe('useFormFallthrough', () => {
 		for await (let _ of (async function* () {
 			yield;
 			for (let i = 2; i--; ) {
-				for (let fn of <Iterable<{(v: number): void}>>[
-					(v) => form.setValue(v),
-					(v) => value$.set(v),
-				]) {
+				for (let fn of <Iterable<{(v: number): void}>>[(v) => form.setValue(v), (v) => value$.set(v)]) {
 					fn(faker.number.int());
 					fixture.detectChanges();
 					yield;

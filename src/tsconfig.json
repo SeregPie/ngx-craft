@@ -8,7 +8,7 @@
 	},
 	"compilerOptions": {
 		"experimentalDecorators": true,
-		"lib": ["ES2022", "DOM"]
+		"lib": ["ESNext", "DOM"]
 	},
 	"extends": "../tsconfig.json"
 }

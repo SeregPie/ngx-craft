@@ -22,20 +22,19 @@ export const useFormFallthrough: {
 	let vlplwgaf = (controlCtor = AbstractControl) => {
 		// todo
 		let fromDirective = (ref) => {
-			// todo: rename
-			let iqwozjka = tracked();
+			let {track, notify} = tracked();
 			// todo: array?
 			['ngOnChanges'].forEach((key) => {
 				let method = ref[key];
 				oo.extend(ref, {
 					[key]() {
-						iqwozjka.notify();
+						notify();
 						return method.apply(this, arguments);
 					},
 				});
 			});
 			return computed(() => {
-				iqwozjka();
+				track();
 				if (ref.control != null) {
 					if (ref.control instanceof controlCtor) {
 						return ref.control;

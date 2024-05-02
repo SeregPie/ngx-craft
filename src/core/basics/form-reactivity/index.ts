@@ -77,13 +77,12 @@ export const formi: {
 	];
 
 	let create = (control) => {
-		// todo: rename
-		let iqwozjka = tracked();
+		let {track, notify} = tracked();
 		watchedMethods.forEach((key) => {
 			let method = control[key];
 			oo.extend(control, {
 				[key]() {
-					iqwozjka.notify();
+					notify();
 					return method.apply(this, arguments);
 				},
 			});
@@ -91,7 +90,7 @@ export const formi: {
 		// todo: rename
 		let hpaphuld = exposedGetters.map((key) => {
 			let value$ = computed(() => {
-				iqwozjka();
+				track();
 				return control[key];
 			});
 			return {

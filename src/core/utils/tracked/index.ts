@@ -1,37 +1,22 @@
 import {signal} from '@angular/core';
 
-import oo, {toString} from '../../../misc/object-oven';
-
-export interface TrackedRef {
-	(): void;
+// todo: rename
+export interface Flvjqrzc {
+	track(): void;
 	notify(): void;
 }
 
+// todo: rename
 export const tracked: {
-	(): TrackedRef;
-} = (() => {
+	(): Flvjqrzc;
+} = () => {
 	// todo: rename
-	let unwkjhtw = {
-		get name() {
-			return this[Symbol.toStringTag];
-		},
-		[Symbol.toStringTag]: 'Tracked', // todo: name
-		toString,
+	let kyrpsrpf = signal({});
+	let track = () => {
+		kyrpsrpf();
 	};
-
-	return () => {
-		// todo: rename
-		let kyrpsrpf = signal({});
-		return oo.extend(
-			() => {
-				kyrpsrpf();
-			},
-			{
-				notify() {
-					kyrpsrpf.set({});
-				},
-			},
-			unwkjhtw,
-		);
+	let notify = () => {
+		kyrpsrpf.set({});
 	};
-})();
+	return {track, notify};
+};
