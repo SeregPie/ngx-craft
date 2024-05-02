@@ -4,8 +4,6 @@ import {FormArray, FormControl, FormGroup, FormRecord, FormsModule, ReactiveForm
 import {By} from '@angular/platform-browser';
 import {simpleFaker as faker} from '@faker-js/faker';
 
-Promise.withResolvers();
-
 import {useFormFallthrough} from '.';
 
 describe('useFormFallthrough', () => {
