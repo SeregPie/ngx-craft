@@ -4,7 +4,7 @@ import {AbstractType, Signal, computed, inject, signal} from '@angular/core';
 import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
 
 import oo from '../../../misc/object-oven';
-import {dbeqzuvj} from '../../utils/dbeqzuvj';
+import {tracked} from '../../utils/tracked';
 
 export const useFormFallthrough: {
 	<ControlT extends AbstractControl>(
@@ -20,9 +20,10 @@ export const useFormFallthrough: {
 } = (() => {
 	// todo: rename
 	let vlplwgaf = (controlCtor = AbstractControl) => {
+		// todo
 		let fromDirective = (ref) => {
 			// todo: rename
-			let iqwozjka = dbeqzuvj();
+			let iqwozjka = tracked();
 			// todo: array?
 			['ngOnChanges'].forEach((key) => {
 				let method = ref[key];

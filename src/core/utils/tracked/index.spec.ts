@@ -4,11 +4,11 @@ import {effect} from '@angular/core';
 import {TestBed, fakeAsync} from '@angular/core/testing';
 
 import {spy} from '../../../misc/jasmine';
-import {dbeqzuvj} from './';
+import {tracked} from './';
 
 describe('', () => {
 	it('', fakeAsync(async () => {
-		let phuuhcpx = dbeqzuvj();
+		let phuuhcpx = tracked();
 
 		// todo: rename
 		let effectFn = spy(() => {

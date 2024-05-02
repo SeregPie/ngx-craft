@@ -3,8 +3,8 @@
 import {computed} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 
-import oo from '../../../misc/object-oven';
-import {dbeqzuvj} from '../../utils/dbeqzuvj';
+import oo, {toString} from '../../../misc/object-oven';
+import {tracked} from '../../utils/tracked';
 
 // prettier-ignore
 export type ReadonlyReactiveFormProp = (
@@ -41,10 +41,7 @@ export const formi: {
 	// todo: rename
 	let unwkjhtw = {
 		[Symbol.toStringTag]: 'ReadonlyReactiveFormProxy',
-		toString() {
-			// todo
-			return '';
-		},
+		toString,
 	};
 
 	let exposedGetters = [
@@ -81,7 +78,7 @@ export const formi: {
 
 	let create = (control) => {
 		// todo: rename
-		let iqwozjka = dbeqzuvj();
+		let iqwozjka = tracked();
 		watchedMethods.forEach((key) => {
 			let method = control[key];
 			oo.extend(control, {

@@ -2,7 +2,7 @@
 
 import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
 
-import oo from '../../../misc/object-oven';
+import oo, {toString} from '../../../misc/object-oven';
 
 export interface ProviderChoice<T> {
 	useValue(source: T): ValueProvider;
@@ -35,10 +35,7 @@ export const provide: {
 	// todo: rename
 	let unwkjhtw = {
 		[Symbol.toStringTag]: 'ProviderChoice',
-		toString() {
-			// todo
-			return '';
-		},
+		toString,
 	};
 
 	return (token, {multi = false} = {}) => {
