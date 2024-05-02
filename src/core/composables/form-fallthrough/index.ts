@@ -4,7 +4,6 @@ import {AbstractType, Signal, computed, inject, signal} from '@angular/core';
 import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
 
 import oo from '../../../misc/object-oven';
-import {tracked} from '../../utils/tracked';
 
 export const useFormFallthrough: {
 	<ControlT extends AbstractControl>(
@@ -22,19 +21,19 @@ export const useFormFallthrough: {
 	let vlplwgaf = (controlCtor = AbstractControl) => {
 		// todo
 		let fromDirective = (ref) => {
-			let {track, notify} = tracked();
+			let changes$ = signal({});
 			// todo: array?
 			['ngOnChanges'].forEach((key) => {
 				let method = ref[key];
 				oo.extend(ref, {
 					[key]() {
-						notify();
+						changes$.set({});
 						return method.apply(this, arguments);
 					},
 				});
 			});
 			return computed(() => {
-				track();
+				changes$();
 				if (ref.control != null) {
 					if (ref.control instanceof controlCtor) {
 						return ref.control;

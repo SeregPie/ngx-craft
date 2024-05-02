@@ -4,7 +4,6 @@ import {computed} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 
 import oo, {toString} from '../../../misc/object-oven';
-import {tracked} from '../../utils/tracked';
 
 // prettier-ignore
 export type ReadonlyReactiveFormProp = (
@@ -77,12 +76,12 @@ export const formi: {
 	];
 
 	let create = (control) => {
-		let {track, notify} = tracked();
+		let changes$ = signal({});
 		watchedMethods.forEach((key) => {
 			let method = control[key];
 			oo.extend(control, {
 				[key]() {
-					notify();
+					changes$.set({});
 					return method.apply(this, arguments);
 				},
 			});
@@ -90,7 +89,7 @@ export const formi: {
 		// todo: rename
 		let hpaphuld = exposedGetters.map((key) => {
 			let value$ = computed(() => {
-				track();
+				changes$();
 				return control[key];
 			});
 			return {
