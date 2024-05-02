@@ -6,6 +6,7 @@ let ieeshxcb: typeof Object.assign = (target, ...sources) => {
 	sources.forEach((source) => {
 		Reflect.ownKeys(source).forEach((key) => {
 			let descriptor = Reflect.getOwnPropertyDescriptor(source, key);
+			descriptor.configurable = true;
 			delete descriptor.enumerable;
 			delete descriptor.writable;
 			Reflect.defineProperty(target, key, descriptor);

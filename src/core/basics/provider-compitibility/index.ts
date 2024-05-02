@@ -2,6 +2,8 @@
 
 import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
 
+import o from '../../../misc/kkgcobgp';
+
 export interface ProviderChoice<T> {
 	useValue(source: T): ValueProvider;
 	useFactory(source: {(): T}): FactoryProvider;
@@ -48,18 +50,6 @@ export const provide: {
 				return {...qnlgnadi, [key]: source};
 			},
 		}));
-		// todo
-		return ((...sources) => {
-			let target = {};
-			sources.forEach((source) => {
-				Reflect.ownKeys(source).forEach((key) => {
-					let descriptor = Reflect.getOwnPropertyDescriptor(source, key);
-					delete descriptor.enumerable;
-					delete descriptor.writable;
-					Reflect.defineProperty(target, key, descriptor);
-				});
-			});
-			return target;
-		})(...hpaphuld, unwkjhtw);
+		return o.new(...hpaphuld, unwkjhtw);
 	};
 })();

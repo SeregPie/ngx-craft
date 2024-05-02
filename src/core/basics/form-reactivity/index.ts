@@ -2,6 +2,8 @@
 
 import {computed} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
+
+import o from '../../../misc/kkgcobgp';
 import {dbeqzuvj} from '../../utils/dbeqzuvj';
 
 // prettier-ignore
@@ -82,15 +84,7 @@ export const formi: {
 		let iqwozjka = dbeqzuvj();
 		watchedMethods.forEach((key) => {
 			let method = control[key];
-			// todo
-			((target, source) => {
-				Reflect.ownKeys(source).forEach((key) => {
-					let descriptor = Reflect.getOwnPropertyDescriptor(source, key);
-					delete descriptor.enumerable;
-					delete descriptor.writable;
-					Reflect.defineProperty(target, key, descriptor);
-				});
-			})(control, {
+			o(control, {
 				[key]() {
 					iqwozjka.notify();
 					return method.apply(this, arguments);
@@ -109,19 +103,7 @@ export const formi: {
 				},
 			};
 		});
-		// todo
-		return ((...sources) => {
-			let target = {};
-			sources.forEach((source) => {
-				Reflect.ownKeys(source).forEach((key) => {
-					let descriptor = Reflect.getOwnPropertyDescriptor(source, key);
-					delete descriptor.enumerable;
-					delete descriptor.writable;
-					Reflect.defineProperty(target, key, descriptor);
-				});
-			});
-			return target;
-		})({control}, ...hpaphuld, unwkjhtw);
+		return o.new({control}, ...hpaphuld, unwkjhtw);
 	};
 
 	let instances = new WeakMap();

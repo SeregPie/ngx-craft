@@ -1,5 +1,10 @@
-import {AbstractType, Signal, computed} from '@angular/core';
-import {AbstractControl} from '@angular/forms';
+// @ts-nocheck
+
+import {AbstractType, Signal, computed, inject, signal} from '@angular/core';
+import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
+
+import o from '../../../misc/kkgcobgp';
+import {dbeqzuvj} from '../../utils/dbeqzuvj';
 
 export const useFormFallthrough: {
 	<ControlT extends AbstractControl>(
@@ -14,21 +19,28 @@ export const useFormFallthrough: {
 	};
 } = (() => {
 	// todo: rename
-	let vlplwgaf = (controlType = AbstractControl) => {
-		let hubitguq = signal(undefined);
+	let vlplwgaf = (controlCtor = AbstractControl) => {
 		let fromDirective = (ref) => {
-			let xhskcqcu = () => {
+			// todo: rename
+			let iqwozjka = dbeqzuvj();
+			// todo: array?
+			['ngOnChanges'].forEach((key) => {
+				let method = ref[key];
+				o(ref, {
+					[key]() {
+						iqwozjka.notify();
+						return method.apply(this, arguments);
+					},
+				});
+			});
+			return computed(() => {
+				iqwozjka();
 				if (ref.control != null) {
-					if (ref.control instanceof controlType) {
+					if (ref.control instanceof controlCtor) {
 						return ref.control;
 					}
 				}
-			};
-			afterRender(() => {
-				hubitguq.set(xhskcqcu() as any);
 			});
-			hubitguq.set(xhskcqcu() as any);
-			return hubitguq.asReadonly();
 		};
 		{
 			let ref = inject(NgControl, {self: true, optional: true});
@@ -47,24 +59,13 @@ export const useFormFallthrough: {
 				return fromDirective(ref);
 			}
 		}
-		return hubitguq.asReadonly();
+		return signal(undefined).asReadonly();
 	};
 
-	// todo
-	return ((target, ...sources) => {
-		sources.forEach((source) => {
-			Reflect.ownKeys(source).forEach((key) => {
-				let descriptor = Reflect.getOwnPropertyDescriptor(source, key);
-				delete descriptor.enumerable;
-				delete descriptor.writable;
-				Reflect.defineProperty(target, key, descriptor);
-			});
-		});
-		return target;
-	})(vlplwgaf, {
+	return o(vlplwgaf, {
 		required(...args) {
 			// todo: use this?
-			let result$ = vlplwgaf(...args);
+			let result$ = this(...args);
 			return computed(() => {
 				let result = result$();
 				if (result == null) {
