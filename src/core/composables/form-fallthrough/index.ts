@@ -1,56 +1,72 @@
 // @ts-nocheck
 
-import {AbstractType, Signal, afterRender, computed, inject, signal} from '@angular/core';
+import {AbstractType, Signal, computed, inject, signal} from '@angular/core';
 import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
 
+import oo from '../../../misc/object-oven';
+
 export const useFormFallthrough: {
-	<TControl extends AbstractControl>(
-		controlCtor?: AbstractType<TControl>,
-	): Signal<undefined | TControl>;
+	<ControlT extends AbstractControl>(
+		//
+		controlCtor?: AbstractType<ControlT>,
+	): Signal<undefined | ControlT>;
 	required: {
-		<TControl extends AbstractControl>(
-			...args: Parameters<typeof useFormFallthrough<TControl>>
-		): Signal<TControl>;
+		<ControlT extends AbstractControl>(
+			...args: Parameters<typeof useFormFallthrough<ControlT>>
+		): Signal<ControlT>;
 	};
-} = (() => {
-	return Object.assign((controlCtor = AbstractControl) => {
-		let fromDirective = (ref) => {
-			let watch = signal({});
-			afterRender(() => {
-				setTimeout(() => {
-					watch.set({});
+} = oo.extend(
+	(controlCtor = AbstractControl) => {
+		let ref = inject(NgControl, {self: true, optional: true});
+		if (ref != null) {
+			ref.valueAccessor ??= {
+				writeValue() {},
+				registerOnChange() {},
+				registerOnTouched() {},
+			};
+		} else {
+			ref = inject(ControlContainer, {self: true, optional: true});
+		}
+		if (ref != null) {
+			let changes$ = signal({});
+			['ngOnChanges'].forEach((key) => {
+				let method = ref[key];
+				if (method) {
+					oo.extend(ref, {
+						[key]() {
+							changes$.set({});
+							return method.apply(this, arguments);
+						},
+					});
+				}
+			});
+			['name'].forEach((key) => {
+				let value = ref[key];
+				oo.extend(ref, {
+					get [key]() {
+						return value;
+					},
+					set [key](v) {
+						changes$.set({});
+						value = v;
+					},
 				});
 			});
 			return computed(() => {
-				watch();
-				if (ref.control != null) {
-					if (ref.control instanceof controlCtor) {
-						return ref.control;
+				changes$();
+				let {control} = ref;
+				if (control != null) {
+					if (control instanceof controlCtor) {
+						return control;
 					}
 				}
 			});
-		};
-		{
-			let ref = inject(NgControl, {self: true, optional: true});
-			if (ref != null) {
-				ref.valueAccessor ??= {
-					writeValue() {},
-					registerOnChange() {},
-					registerOnTouched() {},
-				};
-				return fromDirective(ref);
-			}
-		}
-		{
-			let ref = inject(ControlContainer, {self: true, optional: true});
-			if (ref != null) {
-				return fromDirective(ref);
-			}
 		}
 		return signal(undefined).asReadonly();
-	}, {
-		required: (...args) => {
-			let result$ = useFormFallthrough(...args);
+	},
+	{
+		required(...args) {
+			let result$ = this(...args);
 			return computed(() => {
 				let result = result$();
 				if (result == null) {
@@ -59,5 +75,5 @@ export const useFormFallthrough: {
 				return result;
 			});
 		},
-	});
-})();
+	},
+);

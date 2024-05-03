@@ -5,12 +5,7 @@ import {simpleFaker as faker} from '@faker-js/faker';
 import {provide} from '.';
 
 describe('provide', () => {
-	type TA = {
-		a: number;
-		b: string;
-	};
-
-	class A implements TA {
+	class A {
 		static asValue = new this();
 		static asFactory = () => new this();
 		static asClass = this;
@@ -20,12 +15,7 @@ describe('provide', () => {
 		b = faker.string.alphanumeric();
 	}
 
-	type TB = {
-		a: string;
-		b: number;
-	};
-
-	class B implements TB {
+	class B {
 		static asValue = new this();
 		static asFactory = () => new this();
 		static asClass = this;
@@ -36,7 +26,7 @@ describe('provide', () => {
 	}
 
 	describe('regular', () => {
-		let token = new InjectionToken<TA>('');
+		let token = new InjectionToken<A>('');
 
 		describe('useValue', () => {
 			it('should create correct provider', fakeAsync(async () => {
@@ -132,7 +122,7 @@ describe('provide', () => {
 	});
 
 	describe('multiple', () => {
-		let token = new InjectionToken<Array<TA>>('');
+		let token = new InjectionToken<Array<A>>('');
 
 		describe('useValue', () => {
 			it('should create correct provider', fakeAsync(async () => {
@@ -208,11 +198,13 @@ describe('provide', () => {
 
 		describe('useExisting', () => {
 			it('should create correct provider', fakeAsync(async () => {
-				expect(provide(token, {multi: true}).useExisting(A.asExisting)).toEqual({
-					provide: token,
-					multi: true,
-					useExisting: A.asExisting,
-				});
+				expect(provide(token, {multi: true}).useExisting(A.asExisting)).toEqual(
+					{
+						provide: token,
+						multi: true,
+						useExisting: A.asExisting,
+					},
+				);
 			}));
 
 			it('should ensure type safety', fakeAsync(async () => {

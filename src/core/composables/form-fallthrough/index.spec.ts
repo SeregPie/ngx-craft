@@ -34,11 +34,7 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result} = <MySubComponent>fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 
 		expect(result()).toBe(form.controls.a);
 
@@ -58,7 +54,6 @@ describe('useFormFallthrough', () => {
 		@Component({
 			selector: 'my-sub',
 			standalone: true,
-			template: '',
 		})
 		class MySubComponent {
 			result = useFormFallthrough();
@@ -80,18 +75,14 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result} = <MySubComponent>fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 
 		expect(result()).toBe(form.controls.a);
 
 		formSwitch$.set('b');
 		fixture.detectChanges();
 
-		// todo: comment
+		// https://github.com/angular/angular/issues/28979
 		expect(result()).toBe(form.controls.a);
 	}));
 
@@ -122,11 +113,7 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result} = <MySubComponent>fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 
 		expect(result()).toBe(form.controls.a);
 
@@ -146,7 +133,6 @@ describe('useFormFallthrough', () => {
 		@Component({
 			selector: 'my-sub',
 			standalone: true,
-			template: '',
 		})
 		class MySubComponent {
 			result = useFormFallthrough();
@@ -168,11 +154,7 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result} = <MySubComponent>fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 
 		expect(result()).toBe(form.controls.a);
 
@@ -214,11 +196,7 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result} = <MySubComponent>fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 
 		expect(result()).toBe(form.controls.a);
 
@@ -234,7 +212,6 @@ describe('useFormFallthrough', () => {
 		@Component({
 			selector: 'my-sub',
 			standalone: true,
-			template: '',
 		})
 		class MySubComponent {
 			result = useFormFallthrough.required<FormControl<number>>();
@@ -251,20 +228,16 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result} = <MySubComponent>fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 		let form = result();
 
 		for await (let _ of (async function* () {
 			yield;
 			for (let i = 2; i--; ) {
-				for (let fn of [
+				for (let fn of <Iterable<{(v: number): void}>>[
 					(v) => form.setValue(v),
 					(v) => value$.set(v),
-				] as Iterable<{(v: number): void}>) {
+				]) {
 					fn(faker.number.int());
 					fixture.detectChanges();
 					yield;
@@ -278,7 +251,6 @@ describe('useFormFallthrough', () => {
 	it('should return nothing if not available', fakeAsync(async () => {
 		@Component({
 			standalone: true,
-			template: '',
 		})
 		class MyComponent {
 			result = useFormFallthrough();
@@ -297,7 +269,6 @@ describe('useFormFallthrough', () => {
 		@Component({
 			selector: 'my-sub',
 			standalone: true,
-			template: '',
 		})
 		class MySubComponent {
 			result = useFormFallthrough(FormArray);
@@ -314,11 +285,7 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result} = <MySubComponent>fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 
 		expect(result()).toBeUndefined();
 	});
@@ -326,7 +293,6 @@ describe('useFormFallthrough', () => {
 	it('should throw if required but not available', fakeAsync(async () => {
 		@Component({
 			standalone: true,
-			template: '',
 		})
 		class MyComponent {
 			result = useFormFallthrough.required();
@@ -345,7 +311,6 @@ describe('useFormFallthrough', () => {
 		@Component({
 			selector: 'my-sub',
 			standalone: true,
-			template: '',
 		})
 		class MySubComponent {
 			result = useFormFallthrough.required(FormArray);
@@ -362,11 +327,7 @@ describe('useFormFallthrough', () => {
 
 		let fixture = TestBed.createComponent(MyComponent);
 		fixture.detectChanges();
-		let {result}: MySubComponent = (fixture
-			.debugElement
-			.query(By.directive(MySubComponent))
-			.componentInstance
-		);
+		let {result} = <MySubComponent>fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 
 		expect(result).toThrow();
 	});
