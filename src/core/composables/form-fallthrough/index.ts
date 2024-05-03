@@ -28,7 +28,7 @@ export const useFormFallthrough: {
 				oo.extend(ref, {
 					[key]() {
 						changes$.set({});
-						return method.apply(this, arguments);
+						return method?.apply(this, arguments);
 					},
 				});
 			});

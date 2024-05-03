@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import {computed} from '@angular/core';
+import {computed, signal} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 
 import oo, {toString} from '../../../misc/object-oven';
