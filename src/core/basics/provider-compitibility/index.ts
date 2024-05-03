@@ -30,7 +30,7 @@ export const provide: {
 	multi = false,
 } = {}) => {
 	// todo: rename
-	let qnlgnadi = {provide: token, ...(multi ? {multi} : {})};
+	let provider = {provide: token, ...(multi ? {multi} : {})};
 	return oo(
 		...[
 			'useValue',
@@ -39,7 +39,7 @@ export const provide: {
 			'useExisting',
 		].map((key) => ({
 			[key](source) {
-				return {...qnlgnadi, [key]: source};
+				return {...provider, [key]: source};
 			},
 		})),
 		{

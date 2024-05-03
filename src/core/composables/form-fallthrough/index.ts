@@ -7,10 +7,12 @@ import oo from '../../../misc/object-oven';
 
 export const useFormFallthrough: {
 	<ControlT extends AbstractControl>(
+		//
 		controlCtor?: AbstractType<ControlT>,
 	): Signal<undefined | ControlT>;
 	required: {
 		<ControlT extends AbstractControl>(
+			//
 			...args: Parameters<typeof useFormFallthrough<ControlT>>
 		): Signal<ControlT>;
 	};
@@ -53,9 +55,10 @@ export const useFormFallthrough: {
 			});
 			return computed(() => {
 				changes$();
-				if (ref.control != null) {
-					if (ref.control instanceof controlCtor) {
-						return ref.control;
+				let {control} = ref;
+				if (control != null) {
+					if (control instanceof controlCtor) {
+						return control;
 					}
 				}
 			});
