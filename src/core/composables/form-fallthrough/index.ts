@@ -7,28 +7,47 @@ import oo from '../../../misc/object-oven';
 
 export const useFormFallthrough: {
 	<ControlT extends AbstractControl>(
-		//
 		controlCtor?: AbstractType<ControlT>,
 	): Signal<undefined | ControlT>;
 	required: {
 		<ControlT extends AbstractControl>(
-			//
 			...args: Parameters<typeof useFormFallthrough<ControlT>>
 		): Signal<ControlT>;
 	};
-} = (() => {
-	// todo: rename
-	let vlplwgaf = (controlCtor = AbstractControl) => {
-		// todo
-		let fromDirective = (ref) => {
+} = oo.extend(
+	(controlCtor = AbstractControl) => {
+		let ref = inject(NgControl, {self: true, optional: true});
+		if (ref != null) {
+			ref.valueAccessor ??= {
+				writeValue() {},
+				registerOnChange() {},
+				registerOnTouched() {},
+			};
+		} else {
+			ref = inject(ControlContainer, {self: true, optional: true});
+		}
+		if (ref != null) {
 			let changes$ = signal({});
-			// todo: array?
 			['ngOnChanges'].forEach((key) => {
 				let method = ref[key];
+				if (method) {
+					oo.extend(ref, {
+						[key]() {
+							changes$.set({});
+							return method.apply(this, arguments);
+						},
+					});
+				}
+			});
+			['name'].forEach((key) => {
+				let value = ref[key];
 				oo.extend(ref, {
-					[key]() {
+					get [key]() {
+						return value;
+					},
+					set [key](v) {
 						changes$.set({});
-						return method?.apply(this, arguments);
+						value = v;
 					},
 				});
 			});
@@ -40,30 +59,11 @@ export const useFormFallthrough: {
 					}
 				}
 			});
-		};
-		{
-			let ref = inject(NgControl, {self: true, optional: true});
-			if (ref != null) {
-				ref.valueAccessor ??= {
-					writeValue() {},
-					registerOnChange() {},
-					registerOnTouched() {},
-				};
-				return fromDirective(ref);
-			}
-		}
-		{
-			let ref = inject(ControlContainer, {self: true, optional: true});
-			if (ref != null) {
-				return fromDirective(ref);
-			}
 		}
 		return signal(undefined).asReadonly();
-	};
-
-	return oo.extend(vlplwgaf, {
+	},
+	{
 		required(...args) {
-			// todo: use this?
 			let result$ = this(...args);
 			return computed(() => {
 				let result = result$();
@@ -73,5 +73,5 @@ export const useFormFallthrough: {
 				return result;
 			});
 		},
-	});
-})();
+	},
+);

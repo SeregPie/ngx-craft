@@ -1,6 +1,6 @@
 /dist
 
 -/src/core/basics/form-reactivity
--/src/core/basics/provider-compitibility
+/src/core/basics/provider-compitibility
 /src/core/basics/validator-customization
--/src/core/composables/form-fallthrough
+/src/core/composables/form-fallthrough

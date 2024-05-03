@@ -31,78 +31,71 @@ export type ReadonlyReactiveFormProxy<
 	& Readonly<Pick<ControlT, ReadonlyReactiveFormProp>>
 );
 
-export const formi: {
-	<ControlT extends AbstractControl>(
-		//
-		control: ControlT,
-	): ReadonlyReactiveFormProxy<ControlT>;
-} = (() => {
-	// todo: rename
-	let unwkjhtw = {
-		[Symbol.toStringTag]: 'ReadonlyReactiveFormProxy',
-		toString,
-	};
-
-	let exposedGetters = [
-		//
-		'status',
-		'valid',
-		'invalid',
-		'pending',
-		'disabled',
-		'enabled',
-		'pristine',
-		'dirty',
-		'touched',
-		'untouched',
-		'value',
-		'errors',
-	];
-
-	let watchedMethods = [
-		//
-		'_updatePristine',
-		'_updateTouched',
-		'_updateValue',
-		'disable',
-		'enable',
-		'markAsDirty',
-		'markAsPending',
-		'markAsPristine',
-		'markAsTouched',
-		'markAsUntouched',
-		'setErrors',
-		'updateValueAndValidity',
-	];
-
+// todo?
+const createReadonlyReactiveFormProxy = (() => {
 	let create = (control) => {
 		let changes$ = signal({});
-		watchedMethods.forEach((key) => {
+		[
+			//
+			'_updatePristine',
+			'_updateTouched',
+			'_updateValue',
+			'disable',
+			'enable',
+			'markAsDirty',
+			'markAsPending',
+			'markAsPristine',
+			'markAsTouched',
+			'markAsUntouched',
+			'setErrors',
+			'updateValueAndValidity',
+		].forEach((key) => {
 			let method = control[key];
-			oo.extend(control, {
-				[key]() {
-					changes$.set({});
-					return method.apply(this, arguments);
-				},
-			});
+			if (method) {
+				oo.extend(control, {
+					[key]() {
+						changes$.set({});
+						return method.apply(this, arguments);
+					},
+				});
+			}
 		});
-		// todo: rename
-		let hpaphuld = exposedGetters.map((key) => {
-			let value$ = computed(() => {
-				changes$();
-				return control[key];
-			});
-			return {
-				get [key]() {
-					return value$();
-				},
-			};
-		});
-		return oo({control}, ...hpaphuld, unwkjhtw);
+		return oo(
+			{
+				control,
+			},
+			...[
+				//
+				'status',
+				'valid',
+				'invalid',
+				'pending',
+				'disabled',
+				'enabled',
+				'pristine',
+				'dirty',
+				'touched',
+				'untouched',
+				'value',
+				'errors',
+			].map((key) => {
+				let value$ = computed(() => {
+					changes$();
+					return control[key];
+				});
+				return {
+					get [key]() {
+						return value$();
+					},
+				};
+			}),
+			{
+				[Symbol.toStringTag]: 'ReadonlyReactiveFormProxy',
+				toString,
+			},
+		);
 	};
-
 	let instances = new WeakMap();
-
 	return (arg) => {
 		let instance = instances.get(arg);
 		if (instance == null) {
@@ -111,3 +104,10 @@ export const formi: {
 		return instance;
 	};
 })();
+
+export const formi: {
+	<ControlT extends AbstractControl>(
+		//
+		control: ControlT,
+	): ReadonlyReactiveFormProxy<ControlT>;
+} = createReadonlyReactiveFormProxy;

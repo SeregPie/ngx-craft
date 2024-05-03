@@ -237,7 +237,10 @@ describe('useFormFallthrough', () => {
 		for await (let _ of (async function* () {
 			yield;
 			for (let i = 2; i--; ) {
-				for (let fn of <Iterable<{(v: number): void}>>[(v) => form.setValue(v), (v) => value$.set(v)]) {
+				for (let fn of <Iterable<{(v: number): void}>>[
+					(v) => form.setValue(v),
+					(v) => value$.set(v),
+				]) {
 					fn(faker.number.int());
 					fixture.detectChanges();
 					yield;
