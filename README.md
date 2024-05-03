@@ -23,5 +23,7 @@ _in progress_
 
 - Basics
   - [Provider Compitibility](./src/core/basics/provider-compitibility/README.md)
+  - [Validator Customization](./src/core/basics/validator-customization/README.md)
+    - [Async](./src/core/basics/validator-customization/async/README.md)
 - Composables
   - [Form Fallthrough](./src/core/composables/form-fallthrough/README.md)
