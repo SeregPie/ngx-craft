@@ -27,3 +27,4 @@ _in progress_
     - [Async](./src/core/basics/validator-customization/async/README.md)
 - Composables
   - [Form Fallthrough](./src/core/composables/form-fallthrough/README.md)
+  - [Media Query](./src/core/composables/media-query/README.md)
