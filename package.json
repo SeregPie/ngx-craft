@@ -49,6 +49,14 @@
 		"zone.js": "^0.14.4"
 	},
 	"keywords": [
-		"angular"
+		"angular",
+		"control",
+		"form",
+		"media",
+		"query",
+		"reactivity",
+		"signal",
+		"util",
+		"validate"
 	]
 }
