@@ -7,7 +7,6 @@ import oo from '../../../misc/object-oven';
 
 export const useFormFallthrough: {
 	<ControlT extends AbstractControl>(
-		//
 		controlCtor?: AbstractType<ControlT>,
 	): Signal<undefined | ControlT>;
 	required: {
