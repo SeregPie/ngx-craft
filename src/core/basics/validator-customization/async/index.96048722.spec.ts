@@ -1,7 +1,6 @@
 import {fakeAsync, tick} from '@angular/core/testing';
 import {FormControl} from '@angular/forms';
 
-import {spy} from '../../../../misc/jasmine';
 import {composeAsyncValidators, noopAsyncValidator, stubAsyncValidator, withAsyncValidators} from '.';
 
 describe('withAsyncValidators', () => {
@@ -40,7 +39,7 @@ describe('withAsyncValidators', () => {
 
 	it('should call validators only once', fakeAsync(async () => {
 		let form = new FormControl(null);
-		let validators = [null, null].map((v) => spy(async () => v));
+		let validators = [null, null].map((v) => jest.fn(async () => v));
 		withAsyncValidators(form, ...validators);
 
 		for (let validator of validators) {
@@ -98,7 +97,7 @@ describe('composeAsyncValidators', () => {
 	}));
 
 	it('should skip other validators after one fails', fakeAsync(async () => {
-		let validators = [null, {error: true}, null].map((v) => spy(async () => v));
+		let validators = [null, {error: true}, null].map((v) => jest.fn(async () => v));
 		new FormControl(null, {
 			asyncValidators: composeAsyncValidators(validators),
 		});

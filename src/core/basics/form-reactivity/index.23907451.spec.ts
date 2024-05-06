@@ -2,7 +2,6 @@ import {effect} from '@angular/core';
 import {TestBed, fakeAsync} from '@angular/core/testing';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
-import {spy} from '../../../misc/jasmine';
 import {formi} from '.';
 
 describe('formi', () => {
@@ -49,42 +48,42 @@ describe('formi', () => {
 	it('should trigger changes properly', fakeAsync(async () => {
 		let form = new FormControl(null);
 
-		let effectFn = spy(() => {
+		let effectFn = jest.fn(() => {
 			formi(form).disabled;
 		});
 		TestBed.runInInjectionContext(() => {
 			effect(effectFn);
 		});
 		TestBed.flushEffects();
-		effectFn.calls.reset();
+		jest.clearAllMocks()
 
 		form.disable();
 		form.markAsTouched();
 		TestBed.flushEffects();
 
 		expect(effectFn).toHaveBeenCalledTimes(1);
-		effectFn.calls.reset();
+		jest.clearAllMocks()
 
 		form.disable();
 		form.markAsUntouched();
 		TestBed.flushEffects();
 
 		expect(effectFn).not.toHaveBeenCalled();
-		effectFn.calls.reset();
+		jest.clearAllMocks()
 
 		form.enable();
 		form.markAsUntouched();
 		TestBed.flushEffects();
 
 		expect(effectFn).toHaveBeenCalledTimes(1);
-		effectFn.calls.reset();
+		jest.clearAllMocks()
 
 		form.enable();
 		form.markAsTouched();
 		TestBed.flushEffects();
 
 		expect(effectFn).not.toHaveBeenCalled();
-		effectFn.calls.reset();
+		jest.clearAllMocks()
 	}));
 
 	it('should have target control', fakeAsync(async () => {

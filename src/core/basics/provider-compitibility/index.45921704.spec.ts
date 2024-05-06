@@ -47,7 +47,6 @@ describe('provide', () => {
 					// @ts-expect-error
 					provide(token).useValue(A.asExisting);
 				});
-				expect().nothing();
 			}));
 		});
 
@@ -70,7 +69,6 @@ describe('provide', () => {
 					// @ts-expect-error
 					provide(token).useFactory(A.asExisting);
 				});
-				expect().nothing();
 			}));
 		});
 
@@ -93,7 +91,6 @@ describe('provide', () => {
 					// @ts-expect-error
 					provide(token).useClass(A.asExisting);
 				});
-				expect().nothing();
 			}));
 		});
 
@@ -116,7 +113,6 @@ describe('provide', () => {
 					// @ts-ignore
 					provide(token).useExisting(B.asExisting);
 				});
-				expect().nothing();
 			}));
 		});
 	});
@@ -144,7 +140,6 @@ describe('provide', () => {
 					// @ts-expect-error
 					provide(token, {multi: true}).useValue(A.asExisting);
 				});
-				expect().nothing();
 			}));
 		});
 
@@ -168,7 +163,6 @@ describe('provide', () => {
 					// @ts-expect-error
 					provide(token, {multi: true}).useFactory(A.asExisting);
 				});
-				expect().nothing();
 			}));
 		});
 
@@ -192,7 +186,6 @@ describe('provide', () => {
 					// @ts-expect-error
 					provide(token, {multi: true}).useClass(A.asExisting);
 				});
-				expect().nothing();
 			}));
 		});
 
@@ -218,7 +211,6 @@ describe('provide', () => {
 					// @ts-ignore
 					provide(token, {multi: true}).useExisting(B.asExisting);
 				});
-				expect().nothing();
 			}));
 		});
 	});
