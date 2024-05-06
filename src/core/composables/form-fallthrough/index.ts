@@ -4,8 +4,7 @@ import {AbstractType, Signal, computed, inject, signal} from '@angular/core';
 import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
 
 import oo from '../../../misc/object-oven';
-
-// todo: should work without injection context
+import {isInInjectionContext} from '../../basics/lggajrsh';
 
 export const useFormFallthrough: {
 	<ControlT extends AbstractControl>(
@@ -19,53 +18,55 @@ export const useFormFallthrough: {
 } = oo.extend(
 	(controlCtor = AbstractControl) => {
 		// todo: rework
-		let ref = inject(NgControl, {self: true, optional: true});
-		if (ref != null) {
-			ref.valueAccessor ??= {
-				writeValue() {},
-				registerOnChange() {},
-				registerOnTouched() {},
-			};
-		} else {
-			ref = inject(ControlContainer, {self: true, optional: true});
-		}
-		if (ref != null) {
-			// todo: use helper
-			let changes$ = signal({});
-			// todo: use helper
-			['ngOnChanges'].forEach((key) => {
-				let method = ref[key];
-				if (method) {
+		if (isInInjectionContext()) {
+			let ref = inject(NgControl, {self: true, optional: true});
+			if (ref != null) {
+				ref.valueAccessor ??= {
+					writeValue() {},
+					registerOnChange() {},
+					registerOnTouched() {},
+				};
+			} else {
+				ref = inject(ControlContainer, {self: true, optional: true});
+			}
+			if (ref != null) {
+				// todo: use helper
+				let changes$ = signal({});
+				// todo: use helper
+				['ngOnChanges'].forEach((key) => {
+					let method = ref[key];
+					if (method) {
+						oo.extend(ref, {
+							[key]() {
+								changes$.set({});
+								return method.apply(this, arguments);
+							},
+						});
+					}
+				});
+				// todo: use helper
+				['name'].forEach((key) => {
+					let value = ref[key];
 					oo.extend(ref, {
-						[key]() {
+						get [key]() {
+							return value;
+						},
+						set [key](v) {
 							changes$.set({});
-							return method.apply(this, arguments);
+							value = v;
 						},
 					});
-				}
-			});
-			// todo: use helper
-			['name'].forEach((key) => {
-				let value = ref[key];
-				oo.extend(ref, {
-					get [key]() {
-						return value;
-					},
-					set [key](v) {
-						changes$.set({});
-						value = v;
-					},
 				});
-			});
-			return computed(() => {
-				changes$();
-				let {control} = ref;
-				if (control != null) {
-					if (control instanceof controlCtor) {
-						return control;
+				return computed(() => {
+					changes$();
+					let {control} = ref;
+					if (control != null) {
+						if (control instanceof controlCtor) {
+							return control;
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 		return signal(undefined).asReadonly();
 	},
