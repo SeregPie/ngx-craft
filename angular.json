@@ -26,6 +26,53 @@
 			},
 			"projectType": "library",
 			"root": "."
+		},
+		"docs": {
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:browser-esbuild",
+					"configurations": {
+						"development": {
+							"extractLicenses": false,
+							"optimization": false,
+							"sourceMap": true
+						},
+						"production": {
+							"outputHashing": "all"
+						}
+					},
+					"defaultConfiguration": "production",
+					"options": {
+						"allowedCommonJsDependencies": ["@messageformat/core"],
+						"assets": ["./src/docs/favicon.ico", "./src/docs/assets"],
+						"index": "./src/docs/index.html",
+						"inlineStyleLanguage": "scss",
+						"main": "./src/docs/main.ts",
+						"outputPath": "./docs",
+						"polyfills": ["zone.js"],
+						"styles": ["./src/docs/styles.scss"],
+						"tsConfig": "./src/docs/tsconfig.json"
+					}
+				},
+				"serve": {
+					"builder": "@angular-devkit/build-angular:dev-server",
+					"configurations": {
+						"development": {
+							"buildTarget": "docs:build:development"
+						},
+						"production": {
+							"buildTarget": "docs:build:production"
+						}
+					},
+					"defaultConfiguration": "development",
+					"options": {
+						"open": true
+					}
+				}
+			},
+			"projectType": "application",
+			"root": ".",
+			"sourceRoot": "./src/docs"
 		}
 	},
 	"version": 1

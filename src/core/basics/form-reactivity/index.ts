@@ -29,13 +29,17 @@ export type ReadonlyReactiveFormProxy<
 	& Readonly<Pick<ControlT, ReadonlyReactiveFormProp>>
 );
 
+// todo: rework
+// todo: rename
 export const formi: {
 	<ControlT extends AbstractControl>(
 		control: ControlT,
 	): ReadonlyReactiveFormProxy<ControlT>;
 } = (() => {
 	let create = (control) => {
+		// todo: use helper
 		let changes$ = signal({});
+		// todo: use helper
 		[
 			'_updatePristine',
 			'_updateTouched',

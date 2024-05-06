@@ -4,6 +4,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 import {formi} from '.';
 
+// todo: better descriptions
+
 describe('formi', () => {
 	it('should reflect actual state', fakeAsync(async () => {
 		let form = new FormGroup({
@@ -15,6 +17,7 @@ describe('formi', () => {
 			}),
 		});
 
+		// todo
 		for await (let _ of (async function* () {
 			yield;
 			for (let fn of [
@@ -48,6 +51,7 @@ describe('formi', () => {
 	it('should trigger changes properly', fakeAsync(async () => {
 		let form = new FormControl(null);
 
+		// todo: rename
 		let effectFn = jest.fn(() => {
 			formi(form).disabled;
 		});

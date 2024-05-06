@@ -5,6 +5,8 @@ import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
 
 import oo from '../../../misc/object-oven';
 
+// todo: should work without injection context
+
 export const useFormFallthrough: {
 	<ControlT extends AbstractControl>(
 		controlCtor?: AbstractType<ControlT>,
@@ -16,6 +18,7 @@ export const useFormFallthrough: {
 	};
 } = oo.extend(
 	(controlCtor = AbstractControl) => {
+		// todo: rework
 		let ref = inject(NgControl, {self: true, optional: true});
 		if (ref != null) {
 			ref.valueAccessor ??= {
@@ -27,7 +30,9 @@ export const useFormFallthrough: {
 			ref = inject(ControlContainer, {self: true, optional: true});
 		}
 		if (ref != null) {
+			// todo: use helper
 			let changes$ = signal({});
+			// todo: use helper
 			['ngOnChanges'].forEach((key) => {
 				let method = ref[key];
 				if (method) {
@@ -39,6 +44,7 @@ export const useFormFallthrough: {
 					});
 				}
 			});
+			// todo: use helper
 			['name'].forEach((key) => {
 				let value = ref[key];
 				oo.extend(ref, {

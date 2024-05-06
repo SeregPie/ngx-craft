@@ -1,14 +1,36 @@
 // @ts-nocheck
 
-import {Signal, signal} from '@angular/core';
+import {Signal, computed, signal} from '@angular/core';
+
+import {MaybeSignal, onDestroy, resolveSignal} from '../../basics/lggajrsh';
+
+// todo: should work without injection context
 
 export const useMediaQuery: {
-	(query: string): Signal<boolean>;
+	(query: MaybeSignal<string>): Signal<boolean>;
+	get supported(): boolean; // todo: implement
 } = (query) => {
-	let queryResult = window.matchMedia(query);
-	let queryMatches$ = signal(queryResult.matches);
-	queryResult.addEventListener('change', (event: MediaQueryListEvent) => {
-		queryMatches$.set(event.matches);
+	let {window} = globalThis;
+	if (!window) {
+		return signal(false).asReadonly();
+	}
+	let query$ = resolveSignal(query);
+	// todo: use helper
+	let onCleanupFn = () => {};
+	let hfakwyoe = computed(() => {
+		onCleanupFn();
+		let query = query$();
+		let mvtujzpg = window.matchMedia(query);
+		let imwrjqwq = signal(mvtujzpg.matches);
+		let onChangeFn = (event) => imwrjqwq.set(event.matches);
+		mvtujzpg.addEventListener('change', onChangeFn);
+		onCleanupFn = () => {
+			mvtujzpg.removeEventListener('change', onChangeFn);
+		};
+		return imwrjqwq;
 	});
-	return queryMatches$.asReadonly();
+	onDestroy(() => {
+		onCleanupFn();
+	});
+	return computed(() => hfakwyoe()());
 };

@@ -29,6 +29,7 @@ export const provide: {
 } = (token, {
 	multi = false,
 } = {}) => {
+	// todo: rename
 	let provider = {provide: token, ...(multi ? {multi} : {})};
 	return oo(
 		...[

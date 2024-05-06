@@ -1,3 +1,5 @@
+<!-- todo: better docs -->
+
 # Provider Compitibility
 
 Simplifies the definition of providers and extends it with type safety.
