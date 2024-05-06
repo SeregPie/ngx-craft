@@ -1,14 +1,8 @@
 {
-	"angularCompilerOptions": {
-		"compilationMode": "partial",
-		"enableI18nLegacyMessageIdFormat": false,
-		"strictInjectionParameters": true,
-		"strictInputAccessModifiers": true,
-		"strictTemplates": true
-	},
 	"compilerOptions": {
 		"experimentalDecorators": true,
-		"lib": ["ESNext", "DOM"]
+		"lib": ["ESNext", "DOM"],
+		"removeComments": true
 	},
 	"extends": "../tsconfig.json"
 }
