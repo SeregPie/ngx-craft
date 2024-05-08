@@ -1,22 +1,19 @@
 // @ts-nocheck
 
-import {AbstractType, Signal, computed, inject, signal} from '@angular/core';
+import {AbstractType, Signal, assertInInjectionContext, computed, inject, signal} from '@angular/core';
 import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
 
 import oo from '../../../misc/object-oven';
 import {isInInjectionContext} from '../../basics/lggajrsh';
 
 export const useFormFallthrough: {
-	<ControlT extends AbstractControl>(
-		controlCtor?: AbstractType<ControlT>,
-	): Signal<undefined | ControlT>;
+	<ControlT extends AbstractControl>(controlCtor?: AbstractType<ControlT>): Signal<undefined | ControlT>;
 	required: {
-		<ControlT extends AbstractControl>(
-			...args: Parameters<typeof useFormFallthrough<ControlT>>
-		): Signal<ControlT>;
+		<ControlT extends AbstractControl>(...args: Parameters<typeof useFormFallthrough<ControlT>>): Signal<ControlT>;
 	};
 } = oo.extend(
 	(controlCtor = AbstractControl) => {
+		assertInInjectionContext(useFormFallthrough);
 		// todo: rework
 		if (isInInjectionContext()) {
 			let ref = inject(NgControl, {self: true, optional: true});
