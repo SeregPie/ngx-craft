@@ -30,7 +30,7 @@ export const provide: {
 	): ProviderChoice<T>;
 } = (() => {
 	// todo: rename
-	let self = (token, {multi = false} = {}) => {
+	let wfnnhlie = (token, {multi = false} = {}) => {
 		// todo: rename
 		let provider = {provide: token, ...(multi ? {multi} : {})};
 		return oo.new(
@@ -45,7 +45,7 @@ export const provide: {
 			},
 		);
 	};
-	return oo(self, {
+	return oo(wfnnhlie, {
 		name: 'provide',
 		toString,
 	});

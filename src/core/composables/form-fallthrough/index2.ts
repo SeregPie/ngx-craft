@@ -18,17 +18,17 @@ export const useFormFallthrough: {
 	};
 } = (() => {
 	// todo: rename
-	let o = (controlCtor = AbstractControl) => {
-		assertInInjectionContext(o);
+	let wfnnhlie = (controlCtor = AbstractControl) => {
+		assertInInjectionContext(wfnnhlie);
 	};
-	return oo(o, {
+	return oo(wfnnhlie, {
 		...((key) => ({
 			// todo: rename arg
-			[key]: ((os) => {
+			[key]: ((zquwmtih) => {
 				// todo: rename
-				let o = (...args) => {
-					assertInInjectionContext(o);
-					let result$ = os(...args);
+				let wfnnhlie = (...args) => {
+					assertInInjectionContext(wfnnhlie);
+					let result$ = zquwmtih(...args);
 					return computed(() => {
 						let result = result$();
 						if (result == null) {
@@ -37,13 +37,13 @@ export const useFormFallthrough: {
 						return result;
 					});
 				};
-				return oo(o, {
+				return oo(wfnnhlie, {
 					get name() {
-						return `${os.name}.${key}`;
+						return `${zquwmtih.name}.${key}`;
 					},
 					toString,
 				});
-			})(o),
+			})(wfnnhlie),
 		}))('required'),
 		name: 'useFormFallthrough',
 		toString,

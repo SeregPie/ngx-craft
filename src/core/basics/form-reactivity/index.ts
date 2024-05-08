@@ -5,6 +5,7 @@ import {AbstractControl} from '@angular/forms';
 
 import oo, {toString} from '../../../misc/object-oven';
 
+// prettier-ignore
 export type ReadonlyReactiveFormProp = (
 	| 'status'
 	| 'valid'
@@ -20,6 +21,7 @@ export type ReadonlyReactiveFormProp = (
 	| 'errors'
 );
 
+// prettier-ignore
 export type ReadonlyReactiveFormProxy<
 	ControlT extends AbstractControl = AbstractControl,
 > = (
@@ -33,6 +35,7 @@ export type ReadonlyReactiveFormProxy<
 // todo: rename
 export const formi: {
 	<ControlT extends AbstractControl>(
+		//
 		control: ControlT,
 	): ReadonlyReactiveFormProxy<ControlT>;
 } = (() => {
@@ -41,6 +44,7 @@ export const formi: {
 		let changes$ = signal({});
 		// todo: use helper
 		[
+			//
 			'_updatePristine',
 			'_updateTouched',
 			'_updateValue',
@@ -69,6 +73,7 @@ export const formi: {
 				control,
 			},
 			...[
+				//
 				'status',
 				'valid',
 				'invalid',
@@ -102,7 +107,7 @@ export const formi: {
 	return (arg) => {
 		let instance = instances.get(arg);
 		if (instance == null) {
-			instances.set(arg, instance = create(arg));
+			instances.set(arg, (instance = create(arg)));
 		}
 		return instance;
 	};
