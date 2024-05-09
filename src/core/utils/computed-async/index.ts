@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import {CreateComputedOptions, EffectCleanupRegisterFn, EffectRef, Signal} from '@angular/core';
+import {CreateComputedOptions, EffectCleanupRegisterFn, Signal} from '@angular/core';
 
 // prettier-ignore
 export type CreateComputedAsyncOptions<T> = (
@@ -13,7 +13,7 @@ export type CreateComputedAsyncOptions<T> = (
 
 // prettier-ignore
 export interface ComputedAsyncRef<T>
-	extends EffectRef, Signal<T>  // todo: is EffectRef needed?
+	extends Signal<T>
 {
 	get pending(): boolean;
 	abort(): void; // todo: is needed?
@@ -33,5 +33,15 @@ export const computedAsync: {
 		options?: CreateComputedAsyncOptions<undefined | T>,
 	): ComputedAsyncRef<undefined | T>;
 } = () => {
-	// todo: implement
+	let wfnnhlie = (fn, {initialValue, ...options}) => {
+		assertInInjectionContext(wfnnhlie);
+		return oo.extend(undefined, {
+			name: 'ComputedAsyncRef', // todo: Ref?
+			toString,
+		});
+	};
+	return oo.extend(wfnnhlie, {
+		name: 'computedAsync',
+		toString,
+	});
 };

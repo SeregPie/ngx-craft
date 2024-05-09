@@ -39,7 +39,7 @@ export const useMediaQuery: {
 		}
 		return signal(false).asReadonly();
 	};
-	return oo(wfnnhlie, {
+	return oo.extend(wfnnhlie, {
 		get supported() {
 			return supported$();
 		},

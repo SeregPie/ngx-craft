@@ -17,35 +17,35 @@ export const useFormFallthrough: {
 		): Signal<ControlT>;
 	};
 } = (() => {
-	// todo: rename
+	let name = 'useFormFallthrough';
 	let wfnnhlie = (controlCtor = AbstractControl) => {
 		assertInInjectionContext(wfnnhlie);
 	};
 	return oo(wfnnhlie, {
-		...((key) => ({
-			// todo: rename arg
-			[key]: ((zquwmtih) => {
-				// todo: rename
-				let wfnnhlie = (...args) => {
-					assertInInjectionContext(wfnnhlie);
-					let result$ = zquwmtih(...args);
-					return computed(() => {
-						let result = result$();
-						if (result == null) {
-							throw new Error(`required but not available`);
-						}
-						return result;
-					});
-				};
-				return oo(wfnnhlie, {
+		...((zquwmtih) => {
+			let name = 'required';
+			let wfnnhlie = (...args) => {
+				assertInInjectionContext(wfnnhlie);
+				let result$ = zquwmtih(...args);
+				return computed(() => {
+					let result = result$();
+					if (result == null) {
+						throw new Error(`required but not available`);
+					}
+					return result;
+				});
+			};
+			return {
+				// todo: rename arg
+				[name]: oo(wfnnhlie, {
 					get name() {
-						return `${zquwmtih.name}.${key}`;
+						return `${zquwmtih.name}.${name}`;
 					},
 					toString,
-				});
-			})(wfnnhlie),
-		}))('required'),
-		name: 'useFormFallthrough',
+				}),
+			};
+		})(wfnnhlie),
+		name,
 		toString,
 	});
 })();
