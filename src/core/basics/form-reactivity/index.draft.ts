@@ -3,7 +3,7 @@
 import {computed, signal} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 
-import oo from '../../../misc/object-oven';
+import oo, {toString} from '../../../misc/object-oven';
 
 // prettier-ignore
 export type ReadonlyReactiveFormProp = (
@@ -39,44 +39,28 @@ export const formi: {
 		control: ControlT,
 	): ReadonlyReactiveFormProxy<ControlT>;
 } = (() => {
-	let watchedMethods = [
-		//
-		'_updatePristine',
-		'_updateTouched',
-		'_updateValue',
-		'disable',
-		'enable',
-		'markAsDirty',
-		'markAsPending',
-		'markAsPristine',
-		'markAsTouched',
-		'markAsUntouched',
-		'setErrors',
-		'updateValueAndValidity',
-	];
-	let exposedGetters = [
-		//
-		'status',
-		'valid',
-		'invalid',
-		'pending',
-		'disabled',
-		'enabled',
-		'pristine',
-		'dirty',
-		'touched',
-		'untouched',
-		'value',
-		'errors',
-	];
 	let create = (control) => {
 		// todo: use helper
 		let changes$ = signal({});
 		// todo: use helper
-		watchedMethods.forEach((key) => {
+		[
+			//
+			'_updatePristine',
+			'_updateTouched',
+			'_updateValue',
+			'disable',
+			'enable',
+			'markAsDirty',
+			'markAsPending',
+			'markAsPristine',
+			'markAsTouched',
+			'markAsUntouched',
+			'setErrors',
+			'updateValueAndValidity',
+		].forEach((key) => {
 			let method = control[key];
 			if (method) {
-				oo(control, {
+				oo.extend(control, {
 					[key]() {
 						changes$.set({});
 						return method.apply(this, arguments);
@@ -84,11 +68,25 @@ export const formi: {
 				});
 			}
 		});
-		return oo.new(
+		return oo(
 			{
 				control,
 			},
-			...exposedGetters.map((key) => {
+			...[
+				//
+				'status',
+				'valid',
+				'invalid',
+				'pending',
+				'disabled',
+				'enabled',
+				'pristine',
+				'dirty',
+				'touched',
+				'untouched',
+				'value',
+				'errors',
+			].map((key) => {
 				let value$ = computed(() => {
 					changes$();
 					return control[key];
@@ -99,6 +97,10 @@ export const formi: {
 					},
 				};
 			}),
+			{
+				[Symbol.toStringTag]: 'ReadonlyReactiveFormProxy',
+				toString,
+			},
 		);
 	};
 	let instances = new WeakMap();

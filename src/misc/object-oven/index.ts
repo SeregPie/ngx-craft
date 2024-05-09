@@ -8,17 +8,16 @@ function extend(target: any, ...sources: any[]): any {
 	return target;
 }
 
-function create(...sources: any[]): any {
-	return extend({}, ...sources);
-}
-
 function toString() {
 	// todo
 	return '';
 }
 
-const oo = extend(create, {
-	extend,
+const oo = extend(extend, {
+	new(...sources: any[]): any {
+		return this({}, ...sources);
+	},
+	name: 'ObjectOven',
 	toString,
 });
 

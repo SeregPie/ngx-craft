@@ -2,7 +2,7 @@
 
 import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
 
-import oo, {toString} from '../../../misc/object-oven';
+import oo from '../../../misc/object-oven';
 
 export interface ProviderChoice<T> {
 	useValue(source: T): ValueProvider;
@@ -10,6 +10,8 @@ export interface ProviderChoice<T> {
 	useClass(source: Type<T>): ClassProvider;
 	useExisting(source: ProviderToken<T>): ExistingProvider;
 }
+
+export const ProviderTypes = ['Value', 'Factory', 'Class', 'Existing'];
 
 export module provide {
 	export type Options = Partial<{
@@ -28,25 +30,21 @@ export const provide: {
 		token: ProviderToken<T>,
 		options?: provide.Options,
 	): ProviderChoice<T>;
-} = (() => {
+} = (token, {multi = false} = {}) => {
 	// todo: rename
-	let wfnnhlie = (token, {multi = false} = {}) => {
-		// todo: rename
-		let provider = {provide: token, ...(multi ? {multi} : {})};
-		return oo.new(
-			...['useValue', 'useFactory', 'useClass', 'useExisting'].map((key) => ({
-				[key](source) {
-					return {...provider, [key]: source};
-				},
-			})),
-			{
-				[Symbol.toStringTag]: 'ProviderChoice',
-				toString,
+	let provider = {provide: token, ...(multi ? {multi} : {})};
+	return oo.new(
+		...ProviderTypes.map((v) => `use${v}`).map((key) => ({
+			[key](source) {
+				return {...provider, [key]: source};
 			},
-		);
-	};
-	return oo(wfnnhlie, {
-		name: 'provide',
-		toString,
-	});
-})();
+		})),
+	);
+	return oo.new(
+		...['useValue', 'useFactory', 'useClass', 'useExisting'].map((key) => ({
+			[key](source) {
+				return {...provider, [key]: source};
+			},
+		})),
+	);
+};

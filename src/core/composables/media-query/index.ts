@@ -39,11 +39,10 @@ export const useMediaQuery: {
 		}
 		return signal(false).asReadonly();
 	};
-	return oo.extend(wfnnhlie, {
+	return oo(wfnnhlie, {
 		get supported() {
 			return supported$();
 		},
 		name: 'useMediaQuery',
-		toString,
 	});
 })();

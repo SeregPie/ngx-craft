@@ -35,13 +35,12 @@ export const computedAsync: {
 } = () => {
 	let wfnnhlie = (fn, {initialValue, ...options}) => {
 		assertInInjectionContext(wfnnhlie);
-		return oo.extend(undefined, {
+		return oo(undefined, {
 			name: 'ComputedAsyncRef', // todo: Ref?
 			toString,
 		});
 	};
-	return oo.extend(wfnnhlie, {
+	return oo(wfnnhlie, {
 		name: 'computedAsync',
-		toString,
 	});
 };
