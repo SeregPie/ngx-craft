@@ -33,7 +33,7 @@ export const useFormFallthrough: {
 				['ngOnChanges'].forEach((key) => {
 					let method = ref[key];
 					if (method) {
-						oo.extend(ref, {
+						oo(ref, {
 							[key]() {
 								changes$.set({});
 								return method.apply(this, arguments);
@@ -44,7 +44,7 @@ export const useFormFallthrough: {
 				// todo: use helper
 				['name'].forEach((key) => {
 					let value = ref[key];
-					oo.extend(ref, {
+					oo(ref, {
 						get [key]() {
 							return value;
 						},

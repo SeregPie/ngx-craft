@@ -34,6 +34,8 @@ module impl {
 		}
 		return signal(false).asReadonly();
 	};
+
+	export {supported$};
 }
 
 // todo: should work without injection context
@@ -42,40 +44,14 @@ export const useMediaQuery: {
 	(query: MaybeSignal<string>): Signal<boolean>;
 	get supported(): boolean; // todo: implement
 } = (() => {
-	let supported$ = computed(() => {
-		// todo
-		return !!(window && EventTarget && MediaQueryList && window.matchMedia && MediaQueryList.prototype instanceof EventTarget);
-	});
 	// todo: rename
-	let wfnnhlie = (query) => {
+	let wfnnhlie = (...args) => {
 		assertInInjectionContext(wfnnhlie);
-		if (supported$()) {
-			let query$ = resolveSignal(query);
-			// todo: use helper
-			let onCleanupFn = () => {};
-			// todo: rework
-			let hfakwyoe = computed(() => {
-				onCleanupFn();
-				let query = query$();
-				let mvtujzpg = window.matchMedia(query);
-				let imwrjqwq = signal(mvtujzpg.matches);
-				let onChangeFn = (event) => imwrjqwq.set(event.matches);
-				mvtujzpg.addEventListener('change', onChangeFn);
-				onCleanupFn = () => {
-					mvtujzpg.removeEventListener('change', onChangeFn);
-				};
-				return imwrjqwq;
-			});
-			onDestroy(() => {
-				onCleanupFn();
-			});
-			return computed(() => hfakwyoe()());
-		}
-		return signal(false).asReadonly();
+		return impl.default(...args);
 	};
 	return oo(wfnnhlie, {
 		get supported() {
-			return supported$();
+			return impl.supported$();
 		},
 		name: 'useMediaQuery',
 	});

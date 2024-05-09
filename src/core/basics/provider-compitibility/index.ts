@@ -11,8 +11,6 @@ export interface ProviderChoice<T> {
 	useExisting(source: ProviderToken<T>): ExistingProvider;
 }
 
-export const ProviderTypes = ['Value', 'Factory', 'Class', 'Existing'];
-
 export module provide {
 	export type Options = Partial<{
 		multi: boolean;
@@ -30,21 +28,12 @@ export const provide: {
 		token: ProviderToken<T>,
 		options?: provide.Options,
 	): ProviderChoice<T>;
-} = (token, {multi = false} = {}) => {
-	// todo: rename
-	let provider = {provide: token, ...(multi ? {multi} : {})};
-	return oo.new(
-		...ProviderTypes.map((v) => `use${v}`).map((key) => ({
-			[key](source) {
-				return {...provider, [key]: source};
-			},
-		})),
-	);
-	return oo.new(
-		...['useValue', 'useFactory', 'useClass', 'useExisting'].map((key) => ({
-			[key](source) {
-				return {...provider, [key]: source};
-			},
-		})),
-	);
-};
+} = (() => {
+	let types = ['Value', 'Factory', 'Class', 'Existing'];
+	let methods = types.map((type) => `use${type}`);
+	return (token, {multi = false} = {}) => {
+		// todo: rename
+		let provider = {provide: token, ...(multi ? {multi} : {})};
+		return oo.new(...methods.map((key) => ({[key]: (source) => ({...provider, [key]: source})})));
+	};
+})();
