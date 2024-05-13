@@ -32,17 +32,12 @@ export const computedAsync: {
 		fn: {(onCleanup: EffectCleanupRegisterFn): Promise<T>},
 		options?: CreateComputedAsyncOptions<undefined | T>,
 	): ComputedAsyncRef<undefined | T>;
-} = () => {
-	let wfnnhlie = (fn, {initialValue, ...options}) => {
-		assertInInjectionContext(wfnnhlie);
-		return oo(undefined, {
-			name: 'ComputedAsyncRef', // todo: Ref?
-			get pending() {},
-			abort() {},
-			toString,
-		});
-	};
-	return oo(wfnnhlie, {
-		name: 'computedAsync',
+} = (fn, {initialValue, ...options}) => {
+	assertInInjectionContext(wfnnhlie);
+	return oo(undefined, {
+		name: 'ComputedAsyncRef', // todo: Ref in name?
+		get pending() {},
+		abort() {},
+		toString,
 	});
 };

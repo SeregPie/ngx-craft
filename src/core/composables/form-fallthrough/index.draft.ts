@@ -17,28 +17,18 @@ export const useFormFallthrough: {
 		): Signal<ControlT>;
 	};
 } = (() => {
-	let call = (controlCtor = AbstractControl) => {};
-	return oo(call, {
-		...((zquwmtih) => {
-			let key = 'required';
-			let call = (...args) => {
-				let result$ = zquwmtih(...args);
-				return computed(() => {
-					let result = result$();
-					if (result == null) {
-						throw new Error(`required but not available`);
-					}
-					return result;
-				});
-			};
-			return {
-				[key]: oo(call, {
-					get name() {
-						return `${zquwmtih.name}.${key}`;
-					},
-				}),
-			};
-		})(call),
-		name: 'useFormFallthrough',
+	// todo: rename
+	let wfnnhlie = (controlCtor = AbstractControl) => {};
+	return oo(wfnnhlie, {
+		required: (...args) => {
+			let result$ = wfnnhlie(...args);
+			return computed(() => {
+				let result = result$();
+				if (result == null) {
+					throw new Error(`required but not available`);
+				}
+				return result;
+			});
+		},
 	});
 })();

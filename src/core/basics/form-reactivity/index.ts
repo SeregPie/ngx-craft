@@ -31,7 +31,6 @@ export type ReadonlyReactiveFormProxy<
 	& Readonly<Pick<ControlT, ReadonlyReactiveFormProp>>
 );
 
-// todo: rework
 // todo: rename
 export const formi: {
 	<ControlT extends AbstractControl>(

@@ -19,8 +19,6 @@ export module useFormBridge {
 	};
 }
 
-// todo: should work without injection context
-
 export const useFormBridge: {
 	<ValueT>(
 		//
