@@ -19,12 +19,10 @@ export module provide {
 
 export const provide: {
 	<T>(
-		//
 		token: ProviderToken<Array<T>>,
 		options: provide.Options & {multi: true},
 	): ProviderChoice<T>;
 	<T>(
-		//
 		token: ProviderToken<T>,
 		options?: provide.Options,
 	): ProviderChoice<T>;
@@ -32,8 +30,11 @@ export const provide: {
 	let types = ['Value', 'Factory', 'Class', 'Existing'];
 	let methods = types.map((type) => `use${type}`);
 	return (token, {multi = false} = {}) => {
-		// todo: rename
-		let provider = {provide: token, ...(multi ? {multi} : {})};
-		return oo.new(...methods.map((key) => ({[key]: (source) => ({...provider, [key]: source})})));
+		let partials = {provide: token, ...(multi ? {multi} : {})};
+		return oo.new(
+			...methods.map((key) => ({
+				[key]: (source) => ({...partials, [key]: source}),
+			})),
+		);
 	};
 })();

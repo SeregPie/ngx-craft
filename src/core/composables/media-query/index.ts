@@ -1,5 +1,5 @@
 // @ts-nocheck
-import {Signal, computed, signal} from '@angular/core';
+import {Signal, computed, isDevMode, signal} from '@angular/core';
 
 import {MaybeSignal, onDestroy, resolveSignal} from '../../basics/lggajrsh';
 
@@ -48,7 +48,7 @@ export const useMediaQuery: {
 	});
 	// todo: rename
 	let wfnnhlie = (query) => {
-		assertInInjectionContext(wfnnhlie);
+		assertInInjectionContext(isDevMode() ? {name: 'useMediaQuery'} : {});
 		if (supported$()) {
 			let query$ = resolveSignal(query);
 			// todo: use helper

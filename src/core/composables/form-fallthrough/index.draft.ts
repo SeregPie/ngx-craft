@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import {AbstractType, Signal, assertInInjectionContext, computed} from '@angular/core';
+import {AbstractType, Signal, computed} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 
 import oo from '../../../misc/object-oven';
@@ -17,14 +17,11 @@ export const useFormFallthrough: {
 		): Signal<ControlT>;
 	};
 } = (() => {
-	let call = (controlCtor = AbstractControl) => {
-		assertInInjectionContext(call);
-	};
+	let call = (controlCtor = AbstractControl) => {};
 	return oo(call, {
 		...((zquwmtih) => {
 			let key = 'required';
 			let call = (...args) => {
-				assertInInjectionContext(call);
 				let result$ = zquwmtih(...args);
 				return computed(() => {
 					let result = result$();

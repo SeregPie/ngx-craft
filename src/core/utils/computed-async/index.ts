@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import {CreateComputedOptions, EffectCleanupRegisterFn, Signal} from '@angular/core';
+import {CreateComputedOptions, EffectCleanupRegisterFn, Signal, assertInInjectionContext} from '@angular/core';
 
 // prettier-ignore
 export type CreateComputedAsyncOptions<T> = (
@@ -37,6 +37,8 @@ export const computedAsync: {
 		assertInInjectionContext(wfnnhlie);
 		return oo(undefined, {
 			name: 'ComputedAsyncRef', // todo: Ref?
+			get pending() {},
+			abort() {},
 			toString,
 		});
 	};
