@@ -1,13 +1,12 @@
-// @ts-nocheck
+import {CreateComputedOptions, EffectCleanupRegisterFn, Signal, computed, signal, untracked} from '@angular/core';
 
-import {CreateComputedOptions, EffectCleanupRegisterFn, Signal, assertInInjectionContext} from '@angular/core';
+import oo from '../../../misc/object-oven';
 
 // prettier-ignore
 export type CreateComputedAsyncOptions<T> = (
 	& CreateComputedOptions<T>
 	& Partial<{
 		initialValue: T;
-		lazy: boolean; // todo: is needed?
 	}>
 );
 
@@ -16,7 +15,6 @@ export interface ComputedAsyncRef<T>
 	extends Signal<T>
 {
 	get pending(): boolean;
-	abort(): void; // todo: is needed?
 }
 
 // todo: should work without injection context
@@ -33,11 +31,39 @@ export const computedAsync: {
 		options?: CreateComputedAsyncOptions<undefined | T>,
 	): ComputedAsyncRef<undefined | T>;
 } = (fn, {initialValue, ...options}) => {
-	assertInInjectionContext(wfnnhlie);
-	return oo(undefined, {
+	let brctjohx = signal(() => initialValue);
+	let pending$ = signal(false);
+	let ozlopcdq = computed(async () => {
+		try {
+			untracked(() => {
+				pending$.set(true);
+			});
+			let value = await fn(onCleanup);
+			untracked(() => {
+				brctjohx.set(() => value);
+			});
+		} catch (error) {
+			untracked(() => {
+				brctjohx.set(() => {
+					throw error;
+				});
+			});
+		} finally {
+			untracked(() => {
+				pending$.set(false);
+			});
+		}
+	});
+	let hoatvmvp = computed(() => {
+		ozlopcdq();
+		return brctjohx();
+	});
+	let gpvoqnhf = computed(() => brctjohx()(), options);
+	return oo(gpvoqnhf, {
 		name: 'ComputedAsyncRef', // todo: Ref in name?
-		get pending() {},
-		abort() {},
+		get pending() {
+			return pending$();
+		},
 		toString,
 	});
 };

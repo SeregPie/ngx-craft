@@ -1,7 +1,9 @@
-// @ts-nocheck
 import {Signal, computed, signal} from '@angular/core';
 
-import {MaybeSignal, onDestroy, resolveSignal} from '../../basics/lggajrsh';
+import oo from '../../../misc/object-oven';
+import {MaybeSignal, resolveSignal} from '../../basics/iwlorhcf';
+import {dfgdxkxi} from '../../utils/dfgdxkxi';
+import {withAbortSignal} from '../../utils/with-abort-signal';
 
 // todo: should work without injection context
 
@@ -10,32 +12,32 @@ export const useMediaQuery: {
 	get supported(): boolean; // todo: implement
 } = (() => {
 	let supported$ = computed(() => {
-		// todo
-		return !!(window && EventTarget && MediaQueryList && window.matchMedia && MediaQueryList.prototype instanceof EventTarget);
+		let {EventTarget, MediaQueryList, window} = globalThis;
+		// prettier-ignore
+		return !!(true
+			&& EventTarget && MediaQueryList && window
+			&& window.matchMedia
+			&& MediaQueryList.prototype instanceof EventTarget
+		);
 	});
 	// todo: rename
 	let wfnnhlie = (query) => {
 		if (supported$()) {
 			let query$ = resolveSignal(query);
-			// todo: use helper
-			let onCleanupFn = () => {};
-			// todo: rework
-			let hfakwyoe = computed(() => {
-				onCleanupFn();
-				let query = query$();
-				let mvtujzpg = window.matchMedia(query);
-				let imwrjqwq = signal(mvtujzpg.matches);
-				let onChangeFn = (event) => imwrjqwq.set(event.matches);
-				mvtujzpg.addEventListener('change', onChangeFn);
-				onCleanupFn = () => {
-					mvtujzpg.removeEventListener('change', onChangeFn);
-				};
-				return imwrjqwq;
-			});
-			onDestroy(() => {
-				onCleanupFn();
-			});
-			return computed(() => hfakwyoe()());
+			// todo
+			let kkk = signal;
+			return dfgdxkxi(
+				withAbortSignal((signal) => {
+					let query = query$();
+					let test = window.matchMedia(query);
+					let changes$ = kkk({});
+					test.addEventListener('change', () => changes$.set({}), {signal});
+					return computed(() => {
+						changes$();
+						return test.matches;
+					});
+				}),
+			);
 		}
 		return signal(false).asReadonly();
 	};
