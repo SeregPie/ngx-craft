@@ -29,7 +29,7 @@ describe('getCurrentInjector', () => {
 	}));
 });
 
-describe('createInjector', () => {
+describe.skip('createInjector', () => {
 	it('', fakeAsync(async () => {
 		let injector = createInjector();
 

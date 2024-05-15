@@ -13,7 +13,7 @@ export const useFormFallthrough: {
 	required: {
 		<ControlT extends AbstractControl>(...args: Parameters<typeof useFormFallthrough<ControlT>>): Signal<ControlT>;
 	};
-} = oo.extend(
+} = oo(
 	(controlCtor = AbstractControl) => {
 		assertInInjectionContext(useFormFallthrough);
 		// todo: rework
