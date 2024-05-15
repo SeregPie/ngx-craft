@@ -6,6 +6,8 @@ import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
 import oo from '../../../misc/object-oven';
 import {isInInjectionContext} from '../../basics/lggajrsh';
 
+// todo: should work without injection context
+
 export const useFormFallthrough: {
 	<ControlT extends AbstractControl>(controlCtor?: AbstractType<ControlT>): Signal<undefined | ControlT>;
 	required: {

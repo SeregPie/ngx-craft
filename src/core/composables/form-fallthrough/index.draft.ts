@@ -5,6 +5,8 @@ import {AbstractControl} from '@angular/forms';
 
 import oo from '../../../misc/object-oven';
 
+// todo: should work without injection context
+
 export const useFormFallthrough: {
 	<ControlT extends AbstractControl>(
 		//
@@ -18,13 +20,16 @@ export const useFormFallthrough: {
 	};
 } = (() => {
 	// todo: rename
-	let wfnnhlie = (controlCtor = AbstractControl) => {};
+	let wfnnhlie = (controlCtor = AbstractControl) => {
+		return signal(undefined).asReadonly();
+	};
 	return oo(wfnnhlie, {
 		required: (...args) => {
 			let result$ = wfnnhlie(...args);
 			return computed(() => {
 				let result = result$();
 				if (result == null) {
+					// todo
 					throw new Error(`required but not available`);
 				}
 				return result;

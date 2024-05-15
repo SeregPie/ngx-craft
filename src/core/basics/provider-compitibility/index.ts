@@ -19,10 +19,12 @@ export module provide {
 
 export const provide: {
 	<T>(
+		//
 		token: ProviderToken<Array<T>>,
 		options: provide.Options & {multi: true},
 	): ProviderChoice<T>;
 	<T>(
+		//
 		token: ProviderToken<T>,
 		options?: provide.Options,
 	): ProviderChoice<T>;
