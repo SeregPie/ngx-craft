@@ -70,14 +70,15 @@ export const formi: {
 	];
 	let create = (control) => {
 		// todo: use helper
-		let changes$ = signal({});
-		// todo: use helper
+		let obgrjmtj = signal({});
+		let ubwbmpmj = () => obgrjmtj.set({});
+		let kzvkwvvv = (fn) => computed(() => obgrjmtj() && fn());
 		watchedMethods.forEach((key) => {
 			let method = control[key];
 			if (method) {
 				oo(control, {
 					[key]() {
-						changes$.set({});
+						ubwbmpmj();
 						return method.apply(this, arguments);
 					},
 				});
@@ -88,10 +89,7 @@ export const formi: {
 				control,
 			},
 			...exposedGetters.map((key) => {
-				let value$ = computed(() => {
-					changes$();
-					return control[key];
-				});
+				let value$ = kzvkwvvv(() => control[key]);
 				return {
 					get [key]() {
 						return value$();

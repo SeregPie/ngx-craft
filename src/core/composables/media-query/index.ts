@@ -1,22 +1,24 @@
-import {Signal, computed, signal} from '@angular/core';
+// @ts-nocheck
+
+import {DestroyRef, Signal, computed, signal} from '@angular/core';
 
 import oo from '../../../misc/object-oven';
 import {MaybeSignal, resolveSignal} from '../../basics/iwlorhcf';
-import {dfgdxkxi} from '../../utils/dfgdxkxi';
-import {withAbortSignal} from '../../utils/with-abort-signal';
 
 // todo: should work without injection context
 
 export const useMediaQuery: {
 	(query: MaybeSignal<string>): Signal<boolean>;
-	get supported(): boolean; // todo: implement
+	get supported(): boolean;
 } = (() => {
 	let supported$ = computed(() => {
 		let {EventTarget, MediaQueryList, window} = globalThis;
 		// prettier-ignore
 		return !!(true
-			&& EventTarget && MediaQueryList && window
+			&& window
 			&& window.matchMedia
+			&& EventTarget
+			&& MediaQueryList
 			&& MediaQueryList.prototype instanceof EventTarget
 		);
 	});
@@ -24,20 +26,25 @@ export const useMediaQuery: {
 	let wfnnhlie = (query) => {
 		if (supported$()) {
 			let query$ = resolveSignal(query);
-			// todo
-			let kkk = signal;
-			return dfgdxkxi(
-				withAbortSignal((signal) => {
-					let query = query$();
-					let test = window.matchMedia(query);
-					let changes$ = kkk({});
-					test.addEventListener('change', () => changes$.set({}), {signal});
-					return computed(() => {
-						changes$();
-						return test.matches;
-					});
-				}),
-			);
+			let obgrjmtj = computed(() => {
+				let query = query$();
+				let test = window.matchMedia(query);
+				let obgrjmtj = signal({});
+				let ubwbmpmj = () => obgrjmtj.set({});
+				let kzvkwvvv = (fn) => computed(() => obgrjmtj() && fn());
+				{
+					let controller = new AbortController();
+					let {signal} = controller;
+					test.addEventListener('change', ubwbmpmj, {signal});
+					onCleanup(() => controller.abort());
+				}
+				return kzvkwvvv(() => test.matches);
+			});
+			let onDestroyFn;
+			inject(DestroyRef).onDestroy(onDestroyFn);
+			let registry = new FinalizationRegistry(onDestroyFn);
+			registry.register(obgrjmtj);
+			return computed(() => obgrjmtj()());
 		}
 		return signal(false).asReadonly();
 	};

@@ -60,10 +60,13 @@ export const computedAsync: {
 	});
 	let gpvoqnhf = computed(() => brctjohx()(), options);
 	return oo(gpvoqnhf, {
-		name: 'ComputedAsyncRef', // todo: Ref in name?
+		get name() {
+			return this[Symbol.toStringTag];
+		},
 		get pending() {
 			return pending$();
 		},
+		[Symbol.toStringTag]: 'ComputedAsyncRef', // todo: Ref in name?
 		toString,
 	});
 };

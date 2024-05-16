@@ -6,15 +6,16 @@ export const getCurrentInjector: {
 	(): undefined | Injector;
 } = () => {
 	try {
-		return inject(INJECTOR);
+		let injector = inject(INJECTOR);
+		if (injector instanceof Injector) {
+			return injector;
+		}
 	} catch {}
 };
 
 export const isInInjectionContext: {
 	(): boolean;
-} = () => {
-	return getCurrentInjector() != null;
-};
+} = () => getCurrentInjector() != null;
 
 // todo: rename
 export interface CgbxxahrInjector extends Injector {
