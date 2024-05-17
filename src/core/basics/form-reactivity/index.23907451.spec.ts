@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 import {formi} from '.';
 
+// todo: better tests
 // todo: better descriptions
 
 describe('formi', () => {
@@ -59,35 +60,35 @@ describe('formi', () => {
 			effect(effectFn);
 		});
 		TestBed.flushEffects();
-		jest.clearAllMocks()
+		jest.clearAllMocks();
 
 		form.disable();
 		form.markAsTouched();
 		TestBed.flushEffects();
 
 		expect(effectFn).toHaveBeenCalledTimes(1);
-		jest.clearAllMocks()
+		jest.clearAllMocks();
 
 		form.disable();
 		form.markAsUntouched();
 		TestBed.flushEffects();
 
 		expect(effectFn).not.toHaveBeenCalled();
-		jest.clearAllMocks()
+		jest.clearAllMocks();
 
 		form.enable();
 		form.markAsUntouched();
 		TestBed.flushEffects();
 
 		expect(effectFn).toHaveBeenCalledTimes(1);
-		jest.clearAllMocks()
+		jest.clearAllMocks();
 
 		form.enable();
 		form.markAsTouched();
 		TestBed.flushEffects();
 
 		expect(effectFn).not.toHaveBeenCalled();
-		jest.clearAllMocks()
+		jest.clearAllMocks();
 	}));
 
 	it('should have target control', fakeAsync(async () => {
