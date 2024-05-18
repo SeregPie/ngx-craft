@@ -1,9 +1,7 @@
-// @ts-nocheck
-
 import {DestroyRef, Signal, computed, signal} from '@angular/core';
 
 import oo from '../../../misc/object-oven';
-import {MaybeSignal, resolveSignal} from '../../basics/iwlorhcf';
+import {resolveSignal} from '../../drafts';
 
 // todo: should work without injection context
 
@@ -12,15 +10,9 @@ export const useMediaQuery: {
 	get supported(): boolean;
 } = (() => {
 	let supported$ = computed(() => {
+		// todo
 		let {EventTarget, MediaQueryList, window} = globalThis;
-		// prettier-ignore
-		return !!(true
-			&& window
-			&& window.matchMedia
-			&& EventTarget
-			&& MediaQueryList
-			&& MediaQueryList.prototype instanceof EventTarget
-		);
+		return !!(window && window.matchMedia && EventTarget && MediaQueryList && MediaQueryList.prototype instanceof EventTarget);
 	});
 	// todo: rename
 	let wfnnhlie = (query) => {

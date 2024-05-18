@@ -191,13 +191,11 @@ describe('provide', () => {
 
 		describe('useExisting', () => {
 			it('should create a correct provider', fakeAsync(async () => {
-				expect(provide(token, {multi: true}).useExisting(A.asExisting)).toEqual(
-					{
-						provide: token,
-						multi: true,
-						useExisting: A.asExisting,
-					},
-				);
+				expect(provide(token, {multi: true}).useExisting(A.asExisting)).toEqual({
+					provide: token,
+					multi: true,
+					useExisting: A.asExisting,
+				});
 			}));
 
 			it('should enforce type safety', fakeAsync(async () => {
