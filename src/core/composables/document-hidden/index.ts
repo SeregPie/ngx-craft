@@ -4,7 +4,7 @@ import oo from '../../../misc/object-oven';
 
 // todo: should work without injection context
 
-export const useDocumentVisible: {
+export const useDocumentHidden: {
 	(): Signal<boolean>;
 	get supported(): boolean;
 } = (() => {
@@ -21,13 +21,13 @@ export const useDocumentVisible: {
 			let ubwbmpmj = () => obgrjmtj.set({});
 			let kzvkwvvv = (fn) => computed(() => obgrjmtj() && fn());
 			// todo: use helper
-			{
-				let controller = new AbortController();
-				let {signal} = controller;
-				document.addEventListener('visibilitychange', ubwbmpmj, {signal});
-				inject(DestroyRef).onDestroy(() => controller.abort());
-			}
-			return kzvkwvvv(() => document.visibilityState === 'visible');
+			((target, event, listener) => {
+				target.addEventListener(target, event, listener);
+				inject(DestroyRef).onDestroy(() => {
+					target.removeEventListener(target, event, listener);
+				});
+			})(document, 'visibilitychange', ubwbmpmj);
+			return kzvkwvvv(() => document.hidden);
 		}
 		return signal(false).asReadonly();
 	};

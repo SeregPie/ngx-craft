@@ -1,4 +1,4 @@
-import {DestroyRef, Signal, computed, signal} from '@angular/core';
+import {DestroyRef, Injector, Signal, computed, inject, signal} from '@angular/core';
 
 import oo from '../../../misc/object-oven';
 import {resolveSignal} from '../../drafts';
@@ -18,24 +18,23 @@ export const useMediaQuery: {
 	let wfnnhlie = (query) => {
 		if (supported$()) {
 			let query$ = resolveSignal(query);
+			// todo: use helper
+			let injector = inject(Injector);
 			let obgrjmtj = computed(() => {
 				let query = query$();
 				let test = window.matchMedia(query);
 				let obgrjmtj = signal({});
 				let ubwbmpmj = () => obgrjmtj.set({});
 				let kzvkwvvv = (fn) => computed(() => obgrjmtj() && fn());
-				{
-					let controller = new AbortController();
-					let {signal} = controller;
-					test.addEventListener('change', ubwbmpmj, {signal});
-					onCleanup(() => controller.abort());
-				}
+				// todo: use helper
+				((target, event, listener) => {
+					target.addEventListener(target, event, listener);
+					inject(DestroyRef).onDestroy(() => {
+						target.removeEventListener(target, event, listener);
+					});
+				})(test, 'change', ubwbmpmj);
 				return kzvkwvvv(() => test.matches);
 			});
-			let onDestroyFn;
-			inject(DestroyRef).onDestroy(onDestroyFn);
-			let registry = new FinalizationRegistry(onDestroyFn);
-			registry.register(obgrjmtj);
 			return computed(() => obgrjmtj()());
 		}
 		return signal(false).asReadonly();

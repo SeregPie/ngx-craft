@@ -1,11 +1,29 @@
-// @ts-nocheck
+import {CreateComputedOptions, DestroyRef, EffectCleanupFn, EffectCleanupRegisterFn, ElementRef, INJECTOR, Injector, Provider, Signal, computed, inject, isSignal, signal} from '@angular/core';
 
-import {CreateComputedOptions, DestroyRef, EffectCleanupFn, EffectCleanupRegisterFn, ElementRef, INJECTOR, Injector, Provider, Signal, computed, inject, isSignal, signal, ɵEffectScheduler} from '@angular/core';
-
-export const reactify: {
-	<T>(target: T): T;
-} = (target) => {
-	return target;
+export const ubwbmpmj: {
+	(): {
+		track: {(): void};
+		computed: typeof computed;
+		notify: {(): void};
+	};
+} = () => {
+	let obgrjmtj = signal({});
+	let track = () => {
+		obgrjmtj();
+	};
+	let notify = () => {
+		obgrjmtj.set({});
+	};
+	return {
+		track,
+		computed: (fn, options) => {
+			return computed(() => {
+				track();
+				return fn();
+			}, options);
+		},
+		notify,
+	};
 };
 
 export const dfgdxkxi: {
@@ -85,6 +103,7 @@ export type CreateInjectorOptions = Partial<{
 	loose: boolean;
 }>;
 
+/*
 let pyvoikwr = Injector.create({
 	providers: [ɵEffectScheduler],
 });
@@ -107,6 +126,7 @@ export const createInjector: {
 	})();
 	return Injector.create({providers, parent});
 };
+*/
 
 export const onDestroy: {
 	(fn: {(): void}): void;
