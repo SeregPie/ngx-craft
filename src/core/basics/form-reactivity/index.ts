@@ -3,8 +3,9 @@
 import {computed, signal} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 
-import oo, {toString} from '../../../misc/object-oven';
+import oo from '../../../misc/object-oven';
 
+// prettier-ignore
 export type ReadonlyReactiveFormProp = (
 	| 'status'
 	| 'valid'
@@ -20,6 +21,7 @@ export type ReadonlyReactiveFormProp = (
 	| 'errors'
 );
 
+// prettier-ignore
 export type ReadonlyReactiveFormProxy<
 	ControlT extends AbstractControl = AbstractControl,
 > = (
@@ -29,76 +31,79 @@ export type ReadonlyReactiveFormProxy<
 	& Readonly<Pick<ControlT, ReadonlyReactiveFormProp>>
 );
 
+// todo: rename
 export const formi: {
 	<ControlT extends AbstractControl>(
+		//
 		control: ControlT,
 	): ReadonlyReactiveFormProxy<ControlT>;
 } = (() => {
+	let watchedMethods = [
+		//
+		'_updatePristine',
+		'_updateTouched',
+		'_updateValue',
+		'disable',
+		'enable',
+		'markAsDirty',
+		'markAsPending',
+		'markAsPristine',
+		'markAsTouched',
+		'markAsUntouched',
+		'setErrors',
+		'updateValueAndValidity',
+	];
+	let exposedGetters = [
+		//
+		'status',
+		'valid',
+		'invalid',
+		'pending',
+		'disabled',
+		'enabled',
+		'pristine',
+		'dirty',
+		'touched',
+		'untouched',
+		'value',
+		'errors',
+	];
 	let create = (control) => {
-		let changes$ = signal({});
-		[
-			'_updatePristine',
-			'_updateTouched',
-			'_updateValue',
-			'disable',
-			'enable',
-			'markAsDirty',
-			'markAsPending',
-			'markAsPristine',
-			'markAsTouched',
-			'markAsUntouched',
-			'setErrors',
-			'updateValueAndValidity',
-		].forEach((key) => {
+		// todo: use helper
+		let obgrjmtj = signal({});
+		let ubwbmpmj = () => obgrjmtj.set({});
+		let kzvkwvvv = (fn) => computed(() => obgrjmtj() && fn());
+		// todo: use helper
+		watchedMethods.forEach((key) => {
 			let method = control[key];
 			if (method) {
-				oo.extend(control, {
+				oo(control, {
 					[key]() {
-						changes$.set({});
+						ubwbmpmj();
 						return method.apply(this, arguments);
 					},
 				});
 			}
 		});
-		return oo(
+		return oo.new(
 			{
 				control,
 			},
-			...[
-				'status',
-				'valid',
-				'invalid',
-				'pending',
-				'disabled',
-				'enabled',
-				'pristine',
-				'dirty',
-				'touched',
-				'untouched',
-				'value',
-				'errors',
-			].map((key) => {
-				let value$ = computed(() => {
-					changes$();
-					return control[key];
-				});
+			...exposedGetters.map((key) => {
+				let value$ = kzvkwvvv(() => control[key]);
 				return {
 					get [key]() {
 						return value$();
 					},
 				};
 			}),
-			{
-				[Symbol.toStringTag]: 'ReadonlyReactiveFormProxy',
-				toString,
-			},
 		);
 	};
 	let instances = new WeakMap();
 	return (arg) => {
 		let instance = instances.get(arg);
 		if (instance == null) {
-			instances.set(arg, instance = create(arg));
+			instances.set(arg, (instance = create(arg)));
 		}
 		return instance;
 	};

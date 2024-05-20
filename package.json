@@ -10,6 +10,8 @@
 	},
 	"scripts": {
 		"build": "ng build core",
+		"build:docs": "ng build docs",
+		"start:docs": "ng serve docs",
 		"test": "ng test",
 		"format": "prettier --write ."
 	},

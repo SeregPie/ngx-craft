@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"paths": {
+			"@/*": ["./*"],
+			"ngx-craft": [".."]
+		}
+	},
+	"extends": "../tsconfig.json"
+}

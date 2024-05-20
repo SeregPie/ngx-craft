@@ -6,6 +6,8 @@ import {simpleFaker as faker} from '@faker-js/faker';
 
 import {useFormFallthrough} from '.';
 
+// todo: better descriptions
+
 describe('useFormFallthrough', () => {
 	it('should work with FormControlDirective', fakeAsync(async () => {
 		let form = new FormRecord({
@@ -235,6 +237,7 @@ describe('useFormFallthrough', () => {
 			yield;
 			for (let i = 2; i--; ) {
 				for (let fn of <Iterable<{(v: number): void}>>[
+					//
 					(v) => form.setValue(v),
 					(v) => value$.set(v),
 				]) {
@@ -330,5 +333,11 @@ describe('useFormFallthrough', () => {
 		let {result} = <MySubComponent>fixture.debugElement.query(By.directive(MySubComponent)).componentInstance;
 
 		expect(result).toThrow();
+	});
+
+	it('should work without injection context', () => {
+		let result = useFormFallthrough();
+
+		expect(result).toBeUndefined();
 	});
 });
