@@ -2,6 +2,14 @@
 
 # Validator Customization
 
+`withValidators(control, ...validators)`
+
+Adds a typed validator to a control.
+
+`composeValidators(validators)`
+
+Composes multiple validators into one.
+
 ## Usage
 
 ```ts
@@ -17,10 +25,8 @@ const form = new FormGroup({
       verify: new FormControl<null | string>(null),
     }),
     (form) => {
-      if (form.controls.actual.valid) {
-        if (form.controls.actual.value !== form.controls.verify.value) {
-          return {error: 'Passwords do not match.'};
-        }
+      if (form.controls.actual.value !== form.controls.verify.value) {
+        return {error: 'Passwords do not match.'};
       }
       return null;
     },
@@ -33,6 +39,7 @@ const form = new FormGroup({
 ```ts
 const form = new FormControl<null | number>(null, {
   validators: composeValidators([
+    //
     Validators.required,
     Validators.min(0),
     Validators.max(100),
@@ -42,6 +49,7 @@ const form = new FormControl<null | number>(null, {
 
 ## Types
 
+<!-- prettier-ignore -->
 ```ts
 export interface CustomValidatorFn<
   ControlT extends AbstractControl = AbstractControl,

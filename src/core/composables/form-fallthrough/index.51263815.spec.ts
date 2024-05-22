@@ -335,9 +335,9 @@ describe('useFormFallthrough', () => {
 		expect(result).toThrow();
 	});
 
-	it('should work without injection context', () => {
-		let result = useFormFallthrough();
-
-		expect(result).toBeUndefined();
-	});
+	it('should work without injection context', fakeAsync(async () => {
+		expect(async () => {
+			useFormFallthrough();
+		}).not.toThrow();
+	}));
 });

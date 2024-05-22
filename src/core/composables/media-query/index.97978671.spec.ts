@@ -1,12 +1,17 @@
-import {DestroyRef, Injector} from '@angular/core';
 import {fakeAsync} from '@angular/core/testing';
+import {useMediaQuery} from '.';
 
 // todo: better tests
+// todo: better descriptions
 
-describe.skip('useMediaQuery', () => {
-	it('should work in a common scenario', fakeAsync(async () => {
-		let injector = Injector.create({providers: []});
-		let destroyRef = injector.get(DestroyRef, undefined, {optional: true});
-		console.log(destroyRef);
-	}));
+describe('useMediaQuery', () => {
+	if (useMediaQuery.supported) {
+		// todo
+	} else {
+		it('', fakeAsync(async () => {
+			let result = useMediaQuery('(orientation: landscape)');
+
+			expect(result()).toBe(false);
+		}));
+	}
 });

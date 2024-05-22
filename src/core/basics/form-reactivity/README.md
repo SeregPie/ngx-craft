@@ -1,8 +1,6 @@
-<!-- todo: better docs -->
-
 # Form Reactivity
 
-## Usage
+`formi(control)`
 
 ```ts
 const formResult = computed(() => {
@@ -15,6 +13,7 @@ const formResult = computed(() => {
 
 ## Types
 
+<!-- prettier-ignore -->
 ```ts
 export type ReadonlyReactiveFormProp = (
   | 'status'

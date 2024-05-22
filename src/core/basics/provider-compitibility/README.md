@@ -2,9 +2,9 @@
 
 # Provider Compitibility
 
-Simplifies the definition of providers and extends it with type safety.
+`provide(token, options = {multi: false})`
 
-## Usage
+Simplifies the definition of providers and extends it with type safety.
 
 ```ts
 type MyTheme = 'Polaris' | 'Nebula';
@@ -19,6 +19,7 @@ class MyComponent {}
 
 ## Types
 
+<!-- prettier-ignore -->
 ```ts
 export interface ProviderChoice<T> {
   useValue(source: T): ValueProvider;

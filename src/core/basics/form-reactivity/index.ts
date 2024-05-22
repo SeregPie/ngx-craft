@@ -1,9 +1,7 @@
-// @ts-nocheck
-
-import {computed, signal} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 
 import oo from '../../../misc/object-oven';
+import {ubwbmpmj} from '../../drafts';
 
 // prettier-ignore
 export type ReadonlyReactiveFormProp = (
@@ -69,17 +67,13 @@ export const formi: {
 		'errors',
 	];
 	let create = (control) => {
-		// todo: use helper
-		let obgrjmtj = signal({});
-		let ubwbmpmj = () => obgrjmtj.set({});
-		let kzvkwvvv = (fn) => computed(() => obgrjmtj() && fn());
-		// todo: use helper
+		let {computed, notify} = ubwbmpmj();
 		watchedMethods.forEach((key) => {
 			let method = control[key];
 			if (method) {
 				oo(control, {
 					[key]() {
-						ubwbmpmj();
+						notify();
 						return method.apply(this, arguments);
 					},
 				});
@@ -90,7 +84,7 @@ export const formi: {
 				control,
 			},
 			...exposedGetters.map((key) => {
-				let value$ = kzvkwvvv(() => control[key]);
+				let value$ = computed(() => control[key]);
 				return {
 					get [key]() {
 						return value$();

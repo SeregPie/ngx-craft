@@ -1,7 +1,7 @@
 import {Signal, computed, signal} from '@angular/core';
 
 import oo from '../../../misc/object-oven';
-import {resolveSignal, ubwbmpmj} from '../../drafts';
+import {MaybeSignal, resolveSignal, ubwbmpmj} from '../../drafts';
 
 // todo: should work without injection context
 
@@ -18,10 +18,11 @@ export const useMediaQuery: {
 			let query$ = resolveSignal(query);
 			return qgtsdogx(() => {
 				let query = query$();
-				let test = window.matchMedia(query);
+				// todo: rename
+				let check = window.matchMedia(query);
 				let {computed, notify} = ubwbmpmj();
-				test.addEventListener('change', notify, {signal: sakluuho()});
-				return computed(() => test.matches);
+				check.addEventListener('change', notify, {signal: sakluuho()});
+				return computed(() => check.matches);
 			});
 		}
 		return signal(false).asReadonly();

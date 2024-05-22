@@ -4,13 +4,15 @@ import oo from '../../../misc/object-oven';
 
 // todo: should work without injection context
 
-export const useDocumentHidden: {
+export const useDocumentVisible: {
 	(): Signal<boolean>;
 	get supported(): boolean;
 } = (() => {
 	let supported$ = computed(() => {
 		// todo
-		let {document, window} = globalThis;
+		let {Document, Window, document, window} = globalThis;
+		if (Window && window instanceof Window) {
+		}
 		return !!(window && document);
 	});
 	// todo: rename
@@ -27,7 +29,7 @@ export const useDocumentHidden: {
 					target.removeEventListener(target, event, listener);
 				});
 			})(document, 'visibilitychange', ubwbmpmj);
-			return kzvkwvvv(() => document.hidden);
+			return kzvkwvvv(() => document.visibilityState === 'visible');
 		}
 		return signal(false).asReadonly();
 	};

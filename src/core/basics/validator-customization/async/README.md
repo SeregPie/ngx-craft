@@ -2,6 +2,7 @@
 
 ## Types
 
+<!-- prettier-ignore -->
 ```ts
 export interface CustomAsyncValidatorFn<
   ControlT extends AbstractControl = AbstractControl,
