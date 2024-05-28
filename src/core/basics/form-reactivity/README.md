@@ -15,6 +15,21 @@ const formResult = computed(() => {
 
 <!-- prettier-ignore -->
 ```ts
+export const formi: {
+  <ControlT extends AbstractControl>(
+    control: ControlT,
+  ): ReadonlyReactiveFormProxy<ControlT>;
+};
+
+export type ReadonlyReactiveFormProxy<
+  ControlT extends AbstractControl = AbstractControl,
+> = (
+  & {
+    readonly control: ControlT;
+  }
+  & Readonly<Pick<ControlT, ReadonlyReactiveFormProp>>
+);
+
 export type ReadonlyReactiveFormProp = (
   | 'status'
   | 'valid'
@@ -29,19 +44,4 @@ export type ReadonlyReactiveFormProp = (
   | 'value'
   | 'errors'
 );
-
-export type ReadonlyReactiveFormProxy<
-  ControlT extends AbstractControl = AbstractControl,
-> = (
-  & {
-    readonly control: ControlT;
-  }
-  & Readonly<Pick<ControlT, ReadonlyReactiveFormProp>>
-);
-
-export const formi: {
-  <ControlT extends AbstractControl>(
-    control: ControlT,
-  ): ReadonlyReactiveFormProxy<ControlT>;
-};
 ```

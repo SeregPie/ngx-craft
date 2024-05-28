@@ -7,7 +7,7 @@ import {resolveSignal} from '../../drafts';
 
 export const useMediaQuery: {
 	(query: MaybeSignal<string>): Signal<boolean>;
-	get supported(): boolean;
+	readonly supported: boolean;
 } = (() => {
 	let supported$ = computed(() => {
 		// todo

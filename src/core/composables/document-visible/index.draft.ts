@@ -8,7 +8,7 @@ import {ubwbmpmj} from '../../drafts';
 
 export const useDocumentHidden: {
 	(): Signal<boolean>;
-	get supported(): boolean;
+	readonly supported: boolean;
 } = (() => {
 	let supported$ = computed(() => {
 		return true;

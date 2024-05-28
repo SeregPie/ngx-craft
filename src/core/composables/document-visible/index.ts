@@ -6,7 +6,7 @@ import oo from '../../../misc/object-oven';
 
 export const useDocumentVisible: {
 	(): Signal<boolean>;
-	get supported(): boolean;
+	readonly supported: boolean;
 } = (() => {
 	let supported$ = computed(() => {
 		// todo

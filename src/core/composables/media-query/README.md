@@ -2,16 +2,19 @@
 
 # Media Query
 
+`useMediaQuery(query)`
+
 ## Usage
 
 ```ts
-let dark$ = useMediaQuery('(prefers-color-scheme: dark)');
+const dark$ = useMediaQuery('(prefers-color-scheme: dark)');
 ```
 
 ## Types
 
 ```ts
 export const useMediaQuery: {
-  (query: string): Signal<boolean>;
+  (query: MaybeSignal<string>): Signal<boolean>;
+  readonly supported: boolean;
 };
 ```

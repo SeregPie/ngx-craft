@@ -7,22 +7,6 @@ import {noop} from '../../../misc/heeltkcu';
 import {formi} from '../../basics/form-reactivity';
 import {provide} from '../../basics/provider-compitibility';
 
-export module useFormBridge {
-	export type Options = Partial<{
-		disabled: WritableSignal<boolean>;
-		touched: WritableSignal<boolean>;
-		pending: Signal<boolean>;
-		errors: Signal<null | ValidationErrors>;
-	}>;
-
-	export type Result = {
-		disabled: Signal<boolean>;
-		touched: Signal<boolean>;
-		pending: Signal<boolean>;
-		errors: Signal<null | ValidationErrors>;
-	};
-}
-
 // todo: should work without injection context
 
 export const useFormBridge: {
@@ -125,3 +109,19 @@ export const useFormBridge: {
 		errors: errors$,
 	};
 };
+
+export module useFormBridge {
+	export type Options = Partial<{
+		disabled: WritableSignal<boolean>;
+		touched: WritableSignal<boolean>;
+		pending: Signal<boolean>;
+		errors: Signal<null | ValidationErrors>;
+	}>;
+
+	export type Result = {
+		disabled: Signal<boolean>;
+		touched: Signal<boolean>;
+		pending: Signal<boolean>;
+		errors: Signal<null | ValidationErrors>;
+	};
+}

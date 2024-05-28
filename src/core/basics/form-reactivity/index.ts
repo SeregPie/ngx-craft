@@ -3,33 +3,7 @@ import {AbstractControl} from '@angular/forms';
 import oo from '../../../misc/object-oven';
 import {ubwbmpmj} from '../../drafts';
 
-// prettier-ignore
-export type ReadonlyReactiveFormProp = (
-	| 'status'
-	| 'valid'
-	| 'invalid'
-	| 'pending'
-	| 'disabled'
-	| 'enabled'
-	| 'pristine'
-	| 'dirty'
-	| 'touched'
-	| 'untouched'
-	| 'value'
-	| 'errors'
-);
-
-// prettier-ignore
-export type ReadonlyReactiveFormProxy<
-	ControlT extends AbstractControl = AbstractControl,
-> = (
-	& {
-		readonly control: ControlT;
-	}
-	& Readonly<Pick<ControlT, ReadonlyReactiveFormProp>>
-);
-
-// todo: rename
+// todo: rename?
 export const formi: {
 	<ControlT extends AbstractControl>(
 		//
@@ -102,3 +76,29 @@ export const formi: {
 		return instance;
 	};
 })();
+
+// prettier-ignore
+export type ReadonlyReactiveFormProxy<
+	ControlT extends AbstractControl = AbstractControl,
+> = (
+	& {
+		readonly control: ControlT;
+	}
+	& Readonly<Pick<ControlT, ReadonlyReactiveFormProp>>
+);
+
+// prettier-ignore
+export type ReadonlyReactiveFormProp = (
+	| 'status'
+	| 'valid'
+	| 'invalid'
+	| 'pending'
+	| 'disabled'
+	| 'enabled'
+	| 'pristine'
+	| 'dirty'
+	| 'touched'
+	| 'untouched'
+	| 'value'
+	| 'errors'
+);
