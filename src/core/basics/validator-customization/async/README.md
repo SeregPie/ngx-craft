@@ -29,7 +29,7 @@ export const withAsyncValidators: {
 
 export const composeAsyncValidators: {
   <ControlT extends AbstractControl>(
-    validators: ReadonlyArray<CustomAsyncValidatorFn<ControlT>>,
+    validators: Readonly<Array<CustomAsyncValidatorFn<ControlT>>>,
   ): CustomAsyncValidatorFn<ControlT>;
 };
 ```

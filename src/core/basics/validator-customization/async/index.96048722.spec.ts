@@ -9,7 +9,7 @@ describe('withAsyncValidators', () => {
 			new FormControl<number>(1, {
 				nonNullable: true,
 			}),
-			async ({value}) => value % 2 ? {error: true} : null,
+			async ({value}) => (value % 2 ? {error: true} : null),
 		);
 
 		expect(form.pending).toBe(true);
@@ -68,8 +68,9 @@ describe('composeAsyncValidators', () => {
 				nonNullable: true,
 			}),
 			composeAsyncValidators([
-				async ({value}) => value === 1 ? {error: {n: 1}} : null,
-				async ({value}) => value === 2 ? {error: {n: 2}} : null,
+				//
+				async ({value}) => (value === 1 ? {error: {n: 1}} : null),
+				async ({value}) => (value === 2 ? {error: {n: 2}} : null),
 			]),
 		);
 

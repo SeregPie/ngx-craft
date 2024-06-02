@@ -9,7 +9,7 @@ describe('withValidators', () => {
 			new FormControl<number>(1, {
 				nonNullable: true,
 			}),
-			({value}) => value % 2 ? {error: true} : null,
+			({value}) => (value % 2 ? {error: true} : null),
 		);
 
 		expect(form.errors).toEqual({error: true});
@@ -21,7 +21,7 @@ describe('withValidators', () => {
 
 	it('should contain all provided validators', fakeAsync(async () => {
 		let form = new FormControl(null);
-		let validators = [null, null].map((v) => () => v);
+		let validators = Array.from({length: 3}, () => () => null);
 		withValidators(form, ...validators);
 
 		for (let validator of validators) {
@@ -31,7 +31,7 @@ describe('withValidators', () => {
 
 	it('should call validators only once', fakeAsync(async () => {
 		let form = new FormControl(null);
-		let validators = [null, null].map((v) => jest.fn(() => v));
+		let validators = Array.from({length: 3}, () => jest.fn(() => null));
 		withValidators(form, ...validators);
 
 		for (let validator of validators) {
@@ -60,8 +60,9 @@ describe('composeValidators', () => {
 				nonNullable: true,
 			}),
 			composeValidators([
-				({value}) => value === 1 ? {error: {n: 1}} : null,
-				({value}) => value === 2 ? {error: {n: 2}} : null,
+				//
+				({value}) => (value === 1 ? {error: {n: 1}} : null),
+				({value}) => (value === 2 ? {error: {n: 2}} : null),
 			]),
 		);
 

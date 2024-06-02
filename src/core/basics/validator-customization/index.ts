@@ -31,7 +31,7 @@ export const withValidators: {
 
 export const composeValidators: {
 	<ControlT extends AbstractControl>(
-		validators: ReadonlyArray<CustomValidatorFn<ControlT>>,
+		validators: Readonly<Array<CustomValidatorFn<ControlT>>>,
 	): CustomValidatorFn<ControlT>;
 } = (validators) => {
 	switch (validators.length) {
