@@ -1,47 +1,49 @@
-import {DestroyRef, Injector, Signal, computed, inject, signal} from '@angular/core';
+// @ts-nocheck
+
+import {DestroyRef, Signal, computed, inject, signal} from '@angular/core';
 
 import oo from '../../../misc/object-oven';
-import {resolveSignal} from '../../drafts';
 
 // todo: should work without injection context
+// todo: MaybeSignal
 
 export const useMediaQuery: {
-	(query: MaybeSignal<string>): Signal<boolean>;
+	(query: string): Signal<boolean>;
 	readonly supported: boolean;
 } = (() => {
-	let supported$ = computed(() => {
-		// todo
-		let {EventTarget, MediaQueryList, window} = globalThis;
-		return !!(window && window.matchMedia && EventTarget && MediaQueryList && MediaQueryList.prototype instanceof EventTarget);
-	});
+	// todo
+	let {EventTarget, MediaQueryList, window} = globalThis;
+	let supported = !!(window && window.matchMedia && MediaQueryList && EventTarget);
 	// todo: rename
 	let wfnnhlie = (query) => {
-		if (supported$()) {
-			let query$ = resolveSignal(query);
+		if (supported) {
+			// todo: rename
+			let test = window.matchMedia(query);
 			// todo: use helper
-			let injector = inject(Injector);
-			let obgrjmtj = computed(() => {
-				let query = query$();
-				let test = window.matchMedia(query);
-				let obgrjmtj = signal({});
-				let ubwbmpmj = () => obgrjmtj.set({});
-				let kzvkwvvv = (fn) => computed(() => obgrjmtj() && fn());
-				// todo: use helper
-				((target, event, listener) => {
-					target.addEventListener(target, event, listener);
+			let change$ = signal({});
+			// todo: use helper
+			((target, event, listener) => {
+				// todo: check if needed
+				if (target instanceof EventTarget) {
+					target.addEventListener(event, listener);
 					inject(DestroyRef).onDestroy(() => {
-						target.removeEventListener(target, event, listener);
+						target.removeEventListener(event, listener);
 					});
-				})(test, 'change', ubwbmpmj);
-				return kzvkwvvv(() => test.matches);
+				} else {
+					target.addListener(event, listener);
+					inject(DestroyRef).onDestroy(() => {
+						target.removeListener(event, listener);
+					});
+				}
+			})(test, 'change', () => change$.set({}));
+			return computed(() => {
+				change$();
+				return test.matches;
 			});
-			return computed(() => obgrjmtj()());
 		}
 		return signal(false).asReadonly();
 	};
 	return oo(wfnnhlie, {
-		get supported() {
-			return supported$();
-		},
+		supported,
 	});
 })();

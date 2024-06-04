@@ -1,7 +1,9 @@
+// @ts-nocheck
+
+import {computed, signal} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 
 import oo from '../../../misc/object-oven';
-import {ubwbmpmj} from '../../drafts';
 
 // todo: rename?
 export const formi: {
@@ -41,13 +43,14 @@ export const formi: {
 		'errors',
 	];
 	let create = (control) => {
-		let {computed, notify} = ubwbmpmj();
+		// todo: user helper
+		let change$ = signal({});
 		watchedMethods.forEach((key) => {
 			let method = control[key];
 			if (method) {
 				oo(control, {
 					[key]() {
-						notify();
+						change$.set({});
 						return method.apply(this, arguments);
 					},
 				});
@@ -58,7 +61,10 @@ export const formi: {
 				control,
 			},
 			...exposedGetters.map((key) => {
-				let value$ = computed(() => control[key]);
+				let value$ = computed(() => {
+					change$();
+					return control[key];
+				});
 				return {
 					get [key]() {
 						return value$();

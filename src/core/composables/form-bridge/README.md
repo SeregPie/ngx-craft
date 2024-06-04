@@ -11,6 +11,7 @@ class MyInputComponent<T> {
 
   disabled = model<boolean>(false);
 
+  // todo: better example
   invalid = computed(() => this.formBridge.errors() != null);
 
   formBridge = useFormBridge(this.value, {

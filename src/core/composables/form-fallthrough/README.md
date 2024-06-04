@@ -4,7 +4,7 @@
 
 Passes a control from a control directive through.
 
-`useFormFallthrough(controlCtor?)`
+`useFormFallthrough(controlCtor)`
 
 `useFormFallthrough.required(...args)`
 
@@ -17,9 +17,9 @@ Passes a control from a control directive through.
     <my-number-input
       [formControl]="form()"
       [label]="label()"
+      [suffix]="'%'"
       [min]="0"
       [max]="100"
-      [unit]="'%'"
     />
   `,
 })

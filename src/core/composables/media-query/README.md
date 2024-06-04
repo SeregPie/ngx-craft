@@ -7,7 +7,10 @@
 ## Usage
 
 ```ts
-const dark$ = useMediaQuery('(prefers-color-scheme: dark)');
+@Component({})
+class MyComponent {
+  dark = useMediaQuery('(prefers-color-scheme: dark)');
+}
 ```
 
 ## Types

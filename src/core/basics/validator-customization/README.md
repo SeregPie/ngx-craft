@@ -6,14 +6,8 @@
 
 Adds a typed validator to a control.
 
-`composeValidators(validators)`
-
-Composes multiple validators into one.
-
-## Usage
-
 ```ts
-const form = new FormGroup({
+let form = new FormGroup({
   email: new FormControl<null | string>(null, {
     validators: [Validators.required, Validators.email],
   }),
@@ -25,8 +19,10 @@ const form = new FormGroup({
       verify: new FormControl<null | string>(null),
     }),
     (form) => {
-      if (form.controls.actual.value !== form.controls.verify.value) {
-        return {error: 'Passwords do not match.'};
+      if (form.controls.actual.valid) {
+        if (form.controls.actual.value !== form.controls.verify.value) {
+          return {error: 'The passwords do not match.'};
+        }
       }
       return null;
     },
@@ -36,8 +32,12 @@ const form = new FormGroup({
 
 ---
 
+`composeValidators(validators)`
+
+Composes multiple validators into one.
+
 ```ts
-const form = new FormControl<null | number>(null, {
+let form = new FormControl<null | number>(null, {
   validators: composeValidators([
     //
     Validators.required,

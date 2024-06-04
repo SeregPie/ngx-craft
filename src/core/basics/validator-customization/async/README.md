@@ -1,4 +1,16 @@
+<!-- todo: better docs -->
+
 # Validator Customization | Async
+
+`withAsyncValidators(control, ...validators)`
+
+Adds a typed asynchronous validator to a control.
+
+---
+
+`composeAsyncValidators(validators)`
+
+Composes multiple asynchronous validators into one.
 
 ## Types
 

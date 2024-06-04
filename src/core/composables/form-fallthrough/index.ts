@@ -1,5 +1,7 @@
-import {AbstractType, Signal, computed, inject, signal} from '@angular/core';
-import {AbstractControl, ControlContainer, NgControl} from '@angular/forms';
+// @ts-nocheck
+
+import {AbstractType, Injector, Signal, afterRender, computed, inject, signal} from '@angular/core';
+import {AbstractControl, ControlContainer, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
 
 import oo from '../../../misc/object-oven';
 
@@ -19,48 +21,33 @@ export const useFormFallthrough: {
 } = (() => {
 	// todo: rename
 	let wfnnhlie = (controlCtor = AbstractControl) => {
-		let ref = inject(NgControl, {self: true, optional: true});
-		if (ref != null) {
-			ref.valueAccessor ??= {
-				writeValue() {},
-				registerOnChange() {},
-				registerOnTouched() {},
-			};
-		} else {
-			ref = inject(ControlContainer, {self: true, optional: true});
+		let injector = inject(Injector);
+		{
+			let key = 'get';
+			let method = injector[key];
+			oo(injector, {
+				[key](token) {
+					console.log(token);
+					if (token === NG_VALUE_ACCESSOR) {
+						return {
+							writeValue() {},
+							registerOnChange() {},
+							registerOnTouched() {},
+						};
+					}
+					return method.apply(this, arguments);
+				},
+			});
 		}
+		console.log('TEST');
+		// todo
+		let ref = inject(NgControl, {self: true, optional: true}) && inject(ControlContainer, {self: true, optional: true});
 		if (ref != null) {
-			// todo: use helper
-			let obgrjmtj = signal({});
-			let ubwbmpmj = () => obgrjmtj.set({});
-			let kzvkwvvv = (fn) => computed(() => obgrjmtj() && fn());
-			// todo: use helper
-			['ngOnChanges'].forEach((key) => {
-				let method = ref[key];
-				if (method) {
-					oo(ref, {
-						[key]() {
-							ubwbmpmj();
-							return method.apply(this, arguments);
-						},
-					});
-				}
-			});
-			// todo: use helper
-			['name'].forEach((key) => {
-				let value = ref[key];
-				oo(ref, {
-					get [key]() {
-						return value;
-					},
-					set [key](v) {
-						ubwbmpmj();
-						value = v;
-					},
-				});
-			});
-			return kzvkwvvv(() => {
-				let {control} = ref;
+			let control$ = signal(undefined);
+			afterRender(() => control$.set({}));
+			return computed(() => {
+				control$();
+				let control = ref.control;
 				if (control != null) {
 					if (control instanceof controlCtor) {
 						return control;

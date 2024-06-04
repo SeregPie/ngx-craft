@@ -9,7 +9,7 @@ Simplifies the definition of providers and extends it with type safety.
 ```ts
 type MyTheme = 'Polaris' | 'Nebula';
 
-const myThemeToken = new InjectionToken<MyTheme>('MyTheme');
+let myThemeToken = new InjectionToken<MyTheme>('MyTheme');
 
 @Component({
   providers: [provide(myThemeToken).useValue('Polaris')],
