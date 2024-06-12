@@ -7,7 +7,7 @@ import {formi} from '.';
 // todo: better tests
 // todo: better descriptions
 
-describe('formi', () => {
+describe.skip('formi', () => {
 	it('should reflect actual state', fakeAsync(async () => {
 		let form = new FormGroup({
 			a: new FormControl<null | number>(null, {

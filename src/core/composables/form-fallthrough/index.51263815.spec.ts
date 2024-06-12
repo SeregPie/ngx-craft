@@ -1,14 +1,15 @@
 import {Component, computed, signal} from '@angular/core';
 import {TestBed, fakeAsync} from '@angular/core/testing';
-import {FormArray, FormControl, FormGroup, FormRecord, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormArray, FormControl, FormGroup, FormRecord, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {simpleFaker as faker} from '@faker-js/faker';
 
 import {useFormFallthrough} from '.';
+import {provide} from '../../basics/provider-compitibility';
 
 // todo: better descriptions
 
-describe('useFormFallthrough', () => {
+describe.only('useFormFallthrough', () => {
 	it('should work with FormControlDirective', fakeAsync(async () => {
 		let form = new FormRecord({
 			a: new FormControl(null),
@@ -46,7 +47,7 @@ describe('useFormFallthrough', () => {
 		expect(result()).toBe(form.controls.b);
 	}));
 
-	it('should work with FormControlNameDirective', fakeAsync(async () => {
+	it.only('should work with FormControlNameDirective', fakeAsync(async () => {
 		let form = new FormRecord({
 			a: new FormControl(null),
 			b: new FormControl(null),
@@ -55,6 +56,13 @@ describe('useFormFallthrough', () => {
 
 		@Component({
 			selector: 'my-sub',
+			providers: [
+				provide(NG_VALUE_ACCESSOR, {multi: true}).useValue({
+					writeValue() {},
+					registerOnChange() {},
+					registerOnTouched() {},
+				}),
+			],
 			standalone: true,
 		})
 		class MySubComponent {

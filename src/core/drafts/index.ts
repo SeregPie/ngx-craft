@@ -39,12 +39,14 @@ export const dfgdxkxi: {
 
 export type MaybeSignal<T> = T | Signal<T>;
 
+// todo: rename: wrap/unwrap
 export const resolveSignal: {
 	<T>(v: MaybeSignal<T>): Signal<T>;
 } = (v) => (isSignal(v) ? v : signal(v).asReadonly());
 
 export type MaybeElementSignal<T> = MaybeSignal<T | ElementRef<T>>;
 
+// todo: rename: wrap/unwrap
 export const resolveElementSignal: {
 	<T>(v: MaybeElementSignal<T>): Signal<T>;
 } = (v) => {

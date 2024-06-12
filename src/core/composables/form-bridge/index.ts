@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @ts-nocheck2
 
 import {Signal, WritableSignal, computed, effect, signal, untracked} from '@angular/core';
 import {NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors} from '@angular/forms';
@@ -6,6 +6,7 @@ import {NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors}
 import {noop} from '../../../misc/heeltkcu';
 import {formi} from '../../basics/form-reactivity';
 import {provide} from '../../basics/provider-compitibility';
+import {useFormFallthrough} from '../form-fallthrough';
 
 // todo: should work without injection context
 
@@ -96,7 +97,7 @@ export const useFormBridge: {
 			}));
 		}
 	}
-	let control;
+	let control = useFormFallthrough();
 	if (control) {
 		pending$ = computed(() => formi(control).pending);
 		errors$ = computed(() => formi(control).errors);
