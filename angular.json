@@ -30,7 +30,7 @@
 		"docs": {
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:browser-esbuild",
+					"builder": "@angular-devkit/build-angular:application",
 					"configurations": {
 						"development": {
 							"extractLicenses": false,
@@ -45,10 +45,13 @@
 					"options": {
 						"allowedCommonJsDependencies": ["@messageformat/core"],
 						"assets": ["./src/docs/favicon.ico", "./src/docs/assets"],
+						"browser": "./src/docs/main.ts",
 						"index": "./src/docs/index.html",
 						"inlineStyleLanguage": "scss",
-						"main": "./src/docs/main.ts",
-						"outputPath": "./docs",
+						"outputPath": {
+							"base": "./docs",
+							"browser": ""
+						},
 						"polyfills": ["zone.js"],
 						"styles": ["./src/docs/styles.scss"],
 						"tsConfig": "./src/docs/tsconfig.json"
