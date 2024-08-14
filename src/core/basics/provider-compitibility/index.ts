@@ -16,10 +16,10 @@ export const provide: {
 		options?: provide.Options,
 	): ProviderChoice<T>;
 } = (() => {
-	let types = ['Value', 'Factory', 'Class', 'Existing'];
-	let methods = types.map((type) => `use${type}`);
+	let types = ['Value', 'Factory', 'Class', 'Existing']; // todo: rename?
+	let methods = types.map((type) => `use${type}`); // todo: rename?
 	return (token, {multi = false} = {}) => {
-		let partials = {provide: token, ...(multi ? {multi} : {})};
+		let partials = {provide: token, ...(multi ? {multi} : {})}; // todo: rename?
 		return oo.new(
 			...methods.map((key) => ({
 				[key]: (source) => ({...partials, [key]: source}),
