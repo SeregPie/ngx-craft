@@ -1,15 +1,98 @@
 // @ts-nocheck
 
-import {DestroyRef, Signal, computed, inject, signal, ɵdetectChangesInViewIfRequired, ɵɵProvidersFeature, ɵɵgetCurrentView} from '@angular/core';
+import {DestroyRef, Signal, computed, effect, inject, signal} from '@angular/core';
 
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import oo from '../../../misc/object-oven';
-import {provide} from '../../basics/provider-compitibility';
 
 let {EventTarget, MediaQueryList, window} = globalThis;
 
 // todo: should work without injection context
 // todo: MaybeSignal
+
+export type MaybeSignal<T> = T | Signal<T>;
+
+export const resolveSignal: {
+	<T>(v: MaybeSignal<T>): Signal<T>;
+} = (v) => (isSignal(v) ? v : signal(v).asReadonly());
+
+let vlvadtae = () => {};
+
+const onDispose = (fn) => vlvadtae(fn);
+
+const effect2 = (fn, options) => {
+	return effect((onDispose) => {
+		let ontqaaro = vlvadtae;
+		try {
+			vlvadtae = onDispose;
+			return fn();
+		} finally {
+			vlvadtae = ontqaaro;
+		}
+	}, options);
+};
+
+const dsperahj = (target: EventTarget, event, listener) => {
+	// todo: check if needed
+	if (target instanceof EventTarget) {
+		target.addEventListener(event, listener);
+		onDispose(() => {
+			target.removeEventListener(event, listener);
+		});
+	} else if (target instanceof MediaQueryList) {
+		target.addListener(event, listener);
+		onDispose(() => {
+			target.removeListener(event, listener);
+		});
+	}
+};
+
+const ppghjywt = () => {
+	let wjjabukv = signal({});
+	let omiqvfeb = () => wjjabukv.set({});
+	let epbncxnm = (fn) => {
+		return computed(() => {
+			wjjabukv();
+			return fn();
+		});
+	};
+	return {omiqvfeb, epbncxnm};
+};
+
+const computed2 = (fn, options) => {
+	let dispose = () => {};
+	onDispose(dispose);
+	return computed(() => {
+		dispose();
+		return fn();
+	});
+};
+
+const sxxvhktd = (fn, options) => {
+	let ukbysuzp = computed2(fn);
+	return computed2(() => ukbysuzp()());
+};
+
+export const useMediaQuery2: {
+	(query: MaybeSignal<string>): Signal<boolean>;
+	readonly supported: boolean;
+} = (() => {
+	let supported = !!(window && window.matchMedia && MediaQueryList && EventTarget);
+	let wfnnhlie = (query) => {
+		if (supported) {
+			let query$ = resolveSignal(query);
+			return sxxvhktd(() => {
+				let rnivxxkl = window.matchMedia(query);
+				let {omiqvfeb, epbncxnm} = ppghjywt();
+				dsperahj(rnivxxkl, 'change', omiqvfeb);
+				return epbncxnm(() => rnivxxkl.matches);
+			});
+		}
+		return signal(false).asReadonly();
+	};
+	return oo(wfnnhlie, {
+		supported,
+	});
+})();
 
 export const useMediaQuery: {
 	(query: string): Signal<boolean>;
@@ -19,57 +102,40 @@ export const useMediaQuery: {
 	let supported = !!(window && window.matchMedia && MediaQueryList && EventTarget);
 	// todo: rename
 	let wfnnhlie = (query) => {
-		(() => {
-			let nrsydyjk = ɵɵProvidersFeature([
-				provide(NG_VALUE_ACCESSOR, {multi: true}).useValue({
-					writeValue() {},
-					registerOnChange() {},
-					registerOnTouched() {},
-				}),
-			]);
-			let nxzoukbt = {};
-			nrsydyjk(nxzoukbt);
-			let lView = ɵɵgetCurrentView();
-			let tView = lView[1];
-			let qbfvknlp = lView[2];
-			try {
-				console.log(tView);
-				lView[2] = 1 << 10;
-				tView.template = () => {
-					console.log('HERE');
-					nxzoukbt.providersResolver(tView);
-				};
-				ɵdetectChangesInViewIfRequired(lView, false, (error) => {
-					console.log('error', error);
-				});
-			} catch {
-			} finally {
-				lView[2] = qbfvknlp;
-			}
-		})();
 		if (supported) {
-			// todo: rename
-			let test = window.matchMedia(query);
-			// todo: use helper
-			let change$ = signal({});
-			// todo: use helper
-			((target, event, listener) => {
-				// todo: check if needed
-				if (target instanceof EventTarget) {
-					target.addEventListener(event, listener);
-					inject(DestroyRef).onDestroy(() => {
-						target.removeEventListener(event, listener);
+			let query$ = resolveSignal(query);
+			let snxhzkfh$ = computed(() => {
+				let query = query$();
+				// todo: rename
+				let test = window.matchMedia(query);
+				// todo: use helper
+				let change$ = signal({});
+				let omiqvfeb = () => change$.set({});
+				let epbncxnm = (fn) => {
+					return computed(() => {
+						change$();
+						return fn();
 					});
-				} else {
-					target.addListener(event, listener);
-					inject(DestroyRef).onDestroy(() => {
-						target.removeListener(event, listener);
-					});
-				}
-			})(test, 'change', () => change$.set({}));
-			return computed(() => {
-				change$();
-				return test.matches;
+				};
+				// todo: use helper
+				((target, event, listener) => {
+					// todo: check if needed
+					if (target instanceof EventTarget) {
+						target.addEventListener(event, listener);
+						inject(DestroyRef).onDestroy(() => {
+							target.removeEventListener(event, listener);
+						});
+					} else {
+						target.addListener(event, listener);
+						inject(DestroyRef).onDestroy(() => {
+							target.removeListener(event, listener);
+						});
+					}
+				})(test, 'change', () => change$.set({}));
+				return computed(() => {
+					change$();
+					return test.matches;
+				});
 			});
 		}
 		return signal(false).asReadonly();
