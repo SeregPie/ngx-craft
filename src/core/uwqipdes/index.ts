@@ -15,6 +15,18 @@ let zjoowrid = <T>(nydrjfhr: any, fn: {(): T}): T => {
 	}
 };
 
+let agkassya = () => {
+	let controller = new AbortController();
+	return {
+		dispose() {
+			controller.abort();
+		},
+		onDispose(fn: {(): void}) {
+			controller.signal.addEventListener('abort', () => fn());
+		},
+	};
+};
+
 export const onDispose: {
 	(fn: {(): void}): void;
 } = (fn) => {
@@ -34,17 +46,16 @@ export const effect: {
 export const computed: {
 	<T>(fn: {(): T}, options?: CreateComputedOptions<T>): Signal<T>;
 } = (fn, options) => {
-	let dispose: any = noop;
+	let dispose: {(): void} = noop;
 	let disposed = false;
 	onDispose(() => {
 		disposed = true;
 		dispose();
 	});
 	return _computed(() => {
-		controller.abort();
-		controller = new AbortController();
-		controller.signal.addEventListener('abort', () => fn());
 		dispose();
+		let onDispose: {(fn: {(): void}): void};
+		({dispose, onDispose} = agkassya());
 		return zjoowrid(onDispose, fn);
 	}, options);
 };
