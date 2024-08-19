@@ -1,10 +1,9 @@
 // todo
 let {Error} = globalThis;
-let {document, window} = globalThis;
+let {document} = globalThis;
 
 import {Signal} from '@angular/core';
 
-import {mpardjto} from '../../../misc/mpardjto';
 import oo from '../../../misc/object-oven';
 import {isInInjectionContext} from '../../basics/mfgdlwbc';
 import {onDispose} from '../../basics/uwqipdes';
@@ -31,7 +30,7 @@ export const useDocumentHidden: {
 	// todo: rename
 	let flbcqpwq = 'useDocumentHidden';
 	// todo
-	let supported = mpardjto(() => window && document && 'onvisibilitychange' in document && 'hidden' in document);
+	let supported = !!document;
 	// todo: rename
 	let rorvqfbg = (...args) => {
 		if (!isInInjectionContext()) throw new Error(); // todo: message

@@ -4,7 +4,6 @@ let {window} = globalThis;
 
 import {Signal} from '@angular/core';
 
-import {mpardjto} from '../../../misc/mpardjto';
 import oo from '../../../misc/object-oven';
 import {MaybeSignal, wrapSignal} from '../../basics/daowexhy';
 import {isInInjectionContext} from '../../basics/mfgdlwbc';
@@ -36,7 +35,7 @@ export const useMediaQuery: {
 	// todo: rename
 	let flbcqpwq = 'useMediaQuery';
 	// todo
-	let supported = mpardjto(() => window && window.matchMedia);
+	let supported = !!window;
 	// todo: rename
 	let rorvqfbg = (...args) => {
 		if (!isInInjectionContext()) throw new Error(); // todo: message
