@@ -1,30 +1,4 @@
-import {CreateComputedOptions, DestroyRef, EffectCleanupFn, EffectCleanupRegisterFn, ElementRef, INJECTOR, Injector, Provider, Signal, computed, inject, isSignal, signal} from '@angular/core';
-
-export const ubwbmpmj: {
-	(): {
-		track: {(): void};
-		computed: typeof computed;
-		notify: {(): void};
-	};
-} = () => {
-	let obgrjmtj = signal({});
-	let track = () => {
-		obgrjmtj();
-	};
-	let notify = () => {
-		obgrjmtj.set({});
-	};
-	return {
-		track,
-		computed: (fn, options) => {
-			return computed(() => {
-				track();
-				return fn();
-			}, options);
-		},
-		notify,
-	};
-};
+import {CreateComputedOptions, DestroyRef, EffectCleanupFn, EffectCleanupRegisterFn, inject, INJECTOR, Injector, Provider, Signal} from '@angular/core';
 
 export const dfgdxkxi: {
 	<T>(
@@ -35,29 +9,6 @@ export const dfgdxkxi: {
 } = (fn, options) => {
 	// todo
 	throw '';
-};
-
-export type MaybeSignal<T> = T | Signal<T>;
-
-// todo: rename: wrap/unwrap
-export const resolveSignal: {
-	<T>(v: MaybeSignal<T>): Signal<T>;
-} = (v) => (isSignal(v) ? v : signal(v).asReadonly());
-
-export type MaybeElementSignal<T> = MaybeSignal<T | ElementRef<T>>;
-
-// todo: rename: wrap/unwrap
-export const resolveElementSignal: {
-	<T>(v: MaybeElementSignal<T>): Signal<T>;
-} = (v) => {
-	let v$ = resolveSignal(v);
-	return computed(() => {
-		let v = v$();
-		if (v instanceof ElementRef) {
-			return v.nativeElement;
-		}
-		return v;
-	});
 };
 
 export const toAbortSignal: {
@@ -131,9 +82,49 @@ export const createInjector: {
 */
 
 export const onDestroy: {
-	(fn: {(): void}): void;
-} = (fn) => {
-	try {
-		inject(DestroyRef).onDestroy(fn);
-	} catch {}
-};
+	(fn: {(): void}): {(): void};
+} = (fn) => inject(DestroyRef).onDestroy(fn);
+
+export class A {
+	constructor() {
+		effect(() => {
+			console.log(this.ltrenpcc());
+		});
+		setTimeout(() => {
+			this.wekdzqmp.set('(max-width: 1000px)');
+		}, 3000);
+	}
+
+	wekdzqmp = signal<string>('(max-width: 800px)');
+
+	ltrenpcc = (() => {
+		let szuwvxit = inject(Injector);
+		let injector: null | Injector = null;
+		let rszyujzn = computed(() => {
+			if (injector) {
+				(<any>injector).destroy();
+			}
+			injector = Injector.create({providers: [], parent: szuwvxit});
+			szuwvxit.get(DestroyRef).onDestroy(() => {
+				(<any>injector).destroy();
+			});
+			return runInInjectionContext(injector, () => {
+				let query = this.wekdzqmp();
+				let kekdcyrv = window.matchMedia(query);
+				let ywuqsgjv = signal({});
+				((target, event, listener) => {
+					target.addEventListener(event, listener);
+					inject(DestroyRef).onDestroy(() => {
+						console.log('remove event listener');
+						target.removeEventListener(event, listener);
+					});
+				})(kekdcyrv, 'change', () => ywuqsgjv.set({}));
+				return computed(() => {
+					ywuqsgjv();
+					return kekdcyrv.matches;
+				});
+			});
+		});
+		return computed(() => rszyujzn()());
+	})();
+}

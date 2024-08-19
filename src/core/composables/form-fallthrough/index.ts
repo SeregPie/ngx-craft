@@ -1,17 +1,16 @@
-// @ts-nocheck
-
-import {AbstractType, Signal, afterRender, computed, inject, signal} from '@angular/core';
+import {AbstractType, Signal, computed, inject, signal} from '@angular/core';
 import {AbstractControl, ControlContainer, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
 
 import oo from '../../../misc/object-oven';
-
-globalThis['NG_VALUE_ACCESSOR'] = NG_VALUE_ACCESSOR;
-
-// todo: should work without injection context
+import {qeozagnw} from '../../basics/jshrsvyw';
+import {isInInjectionContext} from '../../basics/mfgdlwbc';
+import {provide} from '../../basics/provider-compitibility';
+import {dhhjnwiz} from '../../utils/dhhjnwiz';
+import {ubwbmpmj} from '../../utils/ubwbmpmj';
 
 export const useFormFallthrough: {
 	<ControlT extends AbstractControl>(
-		//
+		// todo: rename?
 		controlCtor?: AbstractType<ControlT>,
 	): Signal<undefined | ControlT>;
 	required: {
@@ -23,37 +22,22 @@ export const useFormFallthrough: {
 } = (() => {
 	// todo: rename
 	let wfnnhlie = (controlCtor = AbstractControl) => {
-		console.log(inject(NG_VALUE_ACCESSOR, {optional: true, self: true}));
-
-		/*if (inject(NG_VALUE_ACCESSOR) == null) {
-			qeozagnw(
+		if (inject(NG_VALUE_ACCESSOR, {optional: true, self: true}) == null) {
+			qeozagnw([
 				provide(NG_VALUE_ACCESSOR, {multi: true}).useValue({
 					writeValue() {},
 					registerOnChange() {},
 					registerOnTouched() {},
 				}),
-			);
-		}*/
-		//let injector = inject(INJECTOR);
-
-		//console.log(injector);
-		/*
-		injector._lView[9].parentInjector.processProvider(
-			provide(NG_VALUE_ACCESSOR, {multi: true}).useValue({
-				writeValue() {},
-				registerOnChange() {},
-				registerOnTouched() {},
-			}),
-		);
-		*/
-		// todo
+			]);
+		}
 		let ref = inject(NgControl, {self: true, optional: true}) ?? inject(ControlContainer, {self: true, optional: true});
 		if (ref != null) {
-			let control$ = signal(undefined);
-			afterRender(() => control$.set({}));
-			return computed(() => {
-				control$();
-				let control = ref.control;
+			// todo
+			let {notify, tracked} = ubwbmpmj();
+			dhhjnwiz(ref, notify);
+			return tracked(() => {
+				let {control} = ref;
 				if (control != null) {
 					if (control instanceof controlCtor) {
 						return control;
@@ -63,17 +47,24 @@ export const useFormFallthrough: {
 		}
 		return signal(undefined).asReadonly();
 	};
-	return oo(wfnnhlie, {
+	// todo: rename
+	let flbcqpwq = 'useFormFallthrough';
+	// todo: rename
+	let rorvqfbg = (...args) => {
+		if (!isInInjectionContext()) throw new Error(); // todo: message
+		return wfnnhlie(...args);
+	};
+	return oo(rorvqfbg, {
 		required: (...args) => {
-			let result$ = wfnnhlie(...args);
+			let result$ = rorvqfbg(...args);
 			return computed(() => {
 				let result = result$();
 				if (result == null) {
-					// todo
-					throw new Error(`required but not available`);
+					throw new Error(); // todo: message
 				}
 				return result;
 			});
 		},
+		name: flbcqpwq,
 	});
 })();

@@ -1,37 +1,45 @@
-import {DestroyRef, Signal, computed, inject, signal} from '@angular/core';
-
-import oo from '../../../misc/object-oven';
-
+// todo
+let {Error} = globalThis;
 let {document, window} = globalThis;
 
-// todo: should work without injection context
+import {Signal} from '@angular/core';
+
+import {mpardjto} from '../../../misc/mpardjto';
+import oo from '../../../misc/object-oven';
+import {isInInjectionContext} from '../../basics/mfgdlwbc';
+import {onDispose} from '../../basics/uwqipdes';
+import {sxxvhktd} from '../../utils/sxxvhktd';
+import {ubwbmpmj} from '../../utils/ubwbmpmj';
 
 export const useDocumentHidden: {
 	(): Signal<boolean>;
 	readonly supported: boolean;
 } = (() => {
-	// todo
-	let supported = !!(window && document);
 	// todo: rename
 	let wfnnhlie = () => {
-		if (supported) {
-			// todo: use helper
-			let change$ = signal({});
-			// todo: use helper
+		return sxxvhktd(() => {
+			let {notify, tracked} = ubwbmpmj();
 			((target, event, listener) => {
 				target.addEventListener(event, listener);
-				inject(DestroyRef).onDestroy(() => {
+				onDispose(() => {
 					target.removeEventListener(event, listener);
 				});
-			})(document, 'visibilitychange', () => change$.set({}));
-			return computed(() => {
-				change$();
-				return document.hidden;
-			});
-		}
-		return signal(false).asReadonly();
+			})(document, 'visibilitychange', notify);
+			return tracked(() => document.hidden);
+		});
 	};
-	return oo(wfnnhlie, {
+	// todo: rename
+	let flbcqpwq = 'useDocumentHidden';
+	// todo
+	let supported = mpardjto(() => window && document && 'onvisibilitychange' in document && 'hidden' in document);
+	// todo: rename
+	let rorvqfbg = (...args) => {
+		if (!isInInjectionContext()) throw new Error(); // todo: message
+		if (!supported) throw new Error(); // todo: message
+		return wfnnhlie(...args);
+	};
+	return oo(rorvqfbg, {
 		supported,
+		name: flbcqpwq,
 	});
 })();

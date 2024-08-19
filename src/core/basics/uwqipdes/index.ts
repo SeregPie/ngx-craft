@@ -1,7 +1,8 @@
-import {computed as _computed, effect as _effect, CreateComputedOptions, Signal} from '@angular/core';
+// todo: rename folder
 
-import {noop} from '../../misc/heeltkcu';
-import {isInInjectionContext, onDestroy} from '../drafts';
+import {effect as _effect} from '@angular/core';
+
+import {noop} from '../../../misc/heeltkcu';
 
 let vlvadtae: any = noop;
 
@@ -41,21 +42,4 @@ export const effect: {
 	(fn: {(): void}): void;
 } = (fn) => {
 	_effect((onDispose) => zjoowrid(onDispose, fn), {allowSignalWrites: true});
-};
-
-export const computed: {
-	<T>(fn: {(): T}, options?: CreateComputedOptions<T>): Signal<T>;
-} = (fn, options) => {
-	let dispose: {(): void} = noop;
-	let disposed = false;
-	onDispose(() => {
-		disposed = true;
-		dispose();
-	});
-	return _computed(() => {
-		dispose();
-		let onDispose: {(fn: {(): void}): void};
-		({dispose, onDispose} = agkassya());
-		return zjoowrid(onDispose, fn);
-	}, options);
 };

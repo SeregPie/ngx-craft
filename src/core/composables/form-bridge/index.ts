@@ -1,5 +1,3 @@
-// @ts-nocheck2
-
 import {Signal, WritableSignal, computed, effect, signal, untracked} from '@angular/core';
 import {NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors} from '@angular/forms';
 
@@ -99,7 +97,7 @@ export const useFormBridge: {
 	}
 	let control = useFormFallthrough();
 	if (control) {
-		pending$ = computed(() => formi(control).pending);
+		pending$ = computed(() => formi(control()).pending);
 		errors$ = computed(() => formi(control).errors);
 	}
 	return {

@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
 
 import oo from '../../../misc/object-oven';

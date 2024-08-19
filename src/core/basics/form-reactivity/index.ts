@@ -1,9 +1,9 @@
-// @ts-nocheck
+let {WeakMap} = globalThis;
 
-import {computed, signal} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 
 import oo from '../../../misc/object-oven';
+import {ubwbmpmj} from '../../utils/ubwbmpmj';
 
 // todo: rename?
 export const formi: {
@@ -43,14 +43,13 @@ export const formi: {
 		'errors',
 	];
 	let create = (control) => {
-		// todo: user helper
-		let change$ = signal({});
+		let {notify, tracked} = ubwbmpmj();
 		watchedMethods.forEach((key) => {
 			let method = control[key];
 			if (method) {
 				oo(control, {
 					[key]() {
-						change$.set({});
+						notify();
 						return method.apply(this, arguments);
 					},
 				});
@@ -61,10 +60,7 @@ export const formi: {
 				control,
 			},
 			...exposedGetters.map((key) => {
-				let value$ = computed(() => {
-					change$();
-					return control[key];
-				});
+				let value$ = tracked(() => control[key]);
 				return {
 					get [key]() {
 						return value$();
