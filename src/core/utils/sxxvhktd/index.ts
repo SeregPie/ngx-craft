@@ -2,7 +2,7 @@ import {computed, CreateComputedOptions, DestroyRef, inject, Injector, runInInje
 
 // todo: rename
 export const sxxvhktd: {
-	<T>(fn: {(): Signal<T>}, options: CreateComputedOptions<T>): Signal<T>;
+	<T>(fn: {(): Signal<T>}, options?: CreateComputedOptions<T>): Signal<T>;
 } = (fn, options) => {
 	let szuwvxit = inject(Injector);
 	let injector: null | Injector = null;
