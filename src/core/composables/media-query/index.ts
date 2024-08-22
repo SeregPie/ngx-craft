@@ -51,17 +51,18 @@ export const useMediaQuery2: {
 	// todo: rename
 	let wfnnhlie = (query$) => {
 		query$ = wrapSignal(query$);
-		let dfbhauyn$ = computed(() => window.matchMedia(query$()));
+		let {window} = globalThis;
+		let dfbhauyn$ = computed(() => window?.matchMedia?.(query$()));
 		let {notify, tracked} = ubwbmpmj();
 		effect((onDispose) => {
 			((target, event, listener) => {
-				target.addEventListener(event, listener);
+				target?.addEventListener(event, listener);
 				onDispose(() => {
-					target.removeEventListener(event, listener);
+					target?.removeEventListener(event, listener);
 				});
 			})(dfbhauyn$(), 'change', notify);
 		});
-		return tracked(() => dfbhauyn$().matches);
+		return tracked(() => dfbhauyn$()?.matches ?? false);
 	};
 	return oo(wfnnhlie, {
 		supported,

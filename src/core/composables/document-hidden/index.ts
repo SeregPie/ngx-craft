@@ -45,6 +45,7 @@ export const useDocumentHidden2: {
 	let supported = true;
 	// todo: rename
 	let wfnnhlie = () => {
+		let {document} = globalThis;
 		let {notify, tracked} = ubwbmpmj();
 		((target, event, listener) => {
 			target.addEventListener(event, listener);
