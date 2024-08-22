@@ -6,10 +6,7 @@ export const getCurrentInjector: {
 	(): undefined | Injector;
 } = () => {
 	try {
-		let injector = inject(INJECTOR);
-		if (injector instanceof Injector) {
-			return injector;
-		}
+		return inject(INJECTOR);
 	} catch {}
 };
 
@@ -19,4 +16,8 @@ export const isInInjectionContext: {
 
 export const onDestroy: {
 	(fn: {(): void}): {(): void};
-} = (fn) => inject(DestroyRef).onDestroy(fn);
+} = (fn) => {
+	if (isInInjectionContext()) {
+		inject(DestroyRef).onDestroy(fn);
+	}
+};

@@ -3,7 +3,6 @@ import {AbstractControl, ControlContainer, NG_VALUE_ACCESSOR, NgControl} from '@
 
 import oo from '../../../misc/object-oven';
 import {qeozagnw} from '../../basics/jshrsvyw';
-import {isInInjectionContext} from '../../basics/mfgdlwbc';
 import {provide} from '../../basics/provider-compitibility';
 import {dhhjnwiz} from '../../utils/dhhjnwiz';
 import {ubwbmpmj} from '../../utils/ubwbmpmj';
@@ -49,14 +48,9 @@ export const useFormFallthrough: {
 	};
 	// todo: rename
 	let flbcqpwq = 'useFormFallthrough';
-	// todo: rename
-	let rorvqfbg = (...args) => {
-		if (!isInInjectionContext()) throw new Error(); // todo: message
-		return wfnnhlie(...args);
-	};
-	return oo(rorvqfbg, {
+	return oo(wfnnhlie, {
 		required: (...args) => {
-			let result$ = rorvqfbg(...args);
+			let result$ = wfnnhlie(...args);
 			return computed(() => {
 				let result = result$();
 				if (result == null) {

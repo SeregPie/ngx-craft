@@ -1,11 +1,6 @@
-// todo
-let {Error} = globalThis;
-let {document} = globalThis;
-
-import {Signal} from '@angular/core';
+import {signal, Signal} from '@angular/core';
 
 import oo from '../../../misc/object-oven';
-import {isInInjectionContext} from '../../basics/mfgdlwbc';
 import {onDispose} from '../../basics/uwqipdes';
 import {sxxvhktd} from '../../utils/sxxvhktd';
 import {ubwbmpmj} from '../../utils/ubwbmpmj';
@@ -15,29 +10,51 @@ export const useDocumentHidden: {
 	readonly supported: boolean;
 } = (() => {
 	// todo: rename
+	let flbcqpwq = 'useDocumentHidden';
+	// todo
+	let supported = true;
+	// todo: rename
 	let wfnnhlie = () => {
-		return sxxvhktd(() => {
-			let {notify, tracked} = ubwbmpmj();
-			((target, event, listener) => {
-				target.addEventListener(event, listener);
-				onDispose(() => {
-					target.removeEventListener(event, listener);
-				});
-			})(document, 'visibilitychange', notify);
-			return tracked(() => document.hidden);
-		});
+		if (supported) {
+			return sxxvhktd(() => {
+				let {notify, tracked} = ubwbmpmj();
+				((target, event, listener) => {
+					target.addEventListener(event, listener);
+					onDispose(() => {
+						target.removeEventListener(event, listener);
+					});
+				})(document, 'visibilitychange', notify);
+				return tracked(() => document.hidden);
+			});
+		}
+		return signal(false).asReadonly();
 	};
+	return oo(wfnnhlie, {
+		supported,
+		name: flbcqpwq,
+	});
+})();
+
+export const useDocumentHidden2: {
+	(): Signal<boolean>;
+	readonly supported: boolean;
+} = (() => {
 	// todo: rename
 	let flbcqpwq = 'useDocumentHidden';
 	// todo
-	let supported = !!document;
+	let supported = true;
 	// todo: rename
-	let rorvqfbg = (...args) => {
-		if (!isInInjectionContext()) throw new Error(); // todo: message
-		if (!supported) throw new Error(); // todo: message
-		return wfnnhlie(...args);
+	let wfnnhlie = () => {
+		let {notify, tracked} = ubwbmpmj();
+		((target, event, listener) => {
+			target.addEventListener(event, listener);
+			onDispose(() => {
+				target.removeEventListener(event, listener);
+			});
+		})(document, 'visibilitychange', notify);
+		return tracked(() => document.hidden);
 	};
-	return oo(rorvqfbg, {
+	return oo(wfnnhlie, {
 		supported,
 		name: flbcqpwq,
 	});
