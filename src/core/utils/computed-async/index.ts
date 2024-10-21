@@ -15,6 +15,7 @@ export interface ComputedAsyncRef<T>
 	extends Signal<T>
 {
 	get pending(): boolean;
+	cancel(): void;
 }
 
 // todo: should work without injection context

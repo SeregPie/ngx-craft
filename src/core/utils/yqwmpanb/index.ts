@@ -40,6 +40,16 @@ export const debounced: {
 	};
 })();
 
+export namespace useDebounce {
+	export interface Controls {
+		get pending(): boolean;
+		flush(): void;
+		cancel(): void;
+	}
+
+	export type Result<T> = Signal<T> & Controls;
+}
+
 /*
 
 

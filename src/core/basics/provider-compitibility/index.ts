@@ -26,7 +26,7 @@ export const provide: {
 	};
 })();
 
-export module provide {
+export namespace provide {
 	export type Options = Partial<{
 		multi: boolean;
 	}>;
