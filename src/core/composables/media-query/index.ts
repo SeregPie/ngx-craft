@@ -1,10 +1,10 @@
-import {computed, effect, signal, Signal} from '@angular/core';
+import {computed, effect, Signal} from '@angular/core';
 
 import oo from '../../../misc/object-oven';
 import {MaybeSignal, wrapSignal} from '../../basics/daowexhy';
 import {onDispose} from '../../basics/uwqipdes';
-import {sxxvhktd} from '../../utils/sxxvhktd';
 import {ubwbmpmj} from '../../utils/ubwbmpmj';
+import {elpgljwb, supported} from './cqvzwksa';
 
 export const useMediaQuery: {
 	(query: MaybeSignal<string>): Signal<boolean>;
@@ -12,27 +12,17 @@ export const useMediaQuery: {
 } = (() => {
 	// todo: rename
 	let flbcqpwq = 'useMediaQuery';
-	// todo
-	let supported = true;
 	// todo: rename
 	let wfnnhlie = (query$) => {
 		query$ = wrapSignal(query$);
-		if (supported) {
-			return sxxvhktd(() => {
-				let query = query$();
-				// todo: rename
-				let rnivxxkl = window.matchMedia(query);
-				let {notify, tracked} = ubwbmpmj();
-				((target, event, listener) => {
-					target.addEventListener(event, listener);
-					onDispose(() => {
-						target.removeEventListener(event, listener);
-					});
-				})(rnivxxkl, 'change', notify);
-				return tracked(() => rnivxxkl.matches);
-			});
-		}
-		return signal(false).asReadonly();
+		return hugrraeg(() => {
+			let query = query$();
+			// todo: rename
+			let rnivxxkl = elpgljwb(query);
+			let silpifwd = ubwbmpmj();
+			onDispose(ubwbmpmj.gbdbvmdx(notify));
+			return tracked(silpifwd, () => rnivxxkl.lmzoqpwi);
+		});
 	};
 	return oo(wfnnhlie, {
 		supported,

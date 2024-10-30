@@ -5,7 +5,7 @@ import {AbstractControl} from '@angular/forms';
 import oo from '../../../misc/object-oven';
 import {ubwbmpmj} from '../../utils/ubwbmpmj';
 
-// todo: rename?
+// todo: rename
 export const formi: {
 	<ControlT extends AbstractControl>(
 		//
@@ -70,16 +70,18 @@ export const formi: {
 		);
 	};
 	let instances = new WeakMap();
-	return (arg) => {
-		let instance = instances.get(arg);
+	return (target) => {
+		let instance = instances.get(target);
 		if (instance == null) {
-			instances.set(arg, (instance = create(arg)));
+			instances.set(target, (instance = create(target)));
 		}
 		return instance;
 	};
 })();
 
 // prettier-ignore
+// todo: rename
+// todo: readonly?
 export type ReadonlyReactiveFormProxy<
 	ControlT extends AbstractControl = AbstractControl,
 > = (
@@ -90,6 +92,7 @@ export type ReadonlyReactiveFormProxy<
 );
 
 // prettier-ignore
+// todo: rename
 export type ReadonlyReactiveFormProp = (
 	| 'status'
 	| 'valid'
