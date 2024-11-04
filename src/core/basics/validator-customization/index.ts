@@ -13,13 +13,13 @@ export const noopValidator: {
 } = () => null;
 
 export const stubValidator: {
-	<ErrorsT extends ValidationErrors>(errors: ErrorsT): {
+	<const ErrorsT extends ValidationErrors>(errors: ErrorsT): {
 		(control: AbstractControl): ErrorsT;
 	};
 } = (errors) => () => errors;
 
 export const withValidators: {
-	<ControlT extends AbstractControl>(
+	<const ControlT extends AbstractControl>(
 		control: ControlT,
 		...validators: CustomValidatorFn<ControlT>[]
 	): ControlT;
@@ -30,7 +30,7 @@ export const withValidators: {
 };
 
 export const composeValidators: {
-	<ControlT extends AbstractControl>(
+	<const ControlT extends AbstractControl>(
 		validators: Readonly<Array<CustomValidatorFn<ControlT>>>,
 	): CustomValidatorFn<ControlT>;
 } = (validators) => {

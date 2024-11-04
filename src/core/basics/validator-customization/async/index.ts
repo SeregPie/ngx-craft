@@ -14,13 +14,13 @@ export const noopAsyncValidator: {
 } = async () => null;
 
 export const stubAsyncValidator: {
-	<ErrorsT extends ValidationErrors>(errors: ErrorsT): {
+	<const ErrorsT extends ValidationErrors>(errors: ErrorsT): {
 		(control: AbstractControl): Promise<ErrorsT>;
 	};
 } = (errors) => async () => errors;
 
 export const withAsyncValidators: {
-	<ControlT extends AbstractControl>(
+	<const ControlT extends AbstractControl>(
 		control: ControlT,
 		...validators: CustomAsyncValidatorFn<ControlT>[]
 	): ControlT;
@@ -31,7 +31,7 @@ export const withAsyncValidators: {
 };
 
 export const composeAsyncValidators: {
-	<ControlT extends AbstractControl>(
+	<const ControlT extends AbstractControl>(
 		validators: Readonly<Array<CustomAsyncValidatorFn<ControlT>>>,
 	): CustomAsyncValidatorFn<ControlT>;
 } = (validators) => {
