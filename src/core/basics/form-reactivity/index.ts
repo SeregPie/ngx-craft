@@ -7,7 +7,7 @@ import {ubwbmpmj} from '../../utils/ubwbmpmj';
 
 // todo: rename
 export const formi: {
-	<ControlT extends AbstractControl>(
+	<const ControlT extends AbstractControl>(
 		//
 		control: ControlT,
 	): ReadonlyReactiveFormProxy<ControlT>;

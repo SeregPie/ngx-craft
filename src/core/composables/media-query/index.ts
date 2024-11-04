@@ -25,8 +25,8 @@ export const useMediaQuery: {
 		});
 	};
 	return oo(wfnnhlie, {
-		supported,
 		name: flbcqpwq,
+		supported,
 	});
 })();
 
@@ -55,7 +55,7 @@ export const useMediaQuery2: {
 		return tracked(() => dfbhauyn$()?.matches ?? false);
 	};
 	return oo(wfnnhlie, {
-		supported,
 		name: flbcqpwq,
+		supported,
 	});
 })();
