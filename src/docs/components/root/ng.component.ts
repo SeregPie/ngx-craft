@@ -1,6 +1,4 @@
-import {CommonModule} from '@angular/common';
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {TranslocoModule} from '@jsverse/transloco';
 import {useMediaQuery} from 'ngx-craft';
@@ -9,7 +7,6 @@ import {useMediaQuery} from 'ngx-craft';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
 		//
-		CommonModule,
 		RouterModule,
 		TranslocoModule,
 	],
@@ -18,9 +15,7 @@ import {useMediaQuery} from 'ngx-craft';
 	templateUrl: './ng.component.html',
 })
 export class MyRootComponent {
-	constructor() {
-		console.log(inject(NG_VALUE_ACCESSOR));
-	}
+	constructor() {}
 
 	wlxlelhm = useMediaQuery('(min-width: 800px)');
 }

@@ -9,10 +9,10 @@ import {provideTranslocoMessageformat} from '@jsverse/transloco-messageformat';
 export class MyTranslocoLoader implements TranslocoLoader {
 	constructor() {}
 
-	http = inject(HttpClient);
+	ngHttpClient = inject(HttpClient);
 
 	getTranslation(lang: string) {
-		return this.http.get<Translation>(`/assets/i18n/${lang}.json`);
+		return this.ngHttpClient.get<Translation>(`/assets/i18n/${lang}.json`);
 	}
 }
 
