@@ -109,7 +109,7 @@ export const useFormBridge: {
 	};
 };
 
-export module useFormBridge {
+export namespace useFormBridge {
 	export type Options = Partial<{
 		disabled: WritableSignal<boolean>;
 		touched: WritableSignal<boolean>;

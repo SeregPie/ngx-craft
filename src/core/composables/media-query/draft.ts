@@ -1,10 +1,46 @@
-import {computed, effect, Signal} from '@angular/core';
+import {computed, DestroyRef, effect, inject, Signal, signal} from '@angular/core';
 
 import oo from '../../../misc/object-oven';
 import {MaybeSignal, wrapSignal} from '../../basics/daowexhy';
 import {onDispose} from '../../basics/uwqipdes';
 import {ubwbmpmj} from '../../utils/ubwbmpmj';
 import {elpgljwb, supported} from './cqvzwksa';
+
+export function useMediaQuery3(query$: Signal<string>): Signal<boolean> {
+	let destroyRef = inject(DestroyRef);
+	let qlisiiir = true;
+	destroyRef.onDestroy(() => {
+		qlisiiir = false;
+	});
+	let rztnlzad = () => {};
+	let jmuysrnn = computed(() => {
+		rztnlzad();
+		let query = query$();
+		let rnivxxkl = window.matchMedia(query);
+		let cynvbmtf = signal({});
+		if (qlisiiir) {
+			let listener = () => {
+				cynvbmtf.set({});
+			};
+			console.log('addEventListener', query);
+			rnivxxkl.addEventListener('change', listener);
+			let hmpzgesz = () => {
+				console.log('removeEventListener', query);
+				rnivxxkl.removeEventListener('change', listener);
+			};
+			let wmaicinp = destroyRef.onDestroy(hmpzgesz);
+			rztnlzad = () => {
+				wmaicinp();
+				hmpzgesz();
+			};
+		}
+		return computed(() => {
+			cynvbmtf();
+			return rnivxxkl.matches;
+		});
+	});
+	return computed(() => jmuysrnn()());
+}
 
 export const useMediaQuery: {
 	(query: MaybeSignal<string>): Signal<boolean>;

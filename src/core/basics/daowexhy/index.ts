@@ -4,20 +4,33 @@ import {computed, ElementRef, isSignal, Signal} from '@angular/core';
 
 export type MaybeSignal<T> = T | Signal<T>;
 
-export const unwrapSignal: {
-	<const T>(v: MaybeSignal<T>): T;
-} = (v) => (isSignal(v) ? v() : v);
+export function unwrapSignal<const T>(
+	//
+	v: MaybeSignal<T>,
+): T {
+	return isSignal(v) ? v() : v;
+}
 
-export const wrapSignal: {
-	<const T>(v: MaybeSignal<T>): Signal<T>;
-} = (v) => computed(() => unwrapSignal(v));
+export function wrapSignal<const T>(
+	//
+	v: MaybeSignal<T>,
+): Signal<T> {
+	return computed(() => unwrapSignal(v));
+}
 
 export type MaybeElementSignal<T> = MaybeSignal<T | ElementRef<T>>;
 
-export const unwrapElementSignal: {
-	<const T>(v: MaybeElementSignal<T>): T;
-} = (v) => ((v) => (v instanceof ElementRef ? v.nativeElement : v))(unwrapSignal(v));
+export function unwrapElementSignal<const T>(
+	//
+	v: MaybeElementSignal<T>,
+): T {
+	v = unwrapSignal(v);
+	return v instanceof ElementRef ? v.nativeElement : v;
+}
 
-export const wrapElementSignal: {
-	<const T>(v: MaybeElementSignal<T>): Signal<T>;
-} = (v) => computed(() => unwrapElementSignal(v));
+export function wrapElementSignal<const T>(
+	//
+	v: MaybeElementSignal<T>,
+): Signal<T> {
+	return computed(() => unwrapElementSignal(v));
+}
