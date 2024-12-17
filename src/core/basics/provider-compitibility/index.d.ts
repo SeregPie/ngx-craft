@@ -5,11 +5,13 @@ export function provide<T>(
 	token: ProviderToken<Array<T>>,
 	options: provide.Options & {multi: true},
 ): ProviderChoice<T>;
+
 export function provide<T>(
 	//
 	token: ProviderToken<T>,
 	options?: provide.Options,
 ): ProviderChoice<T>;
+
 export namespace provide {
 	export type Options = Partial<{
 		multi: boolean;

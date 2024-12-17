@@ -9,6 +9,7 @@ export function useFormBridge<
 	value: WritableSignal<ValueT>,
 	options?: useFormBridge.Options,
 ): useFormBridge.Result;
+
 export namespace useFormBridge {
 	export type Options = Partial<{
 		disabled: WritableSignal<boolean>;
