@@ -1,4 +1,4 @@
-import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
+import {ClassProvider, ExistingProvider, FactoryProvider, Provider, ProviderToken, Type, ValueProvider} from '@angular/core';
 
 export function provide<T>(
 	//
@@ -19,8 +19,17 @@ export function provide(
 		//
 		multi = false,
 	}: provide.Options = {},
-): any {
-	throw 'not implemented yet';
+) {
+	let provider: Partial<Provider> = {provide: token}; // todo: rename?
+	if (multi) {
+		provider.multi = true;
+	}
+	return <ProviderChoice<any>>{
+		useValue: (source) => ({...provider, useValue: source}),
+		useFactory: (source) => ({...provider, useFactory: source}),
+		useClass: (source) => ({...provider, useClass: source}),
+		useExisting: (source) => ({...provider, useExisting: source}),
+	};
 }
 
 export namespace provide {
@@ -28,15 +37,6 @@ export namespace provide {
 		multi: boolean;
 	}>;
 }
-
-export enum ProviderType {
-	Value = 'Value',
-	Factory = 'Factory',
-	useClass(source: Type<T>): ClassProvider;
-	useExisting(source: ProviderToken<T>): ExistingProvider;
-}
-
-'Value', 'Factory', 'Class', 'Existing'
 
 export interface ProviderChoice<T> {
 	useValue(source: T): ValueProvider;
