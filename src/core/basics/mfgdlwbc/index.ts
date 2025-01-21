@@ -1,6 +1,6 @@
 // todo: rename folder
 
-import {assertInInjectionContext, DestroyRef, inject, Injector, INJECTOR} from '@angular/core';
+import {inject, Injector, INJECTOR} from '@angular/core';
 
 export function getCurrentInjector(): undefined | Injector {
 	try {
@@ -9,15 +9,5 @@ export function getCurrentInjector(): undefined | Injector {
 }
 
 export function isInInjectionContext(): boolean {
-	try {
-		assertInInjectionContext(isInInjectionContext);
-		return true;
-	} catch {}
-	return false;
-}
-
-export function onDestroy(fn: {(): void}): void {
-	try {
-		inject(DestroyRef).onDestroy(fn);
-	} catch {}
+	return getCurrentInjector() != null;
 }

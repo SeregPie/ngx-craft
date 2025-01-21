@@ -1,4 +1,6 @@
-import {Signal, WritableSignal} from '@angular/core';
+// @ts-nocheck
+
+import {signal, Signal, WritableSignal} from '@angular/core';
 import {ValidationErrors} from '@angular/forms';
 
 export function useFormBridge<
@@ -9,6 +11,20 @@ export function useFormBridge<
 	value: WritableSignal<ValueT>,
 	options?: useFormBridge.Options,
 ): useFormBridge.Result;
+
+export function useFormBridge(
+	value,
+	{
+		//
+		disabled = signal(false),
+		touched = signal(false),
+		pending = signal(false).asReadonly(),
+		errors = signal(undefined).asReadonly(),
+	} = {},
+) {
+	// todo
+	throw 'not implemented yet';
+}
 
 export namespace useFormBridge {
 	export type Options = Partial<{

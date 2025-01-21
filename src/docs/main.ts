@@ -1,15 +1,17 @@
 import {provideHttpClient} from '@angular/common/http';
 import {bootstrapApplication} from '@angular/platform-browser';
-import {provideAnimations} from '@angular/platform-browser/animations';
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 
-import {MyRootComponent} from '@/components/root';
-import {myTranslocoProviders} from '@/plugins/transloco';
+import {MyRootComponent} from './components/root';
+import {myPrimeProviders} from './plugins/prime';
+import {myTranslocoProviders} from './plugins/transloco';
 
 bootstrapApplication(MyRootComponent, {
 	providers: [
-		provideAnimations(),
+		provideAnimationsAsync(),
 		provideHttpClient(),
 		//
+		myPrimeProviders,
 		myTranslocoProviders,
 	],
 });

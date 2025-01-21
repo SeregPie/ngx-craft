@@ -1,7 +1,9 @@
+import {NgComponentOutlet} from '@angular/common';
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {TranslocoModule} from '@jsverse/transloco';
-import {useMediaQuery} from 'ngx-craft';
+
+import {MyDemoComponent} from '../../../core/composables/media-query/demo';
 
 @Component({
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -9,6 +11,7 @@ import {useMediaQuery} from 'ngx-craft';
 		//
 		RouterModule,
 		TranslocoModule,
+		NgComponentOutlet,
 	],
 	selector: 'my-root',
 	standalone: true,
@@ -17,5 +20,5 @@ import {useMediaQuery} from 'ngx-craft';
 export class MyRootComponent {
 	constructor() {}
 
-	wlxlelhm = useMediaQuery('(min-width: 800px)');
+	demo = MyDemoComponent;
 }

@@ -2,6 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {inject, Injectable, makeEnvironmentProviders} from '@angular/core';
 import {provideTransloco, Translation, TranslocoLoader} from '@jsverse/transloco';
 import {provideTranslocoMessageformat} from '@jsverse/transloco-messageformat';
+import {Observable} from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
@@ -11,7 +12,7 @@ export class MyTranslocoLoader implements TranslocoLoader {
 
 	ngHttpClient = inject(HttpClient);
 
-	getTranslation(lang: string) {
+	getTranslation(lang: string): Observable<Translation> {
 		return this.ngHttpClient.get<Translation>(`/assets/i18n/${lang}.json`);
 	}
 }

@@ -1,7 +1,9 @@
+// @ts-nocheck
+
 import {Signal} from '@angular/core';
 
 export function useDocumentHidden(): Signal<boolean>;
 
-export namespace useDocumentHidden {
-	export const supported: boolean;
+export function useDocumentHidden() {
+	throw 'not implemented yet';
 }

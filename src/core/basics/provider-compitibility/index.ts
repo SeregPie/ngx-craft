@@ -1,4 +1,6 @@
-import {ClassProvider, ExistingProvider, FactoryProvider, Provider, ProviderToken, Type, ValueProvider} from '@angular/core';
+// @ts-nocheck
+
+import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
 
 export function provide<T>(
 	//
@@ -12,24 +14,8 @@ export function provide<T>(
 	options?: provide.Options,
 ): ProviderChoice<T>;
 
-export function provide(
-	//
-	token: ProviderToken<any>,
-	{
-		//
-		multi = false,
-	}: provide.Options = {},
-) {
-	let provider: Partial<Provider> = {provide: token}; // todo: rename?
-	if (multi) {
-		provider.multi = true;
-	}
-	return <ProviderChoice<any>>{
-		useValue: (source) => ({...provider, useValue: source}),
-		useFactory: (source) => ({...provider, useFactory: source}),
-		useClass: (source) => ({...provider, useClass: source}),
-		useExisting: (source) => ({...provider, useExisting: source}),
-	};
+export function provide(token, {multi = false} = {}) {
+	throw 'not implemented yet';
 }
 
 export namespace provide {

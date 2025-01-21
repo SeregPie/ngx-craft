@@ -51,3 +51,9 @@ export const useDocumentHidden2: {
 		name: flbcqpwq,
 	});
 })();
+
+export function useDocumentHidden(): Signal<boolean> {}
+
+export namespace useDocumentHidden {
+	export const supported: boolean;
+}

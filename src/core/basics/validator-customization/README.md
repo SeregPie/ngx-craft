@@ -2,9 +2,19 @@
 
 # Validator Customization
 
-`withValidators(control, ...validators)`
+---
+
+## `withValidators`
 
 Adds a typed validator to a control.
+
+### Types
+
+```ts
+export function withValidators<const ControlT extends AbstractControl>(control: ControlT, ...validators: CustomValidatorFn<ControlT>[]): ControlT;
+```
+
+### Example
 
 ```ts
 let form = new FormGroup({
@@ -52,31 +62,20 @@ let form = new FormControl<null | number>(null, {
 <!-- prettier-ignore -->
 ```ts
 export interface CustomValidatorFn<
-  ControlT extends AbstractControl = AbstractControl,
+	ControlT extends AbstractControl = AbstractControl,
 > {
-  (control: ControlT): ReturnType<ValidatorFn>;
+	(control: ControlT): ReturnType<ValidatorFn>;
 }
 
 export const noopValidator: {
-  (control: AbstractControl): null;
+	(control: AbstractControl): null;
 };
 
-export const stubValidator: {
-  <ErrorsT extends ValidationErrors>(errors: ErrorsT): {
-    (control: AbstractControl): ErrorsT;
-  };
-};
 
-export const withValidators: {
-  <ControlT extends AbstractControl>(
-    control: ControlT,
-    ...validators: CustomValidatorFn<ControlT>[]
-  ): ControlT;
-};
 
-export const composeValidators: {
-  <ControlT extends AbstractControl>(
-    validators: Readonly<Array<CustomValidatorFn<ControlT>>>,
-  ): CustomValidatorFn<ControlT>;
-};
+export function composeValidators<
+	const ControlT extends AbstractControl,
+>(
+	validators: ReadonlyArray<CustomValidatorFn<ControlT>>,
+): CustomValidatorFn<ControlT>;
 ```

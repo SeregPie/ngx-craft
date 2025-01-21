@@ -7,7 +7,6 @@
 ## Usage
 
 ```ts
-@Component({})
 class MyComponent {
   dark = useMediaQuery('(prefers-color-scheme: dark)');
 }
@@ -15,9 +14,9 @@ class MyComponent {
 
 ## Types
 
+<!-- prettier-ignore -->
 ```ts
-export const useMediaQuery: {
-  (query: MaybeSignal<string>): Signal<boolean>;
-  readonly supported: boolean;
-};
+export function useMediaQuery(
+  query: MaybeSignal<string>,
+): Signal<boolean>;
 ```
