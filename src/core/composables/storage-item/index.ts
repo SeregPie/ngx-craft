@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import {WritableSignal, signal} from '@angular/core';
+import {signal, WritableSignal} from '@angular/core';
 
 import {MaybeSignal, wrapSignal} from '../../basics/daowexhy';
 
@@ -10,9 +10,11 @@ export function useStorageItem(
 	options?: useStorageItem.Options,
 ): WritableSignal<undefined | string>;
 
-export function useStorageItem(name, {session = false} = {}) {
-	let $name = wrapSignal(name);
-	let $session = wrapSignal(session);
+export function useStorageItem(name, {
+	session = false,
+} = {}) {
+	let name$ = wrapSignal(name);
+	let session$ = wrapSignal(session);
 	// todo
 	return signal(undefined);
 }

@@ -1,12 +1,11 @@
 // @ts-nocheck
 
 import {DOCUMENT} from '@angular/common';
-import {Signal, computed, effect, inject, signal} from '@angular/core';
+import {computed, effect, inject, signal, Signal} from '@angular/core';
 
 import {MaybeSignal, wrapSignal} from '../../basics/daowexhy';
 
 export function useMediaQuery(
-	//
 	query: MaybeSignal<string>,
 ): Signal<boolean>;
 
