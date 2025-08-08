@@ -13,11 +13,11 @@ export function useMediaQuery(
 export function useMediaQuery(query) {
 	// todo
 	let document = inject(DOCUMENT, {optional: true});
-	let $query = wrapSignal(query);
+	let query$ = wrapSignal(query);
 	// todo: rename
 	let inccvbcx$ = computed(() => {
 		let window = document.defaultView;
-		let query = $query();
+		let query = query$();
 		return window.matchMedia(query);
 	});
 	// todo: rename

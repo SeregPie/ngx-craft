@@ -3,18 +3,16 @@
 import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
 
 export function provide<T>(
-	//
-	token: ProviderToken<Array<T>>,
+	token: ProviderToken<ReadonlyArray<T>>,
 	options: provide.Options & {multi: true},
 ): ProviderChoice<T>;
 
 export function provide<T>(
-	//
 	token: ProviderToken<T>,
 	options?: provide.Options,
 ): ProviderChoice<T>;
 
-export function provide(token, {multi = false} = {}) {
+export const provide = (token, {multi = false} = {}) => {
 	throw 'not implemented yet';
 }
 
