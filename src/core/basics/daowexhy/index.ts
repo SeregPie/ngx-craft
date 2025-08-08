@@ -4,28 +4,24 @@
 import {isSignal, signal, Signal} from '@angular/core';
 
 /**
- * A type that can be either a value of type T or a Signal containing a value of type T.
+ * Bla bla bla.
  *
- * @template T The type of the value or signal.
+ * @template T Bla bla bla.
  */
 export type MaybeSignal<T> = T | Signal<T>;
 
 /**
- * Unwraps a MaybeSignal to extract the value. If the input is a Signal, it calls the signal function
- * to retrieve the value. Otherwise, it returns the value directly.
+ * Bla bla bla
  *
- * @template T The type of the value contained within the MaybeSignal.
- * @param {MaybeSignal<T>} v The MaybeSignal value to unwrap.
- * @returns {T} The value inside the Signal, or the value itself if it was not a Signal.
+ * @template T Bla bla bla.
+ * @param {MaybeSignal<T>} v Bla bla bla.
+ * @returns {T} Bla bla bla.
  */
 export function unwrapSignal<const T>(
-	//
-	v: MaybeSignal<T>,
+  v: MaybeSignal<T>,
 ): T;
 
-export function unwrapSignal(v) {
-	return isSignal(v) ? v() : v;
-}
+export const unwrapSignal = (v) => (isSignal(v) ? v() : v);
 
 /**
  * Wraps a value in a Signal. If the input is already a Signal, it is returned as is. Otherwise,
@@ -36,10 +32,8 @@ export function unwrapSignal(v) {
  * @returns {Signal<T>} A Signal wrapping the value.
  */
 export function wrapSignal<const T>(
-	//
-	v: MaybeSignal<T>,
+  //
+  v: MaybeSignal<T>,
 ): Signal<T>;
 
-export function wrapSignal(v) {
-	return isSignal(v) ? v : signal(v);
-}
+export const wrapSignal = (v) => (isSignal(v) ? v : signal(v));
