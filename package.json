@@ -40,9 +40,6 @@
 		"typescript": "^5.8.3",
 		"zone.js": "^0.15.1"
 	},
-   "jest": {
-    "preset": "@repo/jest-presets/angular"
-  },
 	"keywords": [
 		"angular",
 		"control",
