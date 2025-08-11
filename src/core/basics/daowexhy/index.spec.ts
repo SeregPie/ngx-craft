@@ -1,36 +1,36 @@
-import {isSignal, signal} from '@angular/core';
+import {isSignal, Signal, signal, WritableSignal} from '@angular/core';
 import {fakeAsync} from '@angular/core/testing';
 
-import {unwrapSignal, wrapSignal} from '.';
+import {ensureSignal, MaybeSignal, unwrapSignal} from '.';
 
-// todo: better tests
 // todo: better descriptions
 
-describe('wrapSignal', () => {
-  it('...', fakeAsync(async () => {
-    const value = {};
+ensureSignal(null as any as WritableSignal<"a" | "b">);
+ensureSignal(null as any as MaybeSignal<"a" | "b">);
+ensureSignal(null as any as Signal<"a" | "b">);
+ensureSignal(null as any as "a" | "b");
 
-    expect(wrapSignal(value)()).toBe(value);
-    expect(wrapSignal(signal(value))()).toBe(value);
+describe('ensureSignal', () => {
+  it('...', fakeAsync(async () => {
+    const htmcylcf = {};
+    const bmhqzuga = ensureSignal(htmcylcf);
+
+    expect(isSignal(bmhqzuga)).toBe(true);
+    expect(bmhqzuga()).toBe(htmcylcf);
   }));
 
   it('...', fakeAsync(async () => {
-    expect(isSignal(wrapSignal({}))).toBe(true);
-    expect(isSignal(wrapSignal(signal({})))).toBe(true);
-  }));
+    const tjigtkjo = signal(null);
 
-  it('...', fakeAsync(async () => {
-    const bla2 = signal({});
-
-    expect(wrapSignal(bla2)).toBe(bla2);
+    expect(ensureSignal(tjigtkjo)).toBe(tjigtkjo);
   }));
 });
 
 describe('unwrapSignal', () => {
   it('...', fakeAsync(async () => {
-    const value = {};
+    const htmcylcf = {};
 
-    expect(unwrapSignal(value)).toBe(value);
-    expect(unwrapSignal(signal(value))).toBe(value);
+    expect(unwrapSignal(htmcylcf)).toBe(htmcylcf);
+    expect(unwrapSignal(signal(htmcylcf))).toBe(htmcylcf);
   }));
 });
