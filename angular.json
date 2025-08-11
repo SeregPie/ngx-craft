@@ -1,18 +1,11 @@
 {
 	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-	"cli": {
-		"analytics": false,
-		"cache": {
-			"enabled": false
-		}
-	},
 	"projects": {
 		"core": {
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"builder": "@angular/build:ng-packagr",
 					"options": {
-						"project": "./ng-package.json",
 						"tsConfig": "./src/tsconfig.json"
 					}
 				},

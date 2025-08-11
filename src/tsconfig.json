@@ -1,4 +1,12 @@
 {
+  "angularCompilerOptions": {
+    "compilationMode": "partial",
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true,
+    "typeCheckHostBindings": true
+  },
 	"compilerOptions": {
 		"experimentalDecorators": true,
 		"lib": ["ESNext", "DOM"],

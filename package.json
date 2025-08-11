@@ -9,7 +9,7 @@
 		"url": "https://github.com/SeregPie/ngx-craft.git"
 	},
 	"scripts": {
-		"build": "ng build core && ng build docs",
+		"build": "ng build core",
 		"start": "ng serve",
 		"test": "ng test",
 		"format": "prettier --write ."
@@ -20,9 +20,9 @@
 		"@angular/forms": ">=17.3"
 	},
 	"devDependencies": {
-		"@angular-builders/jest": "^20.0.0",
-		"@angular-devkit/build-angular": "^20.1.5",
 		"@angular/animations": "^20.1.6",
+		"@angular/build": "^20.1.5",
+    "@angular-builders/jest": "^20.0.0",
 		"@angular/cli": "^20.1.5",
 		"@angular/common": "^20.1.6",
 		"@angular/compiler": "^20.1.6",
@@ -33,23 +33,16 @@
 		"@angular/platform-browser-dynamic": "^20.1.6",
 		"@angular/router": "^20.1.6",
 		"@faker-js/faker": "^9.9.0",
-		"@jsverse/transloco": "^7.6.1",
-		"@jsverse/transloco-messageformat": "^7.0.1",
-		"@messageformat/core": "^3.4.0",
-		"@primeng/themes": "^20.0.1",
 		"@types/jest": "^30.0.0",
-		"jest": "^30.0.5",
-		"jest-environment-jsdom": "^30.0.5",
-		"modern-normalize": "^3.0.1",
 		"ng-packagr": "^20.1.0",
-		"prettier": "^3.6.2",
-		"prettier-plugin-organize-imports": "^4.2.0",
-		"primeng": "^20.0.1",
 		"rxjs": "^7.8.2",
 		"tslib": "^2.8.1",
-		"typescript": "<5.9.0",
+		"typescript": "^5.8.3",
 		"zone.js": "^0.15.1"
 	},
+   "jest": {
+    "preset": "@repo/jest-presets/angular"
+  },
 	"keywords": [
 		"angular",
 		"control",
