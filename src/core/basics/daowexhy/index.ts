@@ -1,7 +1,9 @@
-// @ts-nocheck
+
 // todo: rename folder
 
 import {isSignal, signal, Signal} from '@angular/core';
+
+export type SignalValue<T> = T extends Signal<infer R> ? R : never;
 
 /**
  * Bla bla bla.
@@ -10,9 +12,9 @@ import {isSignal, signal, Signal} from '@angular/core';
  */
 export type MaybeSignal<T> = T | Signal<T>;
 
-export type UnwrapSignal<T> = T extends Signal<infer R> ? R : T;
+export type UnwrapSignal<T> = T extends Signal<any> ? SignalValue<T> : T;
 
-export type WrapSignal<T> = T extends Signal<?> ? T : Signal<T>;
+export type WrapSignal<T> = T extends Signal<any> ? T : Signal<T>;
 
 /**
  * Bla bla bla
