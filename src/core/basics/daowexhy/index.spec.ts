@@ -7,25 +7,25 @@ import {unwrapSignal, wrapSignal} from '.';
 
 describe('wrapSignal', () => {
   it('...', async () => {
-    const htmcylcf = {};
-    const bmhqzuga = wrapSignal(htmcylcf);
+    const value = {};
+    const value$ = wrapSignal(value);
 
-    expect(isSignal(bmhqzuga)).toBe(true);
-    expect(bmhqzuga()).toBe(htmcylcf);
+    expect(isSignal(value$)).toBe(true);
+    expect(value$()).toBe(value);
   });
 
   it('...', async () => {
-    const tjigtkjo = signal(null);
+    const value$ = signal(null);
 
-    expect(wrapSignal(tjigtkjo)).toBe(tjigtkjo);
+    expect(wrapSignal(value$)).toBe(value$);
   });
 });
 
 describe('unwrapSignal', () => {
   it('...', async () => {
-    const htmcylcf = {};
+    const value = {};
 
-    expect(unwrapSignal(htmcylcf)).toBe(htmcylcf);
-    expect(unwrapSignal(signal(htmcylcf))).toBe(htmcylcf);
+    expect(unwrapSignal(value)).toBe(value);
+    expect(unwrapSignal(signal(value))).toBe(value);
   });
 });

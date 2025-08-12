@@ -101,17 +101,22 @@ describe('composeAsyncValidators', () => {
   });
 
   it('should skip remaining validators if one fails', async () => {
-    // todo
-    const validators = [null, {error: true}, null].map((v) => jest.fn(async () => v));
+    // todo: rename
+    const jesergzs = list(4).map(() => jest.fn(async () => null));
+    const fyddlfln = list(4).map(() => jest.fn(async () => null));
+    const wwmzeika = [...fyddlfln, jest.fn(async () => ({error: true}))];
     new FormControl(null, {
-      asyncValidators: composeAsyncValidators(validators),
+      asyncValidators: composeAsyncValidators([...wwmzeika, ...jesergzs]),
     });
 
     await sleep(0);
 
-    expect(validators[0]).toHaveBeenCalledTimes(1);
-    expect(validators[1]).toHaveBeenCalledTimes(1);
-    expect(validators[2]).not.toHaveBeenCalled();
+    for (const validator of wwmzeika) {
+      expect(validator).toHaveBeenCalledTimes(1);
+    }
+    for (const validator of jesergzs) {
+      expect(validator).not.toHaveBeenCalled();
+    }
   });
 
   it('should return the same validator if only one provided', async () => {
@@ -137,11 +142,11 @@ describe('noopAsyncValidator', () => {
 
 describe('stubAsyncValidator', () => {
   it('should return provided errors', async () => {
-    const error = {error: true};
-    const form = withAsyncValidators(new FormControl(null), stubAsyncValidator(error));
+    const errors = {error: true};
+    const form = withAsyncValidators(new FormControl(null), stubAsyncValidator(errors));
 
     await sleep(0);
 
-    expect(form.errors).toEqual(error);
+    expect(form.errors).toEqual(errors);
   });
 });
