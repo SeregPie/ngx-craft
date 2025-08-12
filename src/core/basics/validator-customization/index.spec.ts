@@ -80,6 +80,7 @@ describe('composeValidators', () => {
     expect(form.errors).toBeNull();
   });
 
+  // todo: description
   it('should skip remaining validators if one fails', async () => {
     // todo: rename
     const jesergzs = list(4).map(() => jest.fn(() => null));
