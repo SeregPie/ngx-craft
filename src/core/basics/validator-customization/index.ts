@@ -18,6 +18,8 @@ export interface CustomValidatorFn<
 
 /**
  * Bla bla bla.
+ * @param control Bla bla bla.
+ * @returns Bla bla bla.
  */
 export const noopValidator: {
   (control: AbstractControl): null;
@@ -51,10 +53,8 @@ export const stubValidator: {
  * @returns Bla bla bla.
  */
 export function withValidators<
-  //
   const ControlT extends AbstractControl,
 >(
-  //
   control: ControlT,
   ...validators: CustomValidatorFn<ControlT>[]
 ): ControlT;

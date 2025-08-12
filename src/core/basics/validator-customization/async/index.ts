@@ -18,6 +18,8 @@ export interface CustomAsyncValidatorFn<
 
 /**
  * Bla bla bla.
+ * @param control Bla bla bla.
+ * @returns Bla bla bla.
  */
 export const noopAsyncValidator: {
   (control: AbstractControl): Promise<null>;
