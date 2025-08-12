@@ -4,14 +4,12 @@ import {isSignal, signal, Signal} from '@angular/core';
 
 /**
  * Bla bla bla.
- *
  * @template T Bla bla bla.
  */
 export type MaybeSignal<T> = T | Signal<T>;
 
 /**
  * Bla bla bla.
- *
  * @template T Bla bla bla.
  * @param source Bla bla bla.
  * @returns Bla bla bla.
@@ -27,7 +25,6 @@ export function wrapSignal(source) {
 
 /**
  * Bla bla bla
- *
  * @template T Bla bla bla.
  * @param source Bla bla bla.
  * @returns Bla bla bla.
