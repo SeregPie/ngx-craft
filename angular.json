@@ -12,7 +12,7 @@
 				"test": {
 					"builder": "@angular-builders/jest:run",
 					"options": {
-						"tsConfig": "./src/tsconfig.spec.json"
+						"tsConfig": "./src/tsconfig.json"
 					}
 				}
 			},

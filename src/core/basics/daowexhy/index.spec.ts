@@ -1,19 +1,15 @@
-import {isSignal, Signal, signal, WritableSignal} from '@angular/core';
+import {isSignal, signal} from '@angular/core';
 import {fakeAsync} from '@angular/core/testing';
+import {describe, expect, it} from "@jest/globals";
 
-import {ensureSignal, MaybeSignal, unwrapSignal} from '.';
+import {unwrapSignal, wrapSignal} from '.';
 
 // todo: better descriptions
 
-ensureSignal(null as any as WritableSignal<"a" | "b">);
-ensureSignal(null as any as MaybeSignal<"a" | "b">);
-ensureSignal(null as any as Signal<"a" | "b">);
-ensureSignal(null as any as "a" | "b");
-
-describe('ensureSignal', () => {
+describe('wrapSignal', () => {
   it('...', fakeAsync(async () => {
     const htmcylcf = {};
-    const bmhqzuga = ensureSignal(htmcylcf);
+    const bmhqzuga = wrapSignal(htmcylcf);
 
     expect(isSignal(bmhqzuga)).toBe(true);
     expect(bmhqzuga()).toBe(htmcylcf);
@@ -22,7 +18,7 @@ describe('ensureSignal', () => {
   it('...', fakeAsync(async () => {
     const tjigtkjo = signal(null);
 
-    expect(ensureSignal(tjigtkjo)).toBe(tjigtkjo);
+    expect(wrapSignal(tjigtkjo)).toBe(tjigtkjo);
   }));
 });
 
