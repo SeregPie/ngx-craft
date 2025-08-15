@@ -1,6 +1,6 @@
 // todo: rename folder
 
-import {isSignal, signal, Signal} from '@angular/core';
+import {Signal, isSignal, signal} from '@angular/core';
 
 /**
  * Bla bla bla.

@@ -1,7 +1,7 @@
 import {isSignal, signal} from '@angular/core';
 import {describe, expect, it} from '@jest/globals';
 
-import {unwrapSignal, ensureSignal} from '.';
+import {ensureSignal, unwrapSignal} from '.';
 
 // todo: better descriptions
 
