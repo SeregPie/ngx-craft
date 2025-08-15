@@ -14,7 +14,7 @@
 		"start": "ng serve",
 		"test": "ng test",
 		"test:watch": "ng test --watch",
-		"format": "eslint --fix"
+		"format": ""
 	},
 	"peerDependencies": {
 		"@angular/common": ">=17.3",

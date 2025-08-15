@@ -2,24 +2,16 @@ import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 /**
  * Bla bla bla.
- * @template ControlT Bla bla bla.
  */
 export interface CustomValidatorFn<
   //
   ControlT extends AbstractControl = AbstractControl,
 > {
-  /**
-   * Bla bla bla.
-   * @param control Bla bla bla.
-   * @returns Bla bla bla.
-   */
   (control: ControlT): ReturnType<ValidatorFn>;
 }
 
 /**
  * Bla bla bla.
- * @param control Bla bla bla.
- * @returns Bla bla bla.
  */
 export const noopValidator: {
   (control: AbstractControl): null;
@@ -27,30 +19,18 @@ export const noopValidator: {
 
 /**
  * Bla bla bla.
- * @template ErrorsT Bla bla bla.
- * @param errors Bla bla bla.
- * @returns Bla bla bla.
  */
 // todo: rename
 export const stubValidator: {
   <const ErrorsT extends ValidationErrors>(
     errors: ErrorsT,
   ): {
-    /**
-     * Bla bla bla.
-     * @param control Bla bla bla.
-     * @returns Bla bla bla.
-     */
     (control: AbstractControl): ErrorsT;
   };
 } = (errors) => () => errors;
 
 /**
  * Bla bla bla.
- * @template ControlT Bla bla bla.
- * @param control Bla bla bla.
- * @param validators Bla bla bla.
- * @returns Bla bla bla.
  */
 export function withValidators<
   const ControlT extends AbstractControl,
@@ -68,9 +48,6 @@ export function withValidators(control, ...validators) {
 
 /**
  * Bla bla bla.
- * @template ControlT Bla bla bla.
- * @param validators Bla bla bla.
- * @returns Bla bla bla.
  */
 export function composeValidators<
   const ControlT extends AbstractControl,

@@ -1,18 +1,12 @@
-// todo: rename folder
-
 import {Signal, isSignal, signal} from '@angular/core';
 
 /**
- * Bla bla bla.
- * @template T Bla bla bla.
+ * A raw value or a signal.
  */
 export type MaybeSignal<T> = T | Signal<T>;
 
 /**
- * Bla bla bla.
- * @template T Bla bla bla.
- * @param source Bla bla bla.
- * @returns Bla bla bla.
+ * Normalize a raw value to a signal.
  */
 export function ensureSignal<const T>(
   source: MaybeSignal<T>,
@@ -24,10 +18,7 @@ export function ensureSignal(source) {
 }
 
 /**
- * Bla bla bla
- * @template T Bla bla bla.
- * @param source Bla bla bla.
- * @returns Bla bla bla.
+ * Normalize a signal to a raw value.
  */
 export function unwrapSignal<const T>(
   source: MaybeSignal<T>,

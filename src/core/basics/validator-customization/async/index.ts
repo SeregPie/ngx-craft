@@ -3,23 +3,15 @@ import {isObservable, lastValueFrom} from 'rxjs';
 
 /**
  * Bla bla bla.
- * @template ControlT Bla bla bla.
  */
 export interface CustomAsyncValidatorFn<
   ControlT extends AbstractControl = AbstractControl,
 > {
-  /**
-   * Bla bla bla.
-   * @param control Bla bla bla.
-   * @returns Bla bla bla.
-   */
   (control: ControlT): ReturnType<AsyncValidatorFn>;
 }
 
 /**
  * Bla bla bla.
- * @param control Bla bla bla.
- * @returns Bla bla bla.
  */
 export const noopAsyncValidator: {
   (control: AbstractControl): Promise<null>;
@@ -27,30 +19,18 @@ export const noopAsyncValidator: {
 
 /**
  * Bla bla bla.
- * @template ErrorsT Bla bla bla.
- * @param errors Bla bla bla.
- * @returns Bla bla bla.
  */
 // todo: rename
 export const stubAsyncValidator: {
   <const ErrorsT extends ValidationErrors>(
     errors: ErrorsT,
   ): {
-    /**
-     * Bla bla bla.
-     * @param control Bla bla bla.
-     * @returns Bla bla bla.
-     */
     (control: AbstractControl): Promise<ErrorsT>;
   };
 } = (errors) => async () => errors;
 
 /**
  * Bla bla bla.
- * @template ControlT Bla bla bla.
- * @param control Bla bla bla.
- * @param validators Bla bla bla.
- * @returns Bla bla bla.
  */
 export function withAsyncValidators<
   const ControlT extends AbstractControl,
@@ -68,9 +48,6 @@ export function withAsyncValidators(control, ...validators) {
 
 /**
  * Bla bla bla.
- * @template ControlT Bla bla bla.
- * @param validators Bla bla bla.
- * @returns Bla bla bla.
  */
 export function composeAsyncValidators<
   const ControlT extends AbstractControl,
