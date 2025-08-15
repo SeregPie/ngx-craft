@@ -4,7 +4,7 @@ import {describe, expect, it} from '@jest/globals';
 import {ensureSignal, unwrapSignal} from '.';
 
 describe('ensureSignal', () => {
-  it('should create a signal with the raw value', async () => {
+  it('should wrap the raw value into a signal', async () => {
     const value = {};
     const valueSignal = ensureSignal(value);
 
@@ -12,7 +12,7 @@ describe('ensureSignal', () => {
     expect(valueSignal()).toBe(value);
   });
 
-  it('should return the signal as-is', async () => {
+  it('should return the signal as is', async () => {
     const valueSignal = signal(null);
 
     expect(ensureSignal(valueSignal)).toBe(valueSignal);
@@ -20,13 +20,13 @@ describe('ensureSignal', () => {
 });
 
 describe('unwrapSignal', () => {
-  it('should extract the raw value from the signal', async () => {
+  it('should unwrap the raw value from the signal', async () => {
     const value = {};
 
     expect(unwrapSignal(signal(value))).toBe(value);
   });
 
-  it('should return the raw value as-is', async () => {
+  it('should return the raw value as is', async () => {
     const value = {};
 
     expect(unwrapSignal(value)).toBe(value);
