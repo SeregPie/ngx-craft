@@ -1,14 +1,14 @@
 import {isSignal, signal} from '@angular/core';
 import {describe, expect, it} from "@jest/globals";
 
-import {unwrapSignal, wrapSignal} from '.';
+import {unwrapSignal, ensureSignal} from '.';
 
 // todo: better descriptions
 
 describe('wrapSignal', () => {
   it('...', async () => {
     const value = {};
-    const value$ = wrapSignal(value);
+    const value$ = ensureSignal(value);
 
     expect(isSignal(value$)).toBe(true);
     expect(value$()).toBe(value);
@@ -17,7 +17,7 @@ describe('wrapSignal', () => {
   it('...', async () => {
     const value$ = signal(null);
 
-    expect(wrapSignal(value$)).toBe(value$);
+    expect(ensureSignal(value$)).toBe(value$);
   });
 });
 

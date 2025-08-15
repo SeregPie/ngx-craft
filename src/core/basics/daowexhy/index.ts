@@ -14,12 +14,12 @@ export type MaybeSignal<T> = T | Signal<T>;
  * @param source Bla bla bla.
  * @returns Bla bla bla.
  */
-export function wrapSignal<const T>(
+export function ensureSignal<const T>(
   source: MaybeSignal<T>,
 ): Signal<T>;
 
 // @ts-ignore
-export function wrapSignal(source) {
+export function ensureSignal(source) {
   return isSignal(source) ? source : signal(source);
 }
 
