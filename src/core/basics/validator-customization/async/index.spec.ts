@@ -1,6 +1,6 @@
 import {FormControl} from '@angular/forms';
 import {simpleFaker as faker} from '@faker-js/faker';
-import {describe, expect, it, jest} from "@jest/globals";
+import {describe, expect, it, jest} from '@jest/globals';
 import {list, sleep} from 'radashi';
 
 import {composeAsyncValidators, noopAsyncValidator, stubAsyncValidator, withAsyncValidators} from '.';
@@ -16,20 +16,20 @@ describe('withAsyncValidators', () => {
       async ({value}) => value % 2 ? enfdttrd : null,
     );
 
-    expect(form.status).toBe("PENDING");
+    expect(form.status).toBe('PENDING');
 
     await sleep(0);
 
-    expect(form.status).toBe("INVALID");
+    expect(form.status).toBe('INVALID');
     expect(form.errors).toEqual(enfdttrd);
 
     form.setValue(2);
 
-    expect(form.status).toBe("PENDING");
+    expect(form.status).toBe('PENDING');
 
     await sleep(0);
 
-    expect(form.status).toBe("VALID");
+    expect(form.status).toBe('VALID');
   });
 
   it('should contain all provided validators', async () => {
@@ -80,29 +80,29 @@ describe('composeAsyncValidators', () => {
       ]),
     );
 
-    expect(form.status).toBe("PENDING");
+    expect(form.status).toBe('PENDING');
 
     await sleep(0);
 
-    expect(form.status).toBe("INVALID");
+    expect(form.status).toBe('INVALID');
     expect(form.errors).toEqual({error: {n: 1}});
 
     form.setValue(2);
 
-    expect(form.status).toBe("PENDING");
+    expect(form.status).toBe('PENDING');
 
     await sleep(0);
 
-    expect(form.status).toBe("INVALID");
+    expect(form.status).toBe('INVALID');
     expect(form.errors).toEqual({error: {n: 2}});
 
     form.setValue(3);
 
-    expect(form.status).toBe("PENDING");
+    expect(form.status).toBe('PENDING');
 
     await sleep(0);
 
-    expect(form.status).toBe("VALID");
+    expect(form.status).toBe('VALID');
   });
 
   // todo: description
@@ -142,7 +142,7 @@ describe('noopAsyncValidator', () => {
 
     await sleep(0);
 
-    expect(form.status).toBe("VALID");
+    expect(form.status).toBe('VALID');
   });
 });
 
@@ -153,7 +153,7 @@ describe('stubAsyncValidator', () => {
 
     await sleep(0);
 
-    expect(form.status).toBe("INVALID");
+    expect(form.status).toBe('INVALID');
     expect(form.errors).toEqual(errors);
   });
 });

@@ -1,6 +1,6 @@
 import {FormControl} from '@angular/forms';
 import {simpleFaker as faker} from '@faker-js/faker';
-import {describe, expect, it, jest} from "@jest/globals";
+import {describe, expect, it, jest} from '@jest/globals';
 import {list} from 'radashi';
 
 import {composeValidators, noopValidator, stubValidator, withValidators} from '.';
@@ -16,12 +16,12 @@ describe('withValidators', () => {
       ({value}) => value % 2 ? enfdttrd : null,
     );
 
-    expect(form.status).toBe("INVALID");
+    expect(form.status).toBe('INVALID');
     expect(form.errors).toEqual(enfdttrd);
 
     form.setValue(2);
 
-    expect(form.status).toBe("VALID");
+    expect(form.status).toBe('VALID');
   });
 
   it('should contain all provided validators', async () => {
@@ -72,17 +72,17 @@ describe('composeValidators', () => {
       ]),
     );
 
-    expect(form.status).toBe("INVALID");
+    expect(form.status).toBe('INVALID');
     expect(form.errors).toEqual({error: {n: 1}});
 
     form.setValue(2);
 
-    expect(form.status).toBe("INVALID");
+    expect(form.status).toBe('INVALID');
     expect(form.errors).toEqual({error: {n: 2}});
 
     form.setValue(3);
 
-    expect(form.status).toBe("VALID");
+    expect(form.status).toBe('VALID');
   });
 
   // todo: description
@@ -115,11 +115,11 @@ describe('composeValidators', () => {
 });
 
 describe('noopValidator', () => {
-  it('should return null', (async () => {
+  it('should return null', async () => {
     const form = withValidators(new FormControl(null), noopValidator);
 
-    expect(form.status).toBe("VALID");
-  }));
+    expect(form.status).toBe('VALID');
+  });
 });
 
 describe('stubValidator', () => {
@@ -127,7 +127,7 @@ describe('stubValidator', () => {
     const errors = {error: faker.string.ulid()};
     const form = withValidators(new FormControl(null), stubValidator(errors));
 
-    expect(form.status).toBe("INVALID");
+    expect(form.status).toBe('INVALID');
     expect(form.errors).toEqual(errors);
   });
 });

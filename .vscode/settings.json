@@ -1,9 +1,0 @@
-{
-	"editor.defaultFormatter": "vscode.typescript-language-features",
-	"javascript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
-	"javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
-	"javascript.format.semicolons": "insert",
-	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
-	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
-	"typescript.format.semicolons": "insert"
-}
