@@ -34,7 +34,7 @@ describe('withAsyncValidators', () => {
 
   it('should contain all provided validators', async () => {
     const form = new FormControl(null);
-    const validators = list(faker.number.int({min: 2, max: 4})).map(() => async () => null);
+    const validators = list(3).map(() => async () => null);
     withAsyncValidators(form, ...validators);
 
     for (const validator of validators) {
@@ -45,7 +45,7 @@ describe('withAsyncValidators', () => {
   // todo: better description
   it('should call validators only once', async () => {
     const form = new FormControl(null);
-    const validators = list(faker.number.int({min: 2, max: 4})).map(() => jest.fn(async () => null));
+    const validators = list(3).map(() => jest.fn(async () => null));
     withAsyncValidators(form, ...validators);
 
     for (const validator of validators) {
@@ -108,8 +108,8 @@ describe('composeAsyncValidators', () => {
   // todo: description
   it('should skip remaining validators if one fails', async () => {
     // todo: rename
-    const jesergzs = list(faker.number.int({min: 2, max: 4})).map(() => jest.fn(async () => null));
-    const fyddlfln = list(faker.number.int({min: 2, max: 4})).map(() => jest.fn(async () => null));
+    const jesergzs = list(2).map(() => jest.fn(async () => null));
+    const fyddlfln = list(2).map(() => jest.fn(async () => null));
     const wwmzeika = [...fyddlfln, jest.fn(async () => ({error: true}))];
     new FormControl(null, {
       asyncValidators: composeAsyncValidators([...wwmzeika, ...jesergzs]),

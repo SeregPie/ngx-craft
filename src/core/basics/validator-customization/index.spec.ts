@@ -26,7 +26,7 @@ describe('withValidators', () => {
 
   it('should contain all provided validators', async () => {
     const form = new FormControl(null);
-    const validators = list(faker.number.int({min: 2, max: 4})).map(() => () => null);
+    const validators = list(3).map(() => () => null);
     withValidators(form, ...validators);
 
     for (const validator of validators) {
@@ -37,7 +37,7 @@ describe('withValidators', () => {
   // todo: better description
   it('should call validators only once', async () => {
     const form = new FormControl(null);
-    const validators = list(faker.number.int({min: 2, max: 4})).map(() => jest.fn(() => null));
+    const validators = list(3).map(() => jest.fn(() => null));
     withValidators(form, ...validators);
 
     for (const validator of validators) {
@@ -88,8 +88,8 @@ describe('composeValidators', () => {
   // todo: description
   it('should skip remaining validators if one fails', async () => {
     // todo: rename
-    const jesergzs = list(faker.number.int({min: 2, max: 4})).map(() => jest.fn(() => null));
-    const fyddlfln = list(faker.number.int({min: 2, max: 4})).map(() => jest.fn(() => null));
+    const jesergzs = list(2).map(() => jest.fn(() => null));
+    const fyddlfln = list(2).map(() => jest.fn(() => null));
     const wwmzeika = [...fyddlfln, jest.fn(() => ({error: true}))];
     new FormControl(null, {
       validators: composeValidators([...wwmzeika, ...jesergzs]),
