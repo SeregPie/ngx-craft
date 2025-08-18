@@ -1,31 +1,36 @@
 import {InjectionToken} from '@angular/core';
 import {simpleFaker as faker} from '@faker-js/faker';
+import {describe, expect, it} from '@jest/globals';
 
 import {provide} from '.';
 
 describe('provide', () => {
+  // todo: rename
   class A {
     static asValue = new this();
     static asFactory = () => new this();
     static asClass = this;
-    static asExisting = new InjectionToken('', {factory: this.asFactory});
+    static asExisting = new InjectionToken(this.name, {factory: this.asFactory});
 
+    // todo: rework
     a = faker.number.int();
     b = faker.string.alphanumeric();
   }
 
+  // todo: rename
   class B {
     static asValue = new this();
     static asFactory = () => new this();
     static asClass = this;
-    static asExisting = new InjectionToken('', {factory: this.asFactory});
+    static asExisting = new InjectionToken(this.name, {factory: this.asFactory});
 
+    // todo: rework
     a = faker.string.alphanumeric();
     b = faker.number.int();
   }
 
-  describe('single', () => {
-    let token = new InjectionToken<A>('');
+  describe('', () => {
+    const token = new InjectionToken<A>(A.name);
 
     describe('useValue', () => {
       it('should create a correct provider', async () => {
@@ -117,7 +122,7 @@ describe('provide', () => {
   });
 
   describe('multiple', () => {
-    let token = new InjectionToken<Array<A>>('');
+    const token = new InjectionToken<Array<A>>(A.name);
 
     describe('useValue', () => {
       it('should create a correct provider', async () => {

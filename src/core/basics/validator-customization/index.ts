@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 /**
@@ -39,7 +41,6 @@ export function withValidators<
   ...validators: CustomValidatorFn<ControlT>[]
 ): ControlT;
 
-// @ts-ignore
 export function withValidators(control, ...validators) {
   control.addValidators(validators);
   control.updateValueAndValidity();
@@ -55,7 +56,6 @@ export function composeValidators<
   validators: ReadonlyArray<CustomValidatorFn<ControlT>>,
 ): CustomValidatorFn<ControlT>;
 
-// @ts-ignore
 export function composeValidators(validators) {
   switch (validators.length) {
     case 0:
@@ -63,7 +63,6 @@ export function composeValidators(validators) {
     case 1:
       return validators[0];
   }
-  // @ts-ignore
   return (control) => {
     for (let validator of validators) {
       let errors = validator(control);

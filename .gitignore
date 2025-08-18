@@ -1,7 +1,10 @@
 /node_modules
 /bun.lock
 /bun.lockb
+
 /.angular
 
 /dist
 /public
+
+/.vscode

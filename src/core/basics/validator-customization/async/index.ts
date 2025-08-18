@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {AbstractControl, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
 import {isObservable, lastValueFrom} from 'rxjs';
 
@@ -39,7 +41,6 @@ export function withAsyncValidators<
   ...validators: CustomAsyncValidatorFn<ControlT>[]
 ): ControlT;
 
-// @ts-ignore
 export function withAsyncValidators(control, ...validators) {
   control.addAsyncValidators(validators);
   control.updateValueAndValidity();
@@ -55,7 +56,6 @@ export function composeAsyncValidators<
   validators: ReadonlyArray<CustomAsyncValidatorFn<ControlT>>,
 ): CustomAsyncValidatorFn<ControlT>;
 
-// @ts-ignore
 export function composeAsyncValidators(validators) {
   switch (validators.length) {
     case 0:
@@ -63,7 +63,6 @@ export function composeAsyncValidators(validators) {
     case 1:
       return validators[0];
   }
-  // @ts-ignore
   return async (control) => {
     for (let validator of validators) {
       let errors = await ((v) => isObservable(v) ? lastValueFrom(v) : v)(validator(control));

@@ -13,19 +13,16 @@ export function provide<T>(
 ): ProviderChoice<T>;
 
 export function provide(token, {multi = false} = {}) {
-  // todo: rename
-  let aiprrptp = {provide: token};
+  let base = {provide: token};
   if (multi) {
-    aiprrptp.multi = true;
+    base.multi = true;
   }
-  // todo: rename
-  let jzqwxcdm = {};
-  ['Value', 'Factory', 'Class', 'Existing'].forEach((cdvlnwxq) => {
-    // todo: rename
-    let lsugiyoh = `use${cdvlnwxq}`;
-    jzqwxcdm[lsugiyoh] = (source) => ({...aiprrptp, [lsugiyoh]: source});
+  let choice = {};
+  ['Value', 'Factory', 'Class', 'Existing'].forEach((type) => {
+    let key = `use${type}`;
+    choice[key] = (source) => ({...base, [key]: source});
   });
-  return jzqwxcdm;
+  return choice;
 }
 
 export namespace provide {
