@@ -23,6 +23,11 @@ export default defineConfig([
     languageOptions: {globals: {...globals.browser, ...globals.node}},
   },
   tseslint.configs.base,
-  {files: ['**/*.json'], plugins: {json}, language: 'json/json', extends: ['json/recommended']},
+  {
+    files: ['**/*.json'],
+    plugins: {json},
+    language: 'json/json',
+    extends: ['json/recommended'],
+  },
   // {files: ["**/*.md"], plugins: {markdown}, language: "markdown/gfm", extends: ["markdown/recommended"]},
 ]);
