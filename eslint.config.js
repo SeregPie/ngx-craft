@@ -5,29 +5,40 @@ import json from '@eslint/json';
 import markdown from '@eslint/markdown';
 import {defineConfig} from 'eslint/config';
 import stylistic from '@stylistic/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
 
 export default defineConfig([
-  stylistic.configs.customize({
-    semi: true,
-    arrowParens: true,
-    jsx: false,
-  }),
-  {
-    rules: {
-      '@stylistic/object-curly-spacing': ['error', 'never'],
-    },
-  },
+  /*
+  await (async () => {
+    const parser = await import('@typescript-eslint/parser');
+    const {default: plugin} = await import('@stylistic/eslint-plugin');
+    const {rules} = stylistic.configs.customize({
+      semi: true,
+      arrowParens: true,
+      jsx: false,
+    });
+    return {};
+  })(),
+  */
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
-    plugins: {js},
-    languageOptions: {globals: {...globals.browser, ...globals.node}},
+    languageOptions: {
+      parser: tsParser,
+    },
+    ...(() => {
+      const config = stylistic.configs.customize({
+        semi: true,
+        arrowParens: true,
+        jsx: false,
+      });
+      return {
+        ...config,
+        rules: {
+          ...config.rules,
+          '@stylistic/object-curly-spacing': ['error', 'never'],
+        },
+      };
+    })(),
   },
-  tseslint.configs.base,
-  {
-    files: ['**/*.json'],
-    plugins: {json},
-    language: 'json/json',
-    extends: ['json/recommended'],
-  },
-  // {files: ["**/*.md"], plugins: {markdown}, language: "markdown/gfm", extends: ["markdown/recommended"]},
+
 ]);

@@ -61,5 +61,8 @@
 		"signal",
 		"util",
 		"validate"
-	]
+	],
+	"dependencies": {
+		"@typescript-eslint/parser": "^8.40.0"
+	}
 }
