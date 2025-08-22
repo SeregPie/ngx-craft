@@ -7,6 +7,36 @@ import {defineConfig} from 'eslint/config';
 import stylistic from '@stylistic/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 
+export const globJS = '*.?([cm])js';
+export const globJSX = '*.?([cm])jsx';
+
+export const globTS = '*.?([cm])ts';
+export const globTSX = '*.?([cm])tsx';
+
+export const globHTML = '*.htm?(l)';
+
+export const globSVG = '*.svg';
+
+export const globCSS = '*.css';
+export const globPostCSS = '*.{p,post}css';
+export const globLESS = '*.less';
+export const globSCSS = '*.scss';
+
+export const globSvelte = '*.svelte';
+export const globVue = '*.vue';
+
+export const globJSON = '*.json';
+export const globJSON5 = '*.json5';
+export const globJSONC = '*.jsonc';
+
+export const globYAML = '*.y?(a)ml';
+export const globTOML = '*.toml';
+export const globXML = '*.xml';
+
+export const globGraphQL = '*.{g,graph}ql';
+
+export const globMarkdown = '*.md';
+
 export default defineConfig([
   /*
   await (async () => {
@@ -21,7 +51,7 @@ export default defineConfig([
   })(),
   */
   {
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
+    files: ['*.{js,mjs,cjs,ts,mts,cts}'],
     languageOptions: {
       parser: tsParser,
     },
