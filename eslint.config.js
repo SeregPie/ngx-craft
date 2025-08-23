@@ -22,8 +22,9 @@ export const globPostCSS = '*.{p,post}css';
 export const globLESS = '*.less';
 export const globSCSS = '*.scss';
 
-export const globSvelte = '*.svelte';
+export const globAngularTemplate = '*.ng.html';
 export const globVue = '*.vue';
+export const globSvelte = '*.svelte';
 
 export const globJSON = '*.json';
 export const globJSON5 = '*.json5';
@@ -36,6 +37,27 @@ export const globXML = '*.xml';
 export const globGraphQL = '*.{g,graph}ql';
 
 export const globMarkdown = '*.md';
+
+export function uhhxmpvq(name) {
+  const i = name.lastIndexOf('/');
+  return i < 0 ? name : name.slice(i + 1);
+}
+
+export function qrvcollb(rules) {
+  let result = {};
+  Object.entries(rules).forEach(([name, entry]) => {
+    result[uhhxmpvq(name)] = entry;
+  });
+  return result;
+}
+
+export function zskcshyg(prefix, rules) {
+  let result = {};
+  Object.entries(rules).forEach(([name, entry]) => {
+    result[`${prefix}/${name}`] = entry;
+  });
+  return result;
+}
 
 export default defineConfig([
   /*
@@ -51,7 +73,7 @@ export default defineConfig([
   })(),
   */
   {
-    files: ['*.{js,mjs,cjs,ts,mts,cts}'],
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
     languageOptions: {
       parser: tsParser,
     },
@@ -61,12 +83,15 @@ export default defineConfig([
         arrowParens: true,
         jsx: false,
       });
+      const rules = qrvcollb(config.rules);
       return {
-        ...config,
-        rules: {
-          ...config.rules,
-          '@stylistic/object-curly-spacing': ['error', 'never'],
+        plugins: {
+          ts: stylistic,
         },
+        rules: zskcshyg('ts', {
+          ...rules,
+          'object-curly-spacing': ['error', 'never'],
+        }),
       };
     })(),
   },
