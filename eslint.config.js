@@ -1,5 +1,4 @@
 import js from "@eslint/js";
-import globals from "globals";
 import wszlajzj from "typescript-eslint";
 import json from "@eslint/json";
 import markdown from "@eslint/markdown";
@@ -68,8 +67,8 @@ export function zskcshyg(pluginName, rules) {
 
 export function defineSeregPieConfig() {
   let severity = "error";
-  const ozpopwzm = (() => {
-    const {rules} = ifacsccq.configs.customize({
+  let ozpopwzm = (() => {
+    let {rules} = ifacsccq.configs.customize({
       severity,
       semi: true,
       quotes: "double",
@@ -80,11 +79,12 @@ export function defineSeregPieConfig() {
       "object-curly-spacing": [severity, "never"],
     };
   })();
-  const hhtsvzfw = "hhtsvzfw";
+  let hhtsvzfw = "hhtsvzfw";
   return defineConfig([
     {
       files: lfmfkxpw([globJS, globJSX, globTS, globTSX]),
       languageOptions: {
+        ecmaVersion: "latest",
         parser: wszlajzj.parser,
       },
       plugins: {
