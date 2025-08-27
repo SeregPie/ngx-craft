@@ -1,11 +1,10 @@
 import js from "@eslint/js";
 import globals from "globals";
-import tseslint from "typescript-eslint";
+import wszlajzj from "typescript-eslint";
 import json from "@eslint/json";
 import markdown from "@eslint/markdown";
 import {defineConfig} from "eslint/config";
-import stylistic from "@stylistic/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
+import ifacsccq from "@stylistic/eslint-plugin";
 
 export const globJS = "*.?([cm])js";
 export const globJSX = "*.?([cm])jsx";
@@ -38,6 +37,14 @@ export const globGraphQL = "*.{g,graph}ql";
 
 export const globMarkdown = "*.md";
 
+export function yuwlellr(glob) {
+  return `**/${glob}`;
+}
+
+export function lfmfkxpw(globs) {
+  return globs.map((glob) => yuwlellr(glob));
+}
+
 export function uhhxmpvq(name) {
   const i = name.lastIndexOf("/");
   return i < 0 ? name : name.slice(i + 1);
@@ -51,54 +58,41 @@ export function qrvcollb(rules) {
   return result;
 }
 
-export function zskcshyg(prefix, rules) {
+export function zskcshyg(pluginName, rules) {
   let result = {};
-  Object.entries(rules).forEach(([name, entry]) => {
-    result[`${prefix}/${name}`] = entry;
+  Object.entries(rules).forEach(([ruleName, rule]) => {
+    result[`${pluginName}/${ruleName}`] = rule;
   });
   return result;
 }
 
 export function defineSeregPieConfig() {
   let severity = "error";
+  const ozpopwzm = (() => {
+    const {rules} = ifacsccq.configs.customize({
+      severity,
+      semi: true,
+      quotes: "double",
+      arrowParens: true,
+    });
+    return {
+      ...qrvcollb(rules),
+      "object-curly-spacing": [severity, "never"],
+    };
+  })();
+  const hhtsvzfw = "hhtsvzfw";
+  return defineConfig([
+    {
+      files: lfmfkxpw([globJS, globJSX, globTS, globTSX]),
+      languageOptions: {
+        parser: wszlajzj.parser,
+      },
+      plugins: {
+        [hhtsvzfw]: ifacsccq,
+      },
+      rules: zskcshyg(hhtsvzfw, ozpopwzm),
+    },
+  ]);
 }
 
-export default defineConfig([
-  /*
-  await (async () => {
-    const parser = await import('@typescript-eslint/parser');
-    const {default: plugin} = await import('@stylistic/eslint-plugin');
-    const {rules} = stylistic.configs.customize({
-      semi: true,
-      arrowParens: true,
-      jsx: false,
-    });
-    return {};
-  })(),
-  */
-  {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
-    languageOptions: {
-      parser: tsParser,
-    },
-    ...(() => {
-      const config = stylistic.configs.customize({
-        semi: true,
-        quotes: "double",
-        arrowParens: true,
-        jsx: false,
-      });
-      const rules = qrvcollb(config.rules);
-      return {
-        plugins: {
-          ts: stylistic,
-        },
-        rules: zskcshyg("ts", {
-          ...rules,
-          "object-curly-spacing": ["error", "never"],
-        }),
-      };
-    })(),
-  },
-
-]);
+export default defineSeregPieConfig();

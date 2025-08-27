@@ -1,7 +1,7 @@
 // @ts-nocheck
 
-import {AbstractControl, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
-import {isObservable, lastValueFrom} from 'rxjs';
+import {AbstractControl, AsyncValidatorFn, ValidationErrors} from "@angular/forms";
+import {isObservable, lastValueFrom} from "rxjs";
 
 /**
  * Bla bla bla.

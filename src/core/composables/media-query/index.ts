@@ -1,9 +1,9 @@
-import {describe, expect, it, jest} from '@jest/globals';
+import {describe, expect, it, jest} from "@jest/globals";
 
-import {DOCUMENT, inject} from '@angular/core';
-import {TestBed} from '@angular/core/testing';
+import {DOCUMENT, inject} from "@angular/core";
+import {TestBed} from "@angular/core/testing";
 
-const MediaQueryList_inherits_EventTarget = 'MediaQueryList inherits EventTarget';
+const MediaQueryList_inherits_EventTarget = "MediaQueryList inherits EventTarget";
 
 export function isSupported(): false | Record<string, any> {
   let document = inject(DOCUMENT, {optional: true});
@@ -14,7 +14,7 @@ export function isSupported(): false | Record<string, any> {
       if (window.matchMedia != null && MediaQueryList != null) {
         let compatibility: Record<string, any> = {};
         if (EventTarget != null && MediaQueryListEvent != null && MediaQueryList.prototype instanceof EventTarget) {
-          compatibility['MediaQueryList inherits EventTarget'] = true;
+          compatibility["MediaQueryList inherits EventTarget"] = true;
         }
         return compatibility;
       }

@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
+import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from "@angular/core";
 
 export function provide<T>(
   token: ProviderToken<ReadonlyArray<T>>,
@@ -18,7 +18,7 @@ export function provide(token, {multi = false} = {}) {
     base.multi = true;
   }
   let choice = {};
-  ['Value', 'Factory', 'Class', 'Existing'].forEach((type) => {
+  ["Value", "Factory", "Class", "Existing"].forEach((type) => {
     let key = `use${type}`;
     choice[key] = (source) => ({...base, [key]: source});
   });
