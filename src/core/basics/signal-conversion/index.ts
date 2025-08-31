@@ -12,11 +12,7 @@ export type MaybeSignal<T> = T | Signal<T>;
  */
 export function ensureSignal<const SourceT>(
   source: SourceT,
-): [SourceT] extends [Signal<any>] ? SourceT : Signal<SourceT>;
-
-export function ensureSignal<const T>(
-  source: MaybeSignal<T>,
-): Signal<T>;
+): [SourceT] extends [Signal<any>] ? SourceT : SourceT extends Signal<any> ? SourceT : Signal<SourceT>;
 
 export function ensureSignal(source) {
   return isSignal(source) ? source : signal(source);

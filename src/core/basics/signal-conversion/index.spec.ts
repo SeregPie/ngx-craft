@@ -6,6 +6,7 @@ import {ensureSignal, MaybeSignal, unwrapSignal} from ".";
 ensureSignal(null as any as Signal<"a" | "b">);
 ensureSignal(null as any as "a" | "b");
 ensureSignal(null as any as Signal<"a" | "b"> | "a" | "b");
+ensureSignal(null as any as Signal<Signal<"a" | "b">> | Signal<"a" | "b">);
 ensureSignal(null as any as MaybeSignal<"a" | "b">);
 
 describe("ensureSignal", () => {
