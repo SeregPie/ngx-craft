@@ -10,6 +10,10 @@ export type MaybeSignal<T> = T | Signal<T>;
 /**
  * Normalize a raw value to a signal.
  */
+export function ensureSignal<const SourceT>(
+  source: SourceT,
+): [SourceT] extends [Signal<any>] ? SourceT : Signal<SourceT>;
+
 export function ensureSignal<const T>(
   source: MaybeSignal<T>,
 ): Signal<T>;
@@ -21,6 +25,10 @@ export function ensureSignal(source) {
 /**
  * Normalize a signal to a raw value.
  */
+export function unwrapSignal<const SourceT>(
+  source: SourceT,
+): [SourceT] extends [Signal<infer T>] ? T : SourceT;
+
 export function unwrapSignal<const T>(
   source: MaybeSignal<T>,
 ): T;

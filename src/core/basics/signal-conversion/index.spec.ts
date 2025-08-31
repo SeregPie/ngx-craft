@@ -1,7 +1,12 @@
-import {isSignal, signal} from "@angular/core";
+import {isSignal, Signal, signal} from "@angular/core";
 import {describe, expect, it} from "@jest/globals";
 
-import {ensureSignal, unwrapSignal} from ".";
+import {ensureSignal, MaybeSignal, unwrapSignal} from ".";
+
+ensureSignal(null as any as Signal<"a" | "b">);
+ensureSignal(null as any as "a" | "b");
+ensureSignal(null as any as Signal<"a" | "b"> | "a" | "b");
+ensureSignal(null as any as MaybeSignal<"a" | "b">);
 
 describe("ensureSignal", () => {
   it("should wrap the raw value into a signal", async () => {
