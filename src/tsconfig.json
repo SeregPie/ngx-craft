@@ -6,10 +6,10 @@
     "strictTemplates": true,
     "typeCheckHostBindings": true
   },
-	"compilerOptions": {
-		"experimentalDecorators": true,
-		"lib": ["ESNext", "DOM"],
-		"removeComments": true
-	},
-	"extends": "../tsconfig.json"
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "lib": ["ESNext", "DOM"],
+    "removeComments": true
+  },
+  "extends": "../tsconfig.json"
 }

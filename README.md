@@ -14,5 +14,5 @@ npm i ngx-craft
 import {
   provide,
   /* ... */
-} from 'ngx-craft';
+} from "ngx-craft";
 ```

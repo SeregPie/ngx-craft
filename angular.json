@@ -1,25 +1,25 @@
 {
-	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-	"projects": {
-		"core": {
-			"architect": {
-				"build": {
-					"builder": "@angular/build:ng-packagr",
-					"options": {
-						"tsConfig": "./src/tsconfig.json"
-					}
-				},
-				"test": {
-					"builder": "@angular-builders/jest:run",
-					"options": {
-						"tsConfig": "./src/tsconfig.json"
-					}
-				}
-			},
-			"projectType": "library",
-			"root": "."
-		}
-	},
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "projects": {
+    "core": {
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "tsConfig": "./src/tsconfig.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "tsConfig": "./src/tsconfig.json"
+          }
+        }
+      },
+      "projectType": "library",
+      "root": "."
+    }
+  },
   "version": 1,
   "cli": {
     "analytics": false
