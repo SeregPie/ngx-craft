@@ -1,7 +1,6 @@
-import {describe, expect, it, jest} from "@jest/globals";
-
 import {DOCUMENT, inject} from "@angular/core";
 import {TestBed} from "@angular/core/testing";
+import {describe, expect, it, jest} from "@jest/globals";
 
 const MediaQueryList_inherits_EventTarget = "MediaQueryList inherits EventTarget";
 

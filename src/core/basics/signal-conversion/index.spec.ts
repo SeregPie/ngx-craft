@@ -1,6 +1,5 @@
 import {isSignal, Signal, signal} from "@angular/core";
 import {describe, expect, it} from "@jest/globals";
-
 import {ensureSignal, MaybeSignal, unwrapSignal} from ".";
 
 ensureSignal(null as any as Signal<"a" | "b">);

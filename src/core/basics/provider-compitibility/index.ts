@@ -19,8 +19,8 @@ export function provide(token, {multi = false} = {}) {
   }
   let choice = {};
   ["Value", "Factory", "Class", "Existing"].forEach((type) => {
-    let key = `use${type}`;
-    choice[key] = (source) => ({...base, [key]: source});
+    let method = `use${type}`;
+    choice[method] = (source) => ({...base, [method]: source});
   });
   return choice;
 }

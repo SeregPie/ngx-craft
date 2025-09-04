@@ -1,8 +1,7 @@
 import {FormControl} from "@angular/forms";
-import {simpleFaker as faker} from "@faker-js/faker";
+import {faker} from "@faker-js/faker";
 import {describe, expect, it, jest} from "@jest/globals";
 import {list, sleep} from "radashi";
-
 import {composeAsyncValidators, noopAsyncValidator, stubAsyncValidator, withAsyncValidators} from ".";
 
 describe("withAsyncValidators", () => {
@@ -10,11 +9,19 @@ describe("withAsyncValidators", () => {
     // todo: rename
     const enfdttrd = {error: true};
     const form = withAsyncValidators(
-      new FormControl<number>(1, {
+      new FormControl<number>(0, {
         nonNullable: true,
       }),
       async ({value}) => value % 2 ? enfdttrd : null,
     );
+
+    expect(form.status).toBe("PENDING");
+
+    await sleep(0);
+
+    expect(form.status).toBe("VALID");
+
+    form.setValue(1);
 
     expect(form.status).toBe("PENDING");
 
@@ -148,7 +155,10 @@ describe("noopAsyncValidator", () => {
 
 describe("stubAsyncValidator", () => {
   it("should return provided errors", async () => {
-    const errors = {error: faker.string.ulid()};
+    const errors = {
+      a: faker.string.ulid(),
+      b: faker.string.ulid(),
+    };
     const form = withAsyncValidators(new FormControl(null), stubAsyncValidator(errors));
 
     await sleep(0);

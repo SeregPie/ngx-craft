@@ -1,8 +1,7 @@
 import {FormControl} from "@angular/forms";
-import {simpleFaker as faker} from "@faker-js/faker";
+import {faker} from "@faker-js/faker";
 import {describe, expect, it, jest} from "@jest/globals";
 import {list} from "radashi";
-
 import {composeValidators, noopValidator, stubValidator, withValidators} from ".";
 
 describe("withValidators", () => {
@@ -10,11 +9,15 @@ describe("withValidators", () => {
     // todo: rename
     const enfdttrd = {error: true};
     const form = withValidators(
-      new FormControl<number>(1, {
+      new FormControl<number>(0, {
         nonNullable: true,
       }),
       ({value}) => value % 2 ? enfdttrd : null,
     );
+
+    expect(form.status).toBe("VALID");
+
+    form.setValue(1);
 
     expect(form.status).toBe("INVALID");
     expect(form.errors).toEqual(enfdttrd);
@@ -124,7 +127,10 @@ describe("noopValidator", () => {
 
 describe("stubValidator", () => {
   it("should return provided errors", async () => {
-    const errors = {error: faker.string.ulid()};
+    const errors = {
+      a: faker.string.ulid(),
+      b: faker.string.ulid(),
+    };
     const form = withValidators(new FormControl(null), stubValidator(errors));
 
     expect(form.status).toBe("INVALID");

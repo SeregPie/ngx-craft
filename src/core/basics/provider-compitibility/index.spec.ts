@@ -1,217 +1,212 @@
 import {InjectionToken} from "@angular/core";
-import {simpleFaker as faker} from "@faker-js/faker";
+import {faker} from "@faker-js/faker";
 import {describe, expect, it} from "@jest/globals";
-
 import {provide} from ".";
 
 describe("provide", () => {
-  // todo: rename
-  class A {
+  class TestAa {
     static asValue = new this();
     static asFactory = () => new this();
     static asClass = this;
     static asExisting = new InjectionToken(this.name, {factory: this.asFactory});
 
-    // todo: rework
     a = faker.number.int();
     b = faker.string.alphanumeric();
   }
 
-  // todo: rename
-  class B {
+  class TestBb {
     static asValue = new this();
     static asFactory = () => new this();
     static asClass = this;
     static asExisting = new InjectionToken(this.name, {factory: this.asFactory});
 
-    // todo: rework
     a = faker.string.alphanumeric();
     b = faker.number.int();
   }
 
   describe("", () => {
-    const token = new InjectionToken<A>(A.name);
+    const testAaToken = new InjectionToken<TestAa>(TestAa.name);
 
     describe("useValue", () => {
       it("should create a correct provider", async () => {
-        expect(provide(token).useValue(A.asValue)).toEqual({
-          provide: token,
-          useValue: A.asValue,
+        expect(provide(testAaToken).useValue(TestAa.asValue)).toEqual({
+          provide: testAaToken,
+          useValue: TestAa.asValue,
         });
       });
 
       it("should enforce type safety", async () => {
         expect(async () => {
           // @ts-expect-error
-          provide(token).useValue(B.asValue);
+          provide(testAaToken).useValue(TestBb.asValue);
           // @ts-expect-error
-          provide(token).useValue(A.asFactory);
+          provide(testAaToken).useValue(TestAa.asFactory);
           // @ts-expect-error
-          provide(token).useValue(A.asClass);
+          provide(testAaToken).useValue(TestAa.asClass);
           // @ts-expect-error
-          provide(token).useValue(A.asExisting);
+          provide(testAaToken).useValue(TestAa.asExisting);
         });
       });
     });
 
     describe("useFactory", () => {
       it("should create a correct provider", async () => {
-        expect(provide(token).useFactory(A.asFactory)).toEqual({
-          provide: token,
-          useFactory: A.asFactory,
+        expect(provide(testAaToken).useFactory(TestAa.asFactory)).toEqual({
+          provide: testAaToken,
+          useFactory: TestAa.asFactory,
         });
       });
 
       it("should enforce type safety", async () => {
         expect(async () => {
           // @ts-expect-error
-          provide(token).useFactory(A.asValue);
+          provide(testAaToken).useFactory(TestAa.asValue);
           // @ts-expect-error
-          provide(token).useFactory(B.asFactory);
+          provide(testAaToken).useFactory(TestBb.asFactory);
           // @ts-expect-error
-          provide(token).useFactory(A.asClass);
+          provide(testAaToken).useFactory(TestAa.asClass);
           // @ts-expect-error
-          provide(token).useFactory(A.asExisting);
+          provide(testAaToken).useFactory(TestAa.asExisting);
         });
       });
     });
 
     describe("useClass", () => {
       it("should create a correct provider", async () => {
-        expect(provide(token).useClass(A.asClass)).toEqual({
-          provide: token,
-          useClass: A.asClass,
+        expect(provide(testAaToken).useClass(TestAa.asClass)).toEqual({
+          provide: testAaToken,
+          useClass: TestAa.asClass,
         });
       });
 
       it("should enforce type safety", async () => {
         expect(async () => {
           // @ts-expect-error
-          provide(token).useClass(A.asValue);
+          provide(testAaToken).useClass(TestAa.asValue);
           // @ts-expect-error
-          provide(token).useClass(A.asFactory);
+          provide(testAaToken).useClass(TestAa.asFactory);
           // @ts-expect-error
-          provide(token).useClass(B.asClass);
+          provide(testAaToken).useClass(TestBb.asClass);
           // @ts-expect-error
-          provide(token).useClass(A.asExisting);
+          provide(testAaToken).useClass(TestAa.asExisting);
         });
       });
     });
 
     describe("useExisting", () => {
       it("should create a correct provider", async () => {
-        expect(provide(token).useExisting(A.asExisting)).toEqual({
-          provide: token,
-          useExisting: A.asExisting,
+        expect(provide(testAaToken).useExisting(TestAa.asExisting)).toEqual({
+          provide: testAaToken,
+          useExisting: TestAa.asExisting,
         });
       });
 
       it("should enforce type safety", async () => {
         expect(async () => {
           // @ts-expect-error
-          provide(token).useExisting(A.asValue);
+          provide(testAaToken).useExisting(TestAa.asValue);
           // @ts-ignore
-          provide(token).useExisting(A.asFactory);
+          provide(testAaToken).useExisting(TestAa.asFactory);
           // @ts-ignore
-          provide(token).useExisting(A.asClass);
+          provide(testAaToken).useExisting(TestAa.asClass);
           // @ts-ignore
-          provide(token).useExisting(B.asExisting);
+          provide(testAaToken).useExisting(TestBb.asExisting);
         });
       });
     });
   });
 
   describe("multiple", () => {
-    const token = new InjectionToken<Array<A>>(A.name);
+    const testAaToken = new InjectionToken<Array<TestAa>>(TestAa.name);
 
     describe("useValue", () => {
       it("should create a correct provider", async () => {
-        expect(provide(token, {multi: true}).useValue(A.asValue)).toEqual({
-          provide: token,
+        expect(provide(testAaToken, {multi: true}).useValue(TestAa.asValue)).toEqual({
+          provide: testAaToken,
           multi: true,
-          useValue: A.asValue,
+          useValue: TestAa.asValue,
         });
       });
 
       it("should enforce type safety", async () => {
         expect(async () => {
           // @ts-expect-error
-          provide(token, {multi: true}).useValue(B.asValue);
+          provide(testAaToken, {multi: true}).useValue(TestBb.asValue);
           // @ts-expect-error
-          provide(token, {multi: true}).useValue(A.asFactory);
+          provide(testAaToken, {multi: true}).useValue(TestAa.asFactory);
           // @ts-expect-error
-          provide(token, {multi: true}).useValue(A.asClass);
+          provide(testAaToken, {multi: true}).useValue(TestAa.asClass);
           // @ts-expect-error
-          provide(token, {multi: true}).useValue(A.asExisting);
+          provide(testAaToken, {multi: true}).useValue(TestAa.asExisting);
         });
       });
     });
 
     describe("useFactory", () => {
       it("should create a correct provider", async () => {
-        expect(provide(token, {multi: true}).useFactory(A.asFactory)).toEqual({
-          provide: token,
+        expect(provide(testAaToken, {multi: true}).useFactory(TestAa.asFactory)).toEqual({
+          provide: testAaToken,
           multi: true,
-          useFactory: A.asFactory,
+          useFactory: TestAa.asFactory,
         });
       });
 
       it("should enforce type safety", async () => {
         expect(async () => {
           // @ts-expect-error
-          provide(token, {multi: true}).useFactory(A.asValue);
+          provide(testAaToken, {multi: true}).useFactory(TestAa.asValue);
           // @ts-expect-error
-          provide(token, {multi: true}).useFactory(B.asFactory);
+          provide(testAaToken, {multi: true}).useFactory(TestBb.asFactory);
           // @ts-expect-error
-          provide(token, {multi: true}).useFactory(A.asClass);
+          provide(testAaToken, {multi: true}).useFactory(TestAa.asClass);
           // @ts-expect-error
-          provide(token, {multi: true}).useFactory(A.asExisting);
+          provide(testAaToken, {multi: true}).useFactory(TestAa.asExisting);
         });
       });
     });
 
     describe("useClass", () => {
       it("should create a correct provider", async () => {
-        expect(provide(token, {multi: true}).useClass(A.asClass)).toEqual({
-          provide: token,
+        expect(provide(testAaToken, {multi: true}).useClass(TestAa.asClass)).toEqual({
+          provide: testAaToken,
           multi: true,
-          useClass: A.asClass,
+          useClass: TestAa.asClass,
         });
       });
 
       it("should enforce type safety", async () => {
         expect(async () => {
           // @ts-expect-error
-          provide(token, {multi: true}).useClass(A.asValue);
+          provide(testAaToken, {multi: true}).useClass(TestAa.asValue);
           // @ts-expect-error
-          provide(token, {multi: true}).useClass(A.asFactory);
+          provide(testAaToken, {multi: true}).useClass(TestAa.asFactory);
           // @ts-expect-error
-          provide(token, {multi: true}).useClass(B.asClass);
+          provide(testAaToken, {multi: true}).useClass(TestBb.asClass);
           // @ts-expect-error
-          provide(token, {multi: true}).useClass(A.asExisting);
+          provide(testAaToken, {multi: true}).useClass(TestAa.asExisting);
         });
       });
     });
 
     describe("useExisting", () => {
       it("should create a correct provider", async () => {
-        expect(provide(token, {multi: true}).useExisting(A.asExisting)).toEqual({
-          provide: token,
+        expect(provide(testAaToken, {multi: true}).useExisting(TestAa.asExisting)).toEqual({
+          provide: testAaToken,
           multi: true,
-          useExisting: A.asExisting,
+          useExisting: TestAa.asExisting,
         });
       });
 
       it("should enforce type safety", async () => {
         expect(async () => {
           // @ts-expect-error
-          provide(token, {multi: true}).useExisting(A.asValue);
+          provide(testAaToken, {multi: true}).useExisting(TestAa.asValue);
           // @ts-ignore
-          provide(token, {multi: true}).useExisting(A.asFactory);
+          provide(testAaToken, {multi: true}).useExisting(TestAa.asFactory);
           // @ts-ignore
-          provide(token, {multi: true}).useExisting(A.asClass);
+          provide(testAaToken, {multi: true}).useExisting(TestAa.asClass);
           // @ts-ignore
-          provide(token, {multi: true}).useExisting(B.asExisting);
+          provide(testAaToken, {multi: true}).useExisting(TestBb.asExisting);
         });
       });
     });

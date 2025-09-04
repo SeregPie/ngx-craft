@@ -1,4 +1,4 @@
-# ngx-craft
+# NgxCraft
 
 Everything to make your work with Angular easier.
 
