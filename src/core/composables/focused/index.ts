@@ -1,4 +1,4 @@
-import {Signal, signal, WritableSignal} from "@angular/core";
+import {signal, WritableSignal} from "@angular/core";
 
 export function useFocused(
   target: Element,
