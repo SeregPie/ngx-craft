@@ -1,7 +1,20 @@
+<!-- todo: better docs -->
+
 # Validator Customization | Async
+
+`withAsyncValidators(control, ...validators)`
+
+Adds a typed asynchronous validator to a control.
+
+---
+
+`composeAsyncValidators(validators)`
+
+Composes multiple asynchronous validators into one.
 
 ## Types
 
+<!-- prettier-ignore -->
 ```ts
 export interface CustomAsyncValidatorFn<
   ControlT extends AbstractControl = AbstractControl,
@@ -28,7 +41,7 @@ export const withAsyncValidators: {
 
 export const composeAsyncValidators: {
   <ControlT extends AbstractControl>(
-    validators: ReadonlyArray<CustomAsyncValidatorFn<ControlT>>,
+    validators: Readonly<Array<CustomAsyncValidatorFn<ControlT>>>,
   ): CustomAsyncValidatorFn<ControlT>;
 };
 ```

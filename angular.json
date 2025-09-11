@@ -17,15 +17,64 @@
 					}
 				},
 				"test": {
-					"builder": "@angular-devkit/build-angular:jest",
+					"builder": "@angular-builders/jest:run",
 					"options": {
-						"polyfills": ["zone.js", "zone.js/testing"],
 						"tsConfig": "./src/tsconfig.spec.json"
 					}
 				}
 			},
 			"projectType": "library",
 			"root": "."
+		},
+		"docs": {
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:application",
+					"configurations": {
+						"development": {
+							"extractLicenses": false,
+							"optimization": false,
+							"sourceMap": true
+						},
+						"production": {
+							"outputHashing": "all"
+						}
+					},
+					"defaultConfiguration": "production",
+					"options": {
+						"allowedCommonJsDependencies": ["@messageformat/core"],
+						"assets": ["./src/docs/favicon.ico", "./src/docs/assets"],
+						"browser": "./src/docs/main.ts",
+						"index": "./src/docs/index.html",
+						"inlineStyleLanguage": "scss",
+						"outputPath": {
+							"base": "./docs",
+							"browser": ""
+						},
+						"polyfills": ["zone.js"],
+						"styles": ["./src/docs/styles.scss"],
+						"tsConfig": "./src/docs/tsconfig.json"
+					}
+				},
+				"serve": {
+					"builder": "@angular-devkit/build-angular:dev-server",
+					"configurations": {
+						"development": {
+							"buildTarget": "docs:build:development"
+						},
+						"production": {
+							"buildTarget": "docs:build:production"
+						}
+					},
+					"defaultConfiguration": "development",
+					"options": {
+						"open": true
+					}
+				}
+			},
+			"projectType": "application",
+			"root": ".",
+			"sourceRoot": "./src/docs"
 		}
 	},
 	"version": 1

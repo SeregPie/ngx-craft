@@ -1,14 +1,38 @@
 // @ts-nocheck
 
-import {Signal, signal} from '@angular/core';
+import {DOCUMENT} from '@angular/common';
+import {computed, effect, inject, signal, Signal} from '@angular/core';
 
-export const useMediaQuery: {
-	(query: string): Signal<boolean>;
-} = (query) => {
-	let queryResult = window.matchMedia(query);
-	let queryMatches$ = signal(queryResult.matches);
-	queryResult.addEventListener('change', (event: MediaQueryListEvent) => {
-		queryMatches$.set(event.matches);
+import {MaybeSignal, wrapSignal} from '../../basics/daowexhy';
+
+export function useMediaQuery(
+	query: MaybeSignal<string>,
+): Signal<boolean>;
+
+export function useMediaQuery(query) {
+	// todo
+	let document = inject(DOCUMENT, {optional: true});
+	let query$ = wrapSignal(query);
+	// todo: rename
+	let inccvbcx$ = computed(() => {
+		let window = document.defaultView;
+		let query = query$();
+		return window.matchMedia(query);
 	});
-	return queryMatches$.asReadonly();
-};
+	// todo: rename
+	let cynvbmtf = signal({});
+	effect((onCleanup) => {
+		let inccvbcx = inccvbcx$();
+		((target, event, listener) => {
+			target.addEventListener(event, listener);
+			onCleanup(() => {
+				target.removeEventListener(event, listener);
+			});
+		})(inccvbcx, 'change', () => cynvbmtf.set({}));
+	});
+	return computed(() => {
+		cynvbmtf();
+		let inccvbcx = inccvbcx$();
+		return inccvbcx.matches;
+	});
+}

@@ -1,9 +1,23 @@
+<!-- todo: better docs -->
+
 # Validator Customization
 
-## Usage
+---
+
+## `withValidators`
+
+Adds a typed validator to a control.
+
+### Types
 
 ```ts
-const form = new FormGroup({
+export function withValidators<const ControlT extends AbstractControl>(control: ControlT, ...validators: CustomValidatorFn<ControlT>[]): ControlT;
+```
+
+### Example
+
+```ts
+let form = new FormGroup({
   email: new FormControl<null | string>(null, {
     validators: [Validators.required, Validators.email],
   }),
@@ -17,7 +31,7 @@ const form = new FormGroup({
     (form) => {
       if (form.controls.actual.valid) {
         if (form.controls.actual.value !== form.controls.verify.value) {
-          return {error: 'Passwords do not match.'};
+          return {error: 'The passwords do not match.'};
         }
       }
       return null;
@@ -28,9 +42,14 @@ const form = new FormGroup({
 
 ---
 
+`composeValidators(validators)`
+
+Composes multiple validators into one.
+
 ```ts
-const form = new FormControl<null | number>(null, {
+let form = new FormControl<null | number>(null, {
   validators: composeValidators([
+    //
     Validators.required,
     Validators.min(0),
     Validators.max(100),
@@ -40,33 +59,23 @@ const form = new FormControl<null | number>(null, {
 
 ## Types
 
+<!-- prettier-ignore -->
 ```ts
 export interface CustomValidatorFn<
-  ControlT extends AbstractControl = AbstractControl,
+	ControlT extends AbstractControl = AbstractControl,
 > {
-  (control: ControlT): ReturnType<ValidatorFn>;
+	(control: ControlT): ReturnType<ValidatorFn>;
 }
 
 export const noopValidator: {
-  (control: AbstractControl): null;
+	(control: AbstractControl): null;
 };
 
-export const stubValidator: {
-  <ErrorsT extends ValidationErrors>(errors: ErrorsT): {
-    (control: AbstractControl): ErrorsT;
-  };
-};
 
-export const withValidators: {
-  <ControlT extends AbstractControl>(
-    control: ControlT,
-    ...validators: CustomValidatorFn<ControlT>[]
-  ): ControlT;
-};
 
-export const composeValidators: {
-  <ControlT extends AbstractControl>(
-    validators: ReadonlyArray<CustomValidatorFn<ControlT>>,
-  ): CustomValidatorFn<ControlT>;
-};
+export function composeValidators<
+	const ControlT extends AbstractControl,
+>(
+	validators: ReadonlyArray<CustomValidatorFn<ControlT>>,
+): CustomValidatorFn<ControlT>;
 ```

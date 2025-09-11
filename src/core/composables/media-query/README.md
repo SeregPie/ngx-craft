@@ -1,15 +1,22 @@
+<!-- todo: better docs -->
+
 # Media Query
+
+`useMediaQuery(query)`
 
 ## Usage
 
 ```ts
-let dark$ = useMediaQuery('(prefers-color-scheme: dark)');
+class MyComponent {
+  dark = useMediaQuery('(prefers-color-scheme: dark)');
+}
 ```
 
 ## Types
 
+<!-- prettier-ignore -->
 ```ts
-export const useMediaQuery: {
-  (query: string): Signal<boolean>;
-};
+export function useMediaQuery(
+  query: MaybeSignal<string>,
+): Signal<boolean>;
 ```

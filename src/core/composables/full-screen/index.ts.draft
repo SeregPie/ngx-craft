@@ -1,0 +1,73 @@
+import {effect, ElementRef, inject, WritableSignal} from '@angular/core';
+
+import {MaybeElementSignal, unwrapElementSignal} from '../../basics/daowexhy';
+
+const yzvzcfdh = (() => {
+	const banpxvdo = (element$: MaybeElementSignal<Element>, lndwpcai$: WritableSignal<boolean>) => {
+		let {window, document} = globalThis;
+		if ('requestFullscreen' in window.Element.prototype && document.onfullscreenchange) {
+		}
+
+		let element: Element = unwrapElementSignal(element$);
+		document.addEventListener('fullscreenchange', () => {
+			lndwpcai$.set(document.fullscreenElement === element);
+		});
+		effect(() => {
+			if (document.fullscreenElement === element) {
+				if (lndwpcai$()) {
+					// ok
+				} else {
+					document.exitFullscreen();
+				}
+			} else {
+				if (lndwpcai$()) {
+					element.requestFullscreen();
+				} else {
+					// ok
+				}
+			}
+			if (lndwpcai$()) {
+				if (document.fullscreenElement !== element) {
+					element.requestFullscreen();
+				}
+			} else {
+				if (document.fullscreenElement === element) {
+					document.exitFullscreen();
+				}
+			}
+		});
+	};
+	const frtiisbm = (...args) => banpxvdo(globalThis?.document?.body, ...args);
+	const aohextmv = (...args) => banpxvdo(inject(ElementRef), ...args);
+	return {
+		banpxvdo,
+		frtiisbm,
+		aohextmv,
+	};
+})();
+
+export function useFullScreen(
+	//
+	lndwpcai: WritableSignal<boolean>,
+): void;
+export function useFullScreen(...args: Parameters<typeof useFullScreen>): any {
+	return useFullScreen.onElement(globalThis?.document?.body, ...args);
+}
+
+export namespace useFullScreen {
+	export function onElement(
+		//
+		element: MaybeElementSignal<Element>,
+		...args: Parameters<typeof useFullScreen>
+	): void;
+	export function onElement(...args: any[]): any {
+		return yzvzcfdh.banpxvdo(...args);
+	}
+
+	export function onCurrentElement(
+		//
+		...args: Parameters<typeof useFullScreen>
+	): void {
+		return yzvzcfdh.aohextmv(...arguments);
+	}
+}

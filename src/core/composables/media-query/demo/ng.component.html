@@ -1,0 +1,14 @@
+<div
+	[style.display]="'grid'"
+	[style.gap.rem]="1"
+	[style.padding.rem]="3"
+>
+	<p-slider
+		[(ngModel)]="range"
+		[range]="true"
+		[min]="0"
+		[max]="120"
+	/>
+	<div>{{ media() }}</div>
+	<div>{{ wlxlelhm() }}</div>
+</div>

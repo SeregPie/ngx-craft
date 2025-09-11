@@ -4,12 +4,12 @@ import {FormControl} from '@angular/forms';
 import {composeValidators, noopValidator, stubValidator, withValidators} from '.';
 
 describe('withValidators', () => {
-	it('should work', fakeAsync(async () => {
-		let form = withValidators(
+	it('should work in a common scenario', fakeAsync(async () => {
+		const form = withValidators(
 			new FormControl<number>(1, {
 				nonNullable: true,
 			}),
-			({value}) => value % 2 ? {error: true} : null,
+			({value}) => (value % 2 ? {error: true} : null),
 		);
 
 		expect(form.errors).toEqual({error: true});
@@ -19,30 +19,30 @@ describe('withValidators', () => {
 		expect(form.errors).toBeNull();
 	}));
 
-	it('should contain validators', fakeAsync(async () => {
-		let form = new FormControl(null);
-		let validators = [null, null].map((v) => () => v);
+	it('should contain all provided validators', fakeAsync(async () => {
+		const form = new FormControl(null);
+		const validators = Array.from({length: 3}, () => () => null);
 		withValidators(form, ...validators);
 
-		for (let validator of validators) {
+		for (const validator of validators) {
 			expect(form.hasValidator(validator)).toBe(true);
 		}
 	}));
 
 	it('should call validators only once', fakeAsync(async () => {
-		let form = new FormControl(null);
-		let validators = [null, null].map((v) => jest.fn(() => v));
+		const form = new FormControl(null);
+		const validators = Array.from({length: 3}, () => jest.fn(() => null));
 		withValidators(form, ...validators);
 
-		for (let validator of validators) {
+		for (const validator of validators) {
 			expect(validator).toHaveBeenCalledTimes(1);
 		}
 	}));
 
 	it('should not replace existing validators', fakeAsync(async () => {
-		let initialValidator = () => null;
-		let initialAsyncValidator = async () => null;
-		let form = new FormControl(null, {
+		const initialValidator = () => null;
+		const initialAsyncValidator = async () => null;
+		const form = new FormControl(null, {
 			validators: initialValidator,
 			asyncValidators: initialAsyncValidator,
 		});
@@ -54,14 +54,15 @@ describe('withValidators', () => {
 });
 
 describe('composeValidators', () => {
-	it('should work', fakeAsync(async () => {
-		let form = withValidators(
+	it('should work in a common scenario', fakeAsync(async () => {
+		const form = withValidators(
 			new FormControl<number>(1, {
 				nonNullable: true,
 			}),
 			composeValidators([
-				({value}) => value === 1 ? {error: {n: 1}} : null,
-				({value}) => value === 2 ? {error: {n: 2}} : null,
+				//
+				({value}) => (value === 1 ? {error: {n: 1}} : null),
+				({value}) => (value === 2 ? {error: {n: 2}} : null),
 			]),
 		);
 
@@ -76,8 +77,8 @@ describe('composeValidators', () => {
 		expect(form.errors).toBeNull();
 	}));
 
-	it('should skip other validators after one fails', fakeAsync(async () => {
-		let validators = [null, {error: true}, null].map((v) => jest.fn(() => v));
+	it('should skip remaining validators if one fails', fakeAsync(async () => {
+		const validators = [null, {error: true}, null].map((v) => jest.fn(() => v));
 		new FormControl(null, {
 			validators: composeValidators(validators),
 		});
@@ -87,28 +88,28 @@ describe('composeValidators', () => {
 		expect(validators[2]).not.toHaveBeenCalled();
 	}));
 
-	it('should return same validator if only one provided', fakeAsync(async () => {
-		let validator = () => null;
+	it('should return the same validator if only one provided', fakeAsync(async () => {
+		const validator = () => null;
 
 		expect(composeValidators([validator])).toBe(validator);
 	}));
 
-	it('should return no-op validator if nothing provided', fakeAsync(async () => {
+	it('should return a no-op validator if none provided', fakeAsync(async () => {
 		expect(composeValidators([])).toBe(noopValidator);
 	}));
 });
 
 describe('noopValidator', () => {
-	it('should work', fakeAsync(async () => {
-		let form = withValidators(new FormControl(null), noopValidator);
+	it('should return null', fakeAsync(async () => {
+		const form = withValidators(new FormControl(null), noopValidator);
 
 		expect(form.errors).toBeNull();
 	}));
 });
 
 describe('stubValidator', () => {
-	it('should work', fakeAsync(async () => {
-		let form = withValidators(new FormControl(null), stubValidator({error: true}));
+	it('should return provided errors', fakeAsync(async () => {
+		const form = withValidators(new FormControl(null), stubValidator({error: true}));
 
 		expect(form.errors).toEqual({error: true});
 	}));

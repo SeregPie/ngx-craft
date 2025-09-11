@@ -4,12 +4,12 @@ import {FormControl} from '@angular/forms';
 import {composeAsyncValidators, noopAsyncValidator, stubAsyncValidator, withAsyncValidators} from '.';
 
 describe('withAsyncValidators', () => {
-	it('should work', fakeAsync(async () => {
+	it('should work in a common scenario', fakeAsync(async () => {
 		let form = withAsyncValidators(
 			new FormControl<number>(1, {
 				nonNullable: true,
 			}),
-			async ({value}) => value % 2 ? {error: true} : null,
+			async ({value}) => (value % 2 ? {error: true} : null),
 		);
 
 		expect(form.pending).toBe(true);
@@ -27,7 +27,7 @@ describe('withAsyncValidators', () => {
 		expect(form.errors).toBeNull();
 	}));
 
-	it('should contain validators', fakeAsync(async () => {
+	it('should contain all provided validators', fakeAsync(async () => {
 		let form = new FormControl(null);
 		let validators = [null, null].map((v) => async () => v);
 		withAsyncValidators(form, ...validators);
@@ -62,14 +62,15 @@ describe('withAsyncValidators', () => {
 });
 
 describe('composeAsyncValidators', () => {
-	it('should work', fakeAsync(async () => {
+	it('should work in a common scenario', fakeAsync(async () => {
 		let form = withAsyncValidators(
 			new FormControl<number>(1, {
 				nonNullable: true,
 			}),
 			composeAsyncValidators([
-				async ({value}) => value === 1 ? {error: {n: 1}} : null,
-				async ({value}) => value === 2 ? {error: {n: 2}} : null,
+				//
+				async ({value}) => (value === 1 ? {error: {n: 1}} : null),
+				async ({value}) => (value === 2 ? {error: {n: 2}} : null),
 			]),
 		);
 
@@ -96,7 +97,7 @@ describe('composeAsyncValidators', () => {
 		expect(form.errors).toBeNull();
 	}));
 
-	it('should skip other validators after one fails', fakeAsync(async () => {
+	it('should skip remaining validators if one fails', fakeAsync(async () => {
 		let validators = [null, {error: true}, null].map((v) => jest.fn(async () => v));
 		new FormControl(null, {
 			asyncValidators: composeAsyncValidators(validators),
@@ -109,19 +110,19 @@ describe('composeAsyncValidators', () => {
 		expect(validators[2]).not.toHaveBeenCalled();
 	}));
 
-	it('should return same validator if only one provided', fakeAsync(async () => {
+	it('should return the same validator if only one provided', fakeAsync(async () => {
 		let validator = async () => null;
 
 		expect(composeAsyncValidators([validator])).toBe(validator);
 	}));
 
-	it('should return no-op validator if nothing provided', fakeAsync(async () => {
+	it('should return a no-op validator if none provided', fakeAsync(async () => {
 		expect(composeAsyncValidators([])).toBe(noopAsyncValidator);
 	}));
 });
 
 describe('noopAsyncValidator', () => {
-	it('should work', fakeAsync(async () => {
+	it('should return null', fakeAsync(async () => {
 		let form = withAsyncValidators(new FormControl(null), noopAsyncValidator);
 
 		tick();
@@ -131,7 +132,7 @@ describe('noopAsyncValidator', () => {
 });
 
 describe('stubAsyncValidator', () => {
-	it('should work', fakeAsync(async () => {
+	it('should return provided errors', fakeAsync(async () => {
 		let form = withAsyncValidators(new FormControl(null), stubAsyncValidator({error: true}));
 
 		tick();
