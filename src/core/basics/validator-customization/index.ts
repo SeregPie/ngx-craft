@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import {AbstractControl, ValidationErrors, ValidatorFn} from "@angular/forms";
+import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 /**
  * Bla bla bla.
@@ -74,4 +74,4 @@ export function composeValidators(validators) {
   };
 }
 
-export * from "./async";
+export * from './async';

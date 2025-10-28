@@ -1,11 +1,11 @@
-import {FormControl} from "@angular/forms";
-import {faker} from "@faker-js/faker";
-import {describe, expect, it, jest} from "@jest/globals";
-import {list, sleep} from "radashi";
-import {composeAsyncValidators, noopAsyncValidator, stubAsyncValidator, withAsyncValidators} from ".";
+import {FormControl} from '@angular/forms';
+import {faker} from '@faker-js/faker';
+import {describe, expect, it, jest} from '@jest/globals';
+import {list, sleep} from 'radashi';
+import {composeAsyncValidators, noopAsyncValidator, stubAsyncValidator, withAsyncValidators} from '.';
 
-describe("withAsyncValidators", () => {
-  it("should work in a common scenario", async () => {
+describe('withAsyncValidators', () => {
+  it('should work in a common scenario', async () => {
     // todo: rename
     const enfdttrd = {error: true};
     const form = withAsyncValidators(
@@ -15,31 +15,31 @@ describe("withAsyncValidators", () => {
       async ({value}) => value % 2 ? enfdttrd : null,
     );
 
-    expect(form.status).toBe("PENDING");
+    expect(form.status).toBe('PENDING');
 
     await sleep(0);
 
-    expect(form.status).toBe("VALID");
+    expect(form.status).toBe('VALID');
 
     form.setValue(1);
 
-    expect(form.status).toBe("PENDING");
+    expect(form.status).toBe('PENDING');
 
     await sleep(0);
 
-    expect(form.status).toBe("INVALID");
+    expect(form.status).toBe('INVALID');
     expect(form.errors).toEqual(enfdttrd);
 
     form.setValue(2);
 
-    expect(form.status).toBe("PENDING");
+    expect(form.status).toBe('PENDING');
 
     await sleep(0);
 
-    expect(form.status).toBe("VALID");
+    expect(form.status).toBe('VALID');
   });
 
-  it("should contain all provided validators", async () => {
+  it('should contain all provided validators', async () => {
     const form = new FormControl(null);
     const validators = list(3).map(() => async () => null);
     withAsyncValidators(form, ...validators);
@@ -50,7 +50,7 @@ describe("withAsyncValidators", () => {
   });
 
   // todo: better description
-  it("should call validators only once", async () => {
+  it('should call validators only once', async () => {
     const form = new FormControl(null);
     const validators = list(3).map(() => jest.fn(async () => null));
     withAsyncValidators(form, ...validators);
@@ -60,7 +60,7 @@ describe("withAsyncValidators", () => {
     }
   });
 
-  it("should not replace existing validators", async () => {
+  it('should not replace existing validators', async () => {
     const initialValidator = () => null;
     const initialAsyncValidator = async () => null;
     const form = new FormControl(null, {
@@ -74,8 +74,8 @@ describe("withAsyncValidators", () => {
   });
 });
 
-describe("composeAsyncValidators", () => {
-  it("should work in a common scenario", async () => {
+describe('composeAsyncValidators', () => {
+  it('should work in a common scenario', async () => {
     // todo
     const form = withAsyncValidators(
       new FormControl<number>(1, {
@@ -87,33 +87,33 @@ describe("composeAsyncValidators", () => {
       ]),
     );
 
-    expect(form.status).toBe("PENDING");
+    expect(form.status).toBe('PENDING');
 
     await sleep(0);
 
-    expect(form.status).toBe("INVALID");
+    expect(form.status).toBe('INVALID');
     expect(form.errors).toEqual({error: {n: 1}});
 
     form.setValue(2);
 
-    expect(form.status).toBe("PENDING");
+    expect(form.status).toBe('PENDING');
 
     await sleep(0);
 
-    expect(form.status).toBe("INVALID");
+    expect(form.status).toBe('INVALID');
     expect(form.errors).toEqual({error: {n: 2}});
 
     form.setValue(3);
 
-    expect(form.status).toBe("PENDING");
+    expect(form.status).toBe('PENDING');
 
     await sleep(0);
 
-    expect(form.status).toBe("VALID");
+    expect(form.status).toBe('VALID');
   });
 
   // todo: description
-  it("should skip remaining validators if one fails", async () => {
+  it('should skip remaining validators if one fails', async () => {
     // todo: rename
     const jesergzs = list(2).map(() => jest.fn(async () => null));
     const fyddlfln = list(2).map(() => jest.fn(async () => null));
@@ -132,29 +132,29 @@ describe("composeAsyncValidators", () => {
     }
   });
 
-  it("should return the same validator if only one provided", async () => {
+  it('should return the same validator if only one provided', async () => {
     const validator = async () => null;
 
     expect(composeAsyncValidators([validator])).toBe(validator);
   });
 
-  it("should return a no-op validator if none provided", async () => {
+  it('should return a no-op validator if none provided', async () => {
     expect(composeAsyncValidators([])).toBe(noopAsyncValidator);
   });
 });
 
-describe("noopAsyncValidator", () => {
-  it("should return null", async () => {
+describe('noopAsyncValidator', () => {
+  it('should return null', async () => {
     const form = withAsyncValidators(new FormControl(null), noopAsyncValidator);
 
     await sleep(0);
 
-    expect(form.status).toBe("VALID");
+    expect(form.status).toBe('VALID');
   });
 });
 
-describe("stubAsyncValidator", () => {
-  it("should return provided errors", async () => {
+describe('stubAsyncValidator', () => {
+  it('should return provided errors', async () => {
     const errors = {
       a: faker.string.ulid(),
       b: faker.string.ulid(),
@@ -163,7 +163,7 @@ describe("stubAsyncValidator", () => {
 
     await sleep(0);
 
-    expect(form.status).toBe("INVALID");
+    expect(form.status).toBe('INVALID');
     expect(form.errors).toEqual(errors);
   });
 });

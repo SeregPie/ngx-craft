@@ -1,4 +1,4 @@
-import {signal, WritableSignal} from "@angular/core";
+import {signal, WritableSignal} from '@angular/core';
 
 export function useFocused(
   target: Element,
@@ -8,7 +8,7 @@ export function useFocused(
 export function useFocused(target, {
   focused = signal(false),
 } = {}) {
-  throw "not implemented yet";
+  throw 'not implemented yet';
   return null as any;
 }
 

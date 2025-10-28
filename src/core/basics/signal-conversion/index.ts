@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import {isSignal, Signal, signal} from "@angular/core";
+import {isSignal, Signal, signal} from '@angular/core';
 
 /**
  * A raw value or a signal.

@@ -1,5 +1,5 @@
-import {WritableSignal} from "@angular/core";
-import {MaybeSignal} from "../../basics/signal-conversion";
+import {WritableSignal} from '@angular/core';
+import {MaybeSignal} from '../../basics/signal-conversion';
 
 export function useStorageItem(
   name: MaybeSignal<string>,
@@ -9,7 +9,7 @@ export function useStorageItem(
 export function useStorageItem(name, {
   session = false,
 } = {}) {
-  throw "not implemented yet";
+  throw 'not implemented yet';
   return null as any;
 }
 
