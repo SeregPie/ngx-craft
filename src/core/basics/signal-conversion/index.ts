@@ -8,7 +8,13 @@ import type {Signal} from '@angular/core';
  */
 export type MaybeSignal<T> = T | Signal<T>;
 
-export type EnsureSignal<T> = T extends Signal<unknown> ? T : Signal<UnwrapSignal<T>>;
+export type EnsureSignal<T> =
+  // If it's already a Signal, return as-is
+  T extends Signal<unknown> ? T
+    // If it's a union, map each branch
+    : T extends infer U ? Signal<UnwrapSignal<U>>
+    // Otherwise, just wrap it
+    : Signal<UnwrapSignal<T>>;
 
 export type UnwrapSignal<T> = T extends Signal<infer R> ? R : T;
 
