@@ -1,6 +1,6 @@
 import {InjectionToken} from '@angular/core';
 import {faker} from '@faker-js/faker';
-import {describe, expect, it} from 'vitest';
+import {assertType, describe, expect, expectTypeOf, it} from 'vitest';
 import {provide} from '.';
 
 describe('provide', () => {
@@ -40,7 +40,9 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        expect(async () => {
+        expectTypeOf({a: 1}).toEqualTypeOf<{a: number}>();
+
+        (() => {
           // @ts-expect-error
           provide(testAaToken).useValue(TestBb.asValue);
           // @ts-expect-error
