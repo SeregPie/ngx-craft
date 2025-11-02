@@ -1,5 +1,6 @@
-import {isSignal, Signal, signal} from '@angular/core';
-import {describe, expect, it} from 'vitest';
+import {isSignal, signal} from '@angular/core';
+import type {Signal} from '@angular/core';
+import {describe, expect, expectTypeOf, it} from 'vitest';
 import {ensureSignal, unwrapSignal} from '.';
 import type {MaybeSignal} from '.';
 
@@ -23,6 +24,27 @@ describe('ensureSignal', () => {
 
     expect(ensureSignal(valueSignal)).toBe(valueSignal);
   });
+
+  it('...', async () => {
+    ((v: 'a' | 'b') => {
+      expectTypeOf(ensureSignal(v)).toEqualTypeOf<Signal<'a' | 'b'>>();
+    });
+    ((v: Signal<'a'> | Signal<'b'>) => {
+      expectTypeOf(ensureSignal(v)).toEqualTypeOf<Signal<'a' | 'b'>>();
+    });
+    ((v: Signal<'a' | 'b'>) => {
+      expectTypeOf(ensureSignal(v)).toEqualTypeOf<Signal<'a' | 'b'>>();
+    });
+    ((v: 'a' | 'b' | Signal<'a' | 'b'>) => {
+      expectTypeOf(ensureSignal(v)).toEqualTypeOf<Signal<'a' | 'b'>>();
+    });
+    ((v: 'a' | 'b' | Signal<Signal<'a' | 'b'>>) => {
+      expectTypeOf(ensureSignal(v)).toEqualTypeOf<Signal<'a' | 'b'> | Signal<Signal<'a' | 'b'>>>();
+    });
+    expectTypeOf(ensureSignal({} as any as Signal<'a' | 'b'>)).toEqualTypeOf<Signal<'a' | 'b'>>();
+
+    expectTypeOf(ensureSignal({} as any as 'a' | 'b' | Signal<'a' | 'b'>)).toEqualTypeOf<Signal<'a' | 'b'>>();
+  });
 });
 
 describe('unwrapSignal', () => {
@@ -36,5 +58,26 @@ describe('unwrapSignal', () => {
     const value = {};
 
     expect(unwrapSignal(value)).toBe(value);
+  });
+
+  it('...', async () => {
+    ((v: 'a' | 'b') => {
+      expectTypeOf(unwrapSignal(v)).toEqualTypeOf<'a' | 'b'>();
+    });
+    ((v: Signal<'a' | 'b'>) => {
+      expectTypeOf(unwrapSignal(v)).toEqualTypeOf<'a' | 'b'>();
+    });
+    ((v: Signal<'a'> | Signal<'b'>) => {
+      expectTypeOf(unwrapSignal(v)).toEqualTypeOf<'a' | 'b'>();
+    });
+    ((v: 'a' | 'b' | Signal<'a'> | Signal<'b'> | Signal<'a' | 'b'>) => {
+      expectTypeOf(unwrapSignal(v)).toEqualTypeOf<'a' | 'b'>();
+    });
+    ((v: 'a' | 'b' | Signal<Signal<'a' | 'b'>>) => {
+      expectTypeOf(unwrapSignal(v)).toEqualTypeOf<'a' | 'b' | Signal<'a' | 'b'>>();
+    });
+    ((v: 'a' | 'b' | Signal<Signal<'a' | 'b'>>) => {
+      expectTypeOf(unwrapSignal(v)).toEqualTypeOf<'a' | 'b' | Signal<'a' | 'b'>>();
+    });
   });
 });
