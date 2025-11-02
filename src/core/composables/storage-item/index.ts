@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {WritableSignal} from '@angular/core';
 import {MaybeSignal} from '../../basics/signal-conversion';
 

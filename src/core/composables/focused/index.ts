@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {signal, WritableSignal} from '@angular/core';
 
 export function useFocused(

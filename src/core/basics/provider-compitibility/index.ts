@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
+import type {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
 
 export function provide<T>(
   token: ProviderToken<ReadonlyArray<T>>,

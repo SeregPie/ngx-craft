@@ -1,15 +1,15 @@
 {
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "experimentalDecorators": true,
+    "removeComments": true
+  },
   "angularCompilerOptions": {
     "compilationMode": "partial",
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
     "typeCheckHostBindings": true
-  },
-  "compilerOptions": {
-    "experimentalDecorators": true,
-    "lib": ["ESNext", "DOM"],
-    "removeComments": true
-  },
-  "extends": "../tsconfig.json"
+  }
 }

@@ -1,6 +1,6 @@
 import {InjectionToken} from '@angular/core';
 import {faker} from '@faker-js/faker';
-import {describe, expect, it} from '@jest/globals';
+import {describe, expect, it} from 'vitest';
 import {provide} from '.';
 
 describe('provide', () => {
@@ -8,7 +8,9 @@ describe('provide', () => {
     static asValue = new this();
     static asFactory = () => new this();
     static asClass = this;
-    static asExisting = new InjectionToken(this.name, {factory: this.asFactory});
+    static asExisting = new InjectionToken(this.name, {
+      factory: this.asFactory,
+    });
 
     a = faker.number.int();
     b = faker.string.alphanumeric();
@@ -18,7 +20,9 @@ describe('provide', () => {
     static asValue = new this();
     static asFactory = () => new this();
     static asClass = this;
-    static asExisting = new InjectionToken(this.name, {factory: this.asFactory});
+    static asExisting = new InjectionToken(this.name, {
+      factory: this.asFactory,
+    });
 
     a = faker.string.alphanumeric();
     b = faker.number.int();

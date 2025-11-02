@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {computed, Signal, signal} from '@angular/core';
 
 export type AsyncDataStatus = 'idle' | 'pending' | 'resolved' | 'rejected';
@@ -22,10 +24,17 @@ export type AsyncData<T> = {
 export function useAsyncData<const T>(fn: {(): Promise<T>}, options?: AsyncDataOptions): AsyncData<T>;
 
 export function useAsyncData(fn) {
-  let status = signal('idle');
-  let result = computed(async () => {
+  let errorSignal = signal(undefined);
+  let statusSignal = signal('idle');
+  let abortController;
+  let resultSignal = computed(async () => {
     try {
+      statusSignal.set('loading');
+
+      statusSignal.set('success');
     } catch (error) {
+      statusSignal.set('error');
+      errorSignal.set(error);
     } finally {
     }
   });

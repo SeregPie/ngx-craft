@@ -1,6 +1,8 @@
+// @ts-nocheck
+
 import {DOCUMENT, inject} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
-import {describe, expect, it, jest} from '@jest/globals';
+import {describe, expect, it, jest} from 'vitest';
 
 const MediaQueryList_inherits_EventTarget = 'MediaQueryList inherits EventTarget';
 

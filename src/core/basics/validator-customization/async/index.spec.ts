@@ -1,7 +1,7 @@
 import {FormControl} from '@angular/forms';
 import {faker} from '@faker-js/faker';
-import {describe, expect, it, jest} from '@jest/globals';
 import {list, sleep} from 'radashi';
+import {describe, expect, it, vi} from 'vitest';
 import {composeAsyncValidators, noopAsyncValidator, stubAsyncValidator, withAsyncValidators} from '.';
 
 describe('withAsyncValidators', () => {
@@ -52,7 +52,7 @@ describe('withAsyncValidators', () => {
   // todo: better description
   it('should call validators only once', async () => {
     const form = new FormControl(null);
-    const validators = list(3).map(() => jest.fn(async () => null));
+    const validators = list(3).map(() => vi.fn(async () => null));
     withAsyncValidators(form, ...validators);
 
     for (const validator of validators) {
@@ -115,9 +115,9 @@ describe('composeAsyncValidators', () => {
   // todo: description
   it('should skip remaining validators if one fails', async () => {
     // todo: rename
-    const jesergzs = list(2).map(() => jest.fn(async () => null));
-    const fyddlfln = list(2).map(() => jest.fn(async () => null));
-    const wwmzeika = [...fyddlfln, jest.fn(async () => ({error: true}))];
+    const jesergzs = list(2).map(() => vi.fn(async () => null));
+    const fyddlfln = list(2).map(() => vi.fn(async () => null));
+    const wwmzeika = [...fyddlfln, vi.fn(async () => ({error: true}))];
     new FormControl(null, {
       asyncValidators: composeAsyncValidators([...wwmzeika, ...jesergzs]),
     });

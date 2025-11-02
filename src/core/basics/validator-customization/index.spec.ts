@@ -1,7 +1,7 @@
 import {FormControl} from '@angular/forms';
 import {faker} from '@faker-js/faker';
-import {describe, expect, it, jest} from '@jest/globals';
 import {list} from 'radashi';
+import {describe, expect, it, vi} from 'vitest';
 import {composeValidators, noopValidator, stubValidator, withValidators} from '.';
 
 describe('withValidators', () => {
@@ -40,7 +40,7 @@ describe('withValidators', () => {
   // todo: better description
   it('should call validators only once', async () => {
     const form = new FormControl(null);
-    const validators = list(3).map(() => jest.fn(() => null));
+    const validators = list(3).map(() => vi.fn(() => null));
     withValidators(form, ...validators);
 
     for (const validator of validators) {
@@ -91,9 +91,9 @@ describe('composeValidators', () => {
   // todo: description
   it('should skip remaining validators if one fails', async () => {
     // todo: rename
-    const jesergzs = list(2).map(() => jest.fn(() => null));
-    const fyddlfln = list(2).map(() => jest.fn(() => null));
-    const wwmzeika = [...fyddlfln, jest.fn(() => ({error: true}))];
+    const jesergzs = list(2).map(() => vi.fn(() => null));
+    const fyddlfln = list(2).map(() => vi.fn(() => null));
+    const wwmzeika = [...fyddlfln, vi.fn(() => ({error: true}))];
     new FormControl(null, {
       validators: composeValidators([...wwmzeika, ...jesergzs]),
     });

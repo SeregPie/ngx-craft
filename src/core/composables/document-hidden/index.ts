@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {Signal} from '@angular/core';
 
 export function useDocumentHidden(): Signal<boolean>;
