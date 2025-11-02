@@ -8,32 +8,28 @@ import type {Signal} from '@angular/core';
  */
 export type MaybeSignal<T> = T | Signal<T>;
 
+export type EnsureSignal<T> = T extends Signal<unknown> ? T : Signal<UnwrapSignal<T>>;
+
+export type UnwrapSignal<T> = T extends Signal<infer R> ? R : T;
+
 /**
  * Normalize a raw value to a signal.
  */
 export function ensureSignal<const T>(
-  value: MaybeSignal<T>,
-): Signal<T>;
+  input: T,
+): EnsureSignal<T>;
 
-export function ensureSignal<const T>(
-  value: T,
-): [T] extends [Signal<any>] ? T : T extends Signal<any> ? T : Signal<T>;
-
-export function ensureSignal(value) {
-  return isSignal(value) ? value : signal(value);
+export function ensureSignal(input) {
+  return isSignal(input) ? input : signal(input);
 }
 
 /**
  * Normalize a signal to a raw value.
  */
 export function unwrapSignal<const T>(
-  value: MaybeSignal<T>,
-): T;
+  input: T,
+): UnwrapSignal<T>;
 
-export function unwrapSignal<const T>(
-  value: T,
-): T extends Signal<infer R> ? R : T;
-
-export function unwrapSignal(value) {
-  return isSignal(value) ? value() : value;
+export function unwrapSignal(input) {
+  return isSignal(input) ? input() : input;
 }
