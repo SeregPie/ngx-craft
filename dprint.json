@@ -1,4 +1,5 @@
 {
+  "lineWidth": 9999,
   "typescript": {
     "importDeclaration.spaceSurroundingNamedImports": false,
     "quoteStyle": "preferSingle",

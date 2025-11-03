@@ -64,7 +64,7 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        expect(async () => {
+        (() => {
           // @ts-expect-error
           provide(testAaToken).useFactory(TestAa.asValue);
           // @ts-expect-error
@@ -86,7 +86,7 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        expect(async () => {
+        (() => {
           // @ts-expect-error
           provide(testAaToken).useClass(TestAa.asValue);
           // @ts-expect-error
@@ -108,7 +108,7 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        expect(async () => {
+        (() => {
           // @ts-expect-error
           provide(testAaToken).useExisting(TestAa.asValue);
           // @ts-ignore
@@ -135,7 +135,7 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        expect(async () => {
+        (() => {
           // @ts-expect-error
           provide(testAaToken, {multi: true}).useValue(TestBb.asValue);
           // @ts-expect-error
@@ -158,7 +158,7 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        expect(async () => {
+        (() => {
           // @ts-expect-error
           provide(testAaToken, {multi: true}).useFactory(TestAa.asValue);
           // @ts-expect-error
@@ -181,7 +181,7 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        expect(async () => {
+        (() => {
           // @ts-expect-error
           provide(testAaToken, {multi: true}).useClass(TestAa.asValue);
           // @ts-expect-error
@@ -204,7 +204,7 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        expect(async () => {
+        (() => {
           // @ts-expect-error
           provide(testAaToken, {multi: true}).useExisting(TestAa.asValue);
           // @ts-ignore
