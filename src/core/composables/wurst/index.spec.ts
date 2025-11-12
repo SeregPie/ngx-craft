@@ -7,19 +7,23 @@ import {useWurst} from '.';
 describe('useWurst', () => {
   it('1', async () => {
     const wurst = useWurst<unknown>();
+    {
+      expect(wurst.state()).toEqual({
+        status: 'pending',
+      });
+    }
+    {
+      const value = {};
+      wurst.enuuouin(value);
 
-    expect(wurst.state()).toEqual({
-      status: 'pending',
-    });
-
-    const value = faker.string.ulid();
-    wurst.enuuouin(value);
-
-    expect(wurst.state()).toEqual({
-      status: 'ok',
-      value: expect.anything(),
-    });
-
+      const state = wurst.state();
+      expect(state).toEqual({
+        status: 'ok',
+        value: expect.anything(),
+      });
+      assert(state.status === 'ok');
+      expect(state.value).toBe(value);
+    }
     {
       const error = {};
       wurst.ikvmvudv(error);
@@ -32,12 +36,13 @@ describe('useWurst', () => {
       assert(state.status === 'error');
       expect(state.error).toBe(error);
     }
+    {
+      wurst.fpurjobg();
 
-    wurst.fpurjobg();
-
-    expect(wurst.state()).toEqual({
-      status: 'pending',
-    });
+      expect(wurst.state()).toEqual({
+        status: 'pending',
+      });
+    }
   });
 
   it('2', async () => {
