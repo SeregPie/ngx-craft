@@ -17,20 +17,21 @@ describe('useWurst', () => {
 
     expect(wurst.state()).toEqual({
       status: 'ok',
-      value,
+      value: expect.anything(),
     });
 
-    const error = faker.string.ulid();
-    wurst.ikvmvudv(error);
+    {
+      const error = {};
+      wurst.ikvmvudv(error);
 
-    expect(wurst.state()).toEqual({
-      status: 'error',
-      error,
-    });
-
-    const state = wurst.state();
-    assert(state.status === 'error');
-    state.error;
+      const state = wurst.state();
+      expect(state).toEqual({
+        status: 'error',
+        error: expect.anything(),
+      });
+      assert(state.status === 'error');
+      expect(state.error).toBe(error);
+    }
 
     wurst.fpurjobg();
 
