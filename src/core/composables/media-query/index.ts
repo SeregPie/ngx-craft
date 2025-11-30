@@ -3,6 +3,7 @@
 import {DOCUMENT, inject} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {describe, expect, it, jest} from 'vitest';
+import {MaybeSignal} from '../../basics/signal-conversion';
 
 const MediaQueryList_inherits_EventTarget = 'MediaQueryList inherits EventTarget';
 
@@ -33,4 +34,8 @@ export function foo() {
       return {document, window, EventTarget, MediaQueryList, MediaQueryListEvent};
     }
   }
+}
+
+export function useMediaQuery(query: MaybeSignal<string>): Signal<boolean> {
+  let;
 }
