@@ -3,11 +3,15 @@
 import type {ClassProvider, ExistingProvider, FactoryProvider, ProviderToken, Type, ValueProvider} from '@angular/core';
 
 export function provide<T>(
+  //
   token: ProviderToken<ReadonlyArray<T>>,
-  options: provide.Options & {multi: true},
+  options: provide.Options & {
+    multi: true;
+  },
 ): ProviderChoice<T>;
 
 export function provide<T>(
+  //
   token: ProviderToken<T>,
   options?: provide.Options,
 ): ProviderChoice<T>;

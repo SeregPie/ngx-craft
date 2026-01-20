@@ -12,10 +12,8 @@
             "tsConfig": "./src/tsconfig.json"
           },
           "configurations": {
-            "production": {
-            },
-            "development": {
-            }
+            "production": {},
+            "development": {}
           }
         },
         "test": {

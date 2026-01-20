@@ -1,6 +1,6 @@
 import {InjectionToken} from '@angular/core';
 import {faker} from '@faker-js/faker';
-import {assertType, describe, expect, expectTypeOf, it} from 'vitest';
+import {describe, expect, it} from 'vitest';
 import {provide} from '.';
 
 describe('provide', () => {
@@ -40,9 +40,7 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        expectTypeOf({a: 1}).toEqualTypeOf<{a: number}>();
-
-        (() => {
+        expect(() => {
           // @ts-expect-error
           provide(testAaToken).useValue(TestBb.asValue);
           // @ts-expect-error
@@ -64,7 +62,7 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        (() => {
+        expect(() => {
           // @ts-expect-error
           provide(testAaToken).useFactory(TestAa.asValue);
           // @ts-expect-error
@@ -86,7 +84,7 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        (() => {
+        expect(() => {
           // @ts-expect-error
           provide(testAaToken).useClass(TestAa.asValue);
           // @ts-expect-error
@@ -108,7 +106,7 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        (() => {
+        expect(() => {
           // @ts-expect-error
           provide(testAaToken).useExisting(TestAa.asValue);
           // @ts-ignore
@@ -135,7 +133,7 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        (() => {
+        () => {
           // @ts-expect-error
           provide(testAaToken, {multi: true}).useValue(TestBb.asValue);
           // @ts-expect-error
@@ -144,7 +142,7 @@ describe('provide', () => {
           provide(testAaToken, {multi: true}).useValue(TestAa.asClass);
           // @ts-expect-error
           provide(testAaToken, {multi: true}).useValue(TestAa.asExisting);
-        });
+        };
       });
     });
 
@@ -158,7 +156,7 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        (() => {
+        () => {
           // @ts-expect-error
           provide(testAaToken, {multi: true}).useFactory(TestAa.asValue);
           // @ts-expect-error
@@ -167,7 +165,7 @@ describe('provide', () => {
           provide(testAaToken, {multi: true}).useFactory(TestAa.asClass);
           // @ts-expect-error
           provide(testAaToken, {multi: true}).useFactory(TestAa.asExisting);
-        });
+        };
       });
     });
 
@@ -181,7 +179,7 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        (() => {
+        () => {
           // @ts-expect-error
           provide(testAaToken, {multi: true}).useClass(TestAa.asValue);
           // @ts-expect-error
@@ -190,7 +188,7 @@ describe('provide', () => {
           provide(testAaToken, {multi: true}).useClass(TestBb.asClass);
           // @ts-expect-error
           provide(testAaToken, {multi: true}).useClass(TestAa.asExisting);
-        });
+        };
       });
     });
 
@@ -204,7 +202,7 @@ describe('provide', () => {
       });
 
       it('should enforce type safety', async () => {
-        (() => {
+        () => {
           // @ts-expect-error
           provide(testAaToken, {multi: true}).useExisting(TestAa.asValue);
           // @ts-ignore
@@ -213,7 +211,7 @@ describe('provide', () => {
           provide(testAaToken, {multi: true}).useExisting(TestAa.asClass);
           // @ts-ignore
           provide(testAaToken, {multi: true}).useExisting(TestBb.asExisting);
-        });
+        };
       });
     });
   });
