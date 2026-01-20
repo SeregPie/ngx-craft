@@ -35,9 +35,9 @@ export namespace provide {
   }>;
 }
 
-export interface ProviderChoice<T> {
+export type ProviderChoice<T> = {
   useValue(source: T): ValueProvider;
   useFactory(source: {(): T}): FactoryProvider;
   useClass(source: Type<T>): ClassProvider;
   useExisting(source: ProviderToken<T>): ExistingProvider;
-}
+};

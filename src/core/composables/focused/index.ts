@@ -3,13 +3,18 @@
 import {signal, WritableSignal} from '@angular/core';
 
 export function useFocused(
+  //
   target: Element,
   options?: useFocused.Options,
 ): WritableSignal<boolean>;
 
-export function useFocused(target, {
-  focused = signal(false),
-} = {}) {
+export function useFocused(
+  target,
+  {
+    //
+    focused = signal(false),
+  } = {},
+) {
   throw 'not implemented yet';
   return null as any;
 }

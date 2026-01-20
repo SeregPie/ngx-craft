@@ -2,12 +2,12 @@
 
 import type {Signal, WritableSignal} from '@angular/core';
 
-export function useResource<const T>(
+export function useStreamingResource<const T>(
   //
-  fn: {(): Promise<T>},
+  fn: {(): Signal<Promise<T>>},
 ): Resource<T>;
 
-export function useResource(fn) {
+export function useStreamingResource(fn) {
   // todo
 }
 
@@ -15,17 +15,15 @@ export type Resource = Signal<Promise<T>> & {
   ready: Signal<boolean>;
   whenReady(): Promise<void>;
   state: Signal<State<T>>;
-  idle: Signal<boolean>;
   pending: Signal<boolean>;
-  value: Signal<undefined | T>;
+  data: Signal<undefined | T>;
   error: Signal<undefined | Error>;
   trigger(): void;
 };
 
-export type ResourceOptions = Partial<{
-  lazy: boolean;
+export type ResourceOptions = {
   disabled: WritableSignal<boolean>;
-}>;
+};
 
 export type ResourceState<T> =
   | {
@@ -35,8 +33,8 @@ export type ResourceState<T> =
       status: 'pending';
     }
   | {
-      status: 'success';
-      value: T;
+      status: 'ok';
+      data: T;
     }
   | {
       status: 'error';
